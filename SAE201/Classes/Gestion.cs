@@ -29,7 +29,7 @@ namespace SAE201.Classes
             this.LesClients = new ObservableCollection<Client>(new Client().FindAll());
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll());
             this.LesEmploye = lesEmploye;
-            this.LesCommande = lesCommande;
+            this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll());
         }
 
         public ObservableCollection<Client> LesClients

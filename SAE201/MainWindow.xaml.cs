@@ -1,4 +1,5 @@
 ﻿using SAE201.Classes;
+using SAE201.Usercontrol;
 using SAE201.userControls;
 using System;
 using System.Text;
@@ -43,7 +44,10 @@ namespace SAE201
 
         private void BoutonsToutesCommandes_Click(object sender, RoutedEventArgs e)
         {
-
+            if (!(ZoneUserControls.Content is ToutesLesCommandes))
+            {
+                ZoneUserControls.Content = new ToutesLesCommandes();
+            }
         }
 
         private void BoutonAcceuil_Click(object sender, RoutedEventArgs e)

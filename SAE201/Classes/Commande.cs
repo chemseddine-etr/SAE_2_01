@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +16,13 @@ namespace SAE201.Classes
         private DateTime dateretraitprevue;
         private bool payee;
         private bool retire;
-        private double prixtotal;
+        private Decimal prixtotal;
 
         public Commande()
         {
         }
 
-        public Commande(int numcommande, DateTime datecommande, DateTime dateretraitprevue, bool payee, bool retire, double prixtotal)
+        public Commande(int numcommande, DateTime datecommande, DateTime dateretraitprevue, bool payee, bool retire, Decimal prixtotal)
         {
             this.Numcommande = numcommande;
             this.Datecommande = datecommande;
@@ -94,7 +97,7 @@ namespace SAE201.Classes
             }
         }
 
-        public double Prixtotal
+        public Decimal Prixtotal
         {
             get
             {
@@ -105,6 +108,19 @@ namespace SAE201.Classes
             {
                 this.prixtotal = value;
             }
+        }
+
+        public List<Commande> FindAll()
+        {
+            List<Commande> lesCommandes = new List<Commande>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from commande;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesCommandes.Add(new Commande((int)dr["numcommande"], (DateTime)dr["datecommande"], (DateTime)dr["dateretraitprevue"],
+                   (Boolean)dr["payee"], (Boolean)dr["retiree"], (Decimal)dr["prixtotal"]));
+            }
+            return lesCommandes;
         }
     }
 }
