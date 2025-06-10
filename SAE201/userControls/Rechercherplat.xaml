@@ -40,38 +40,52 @@
                 <TextBlock Margin="0,10,0,5" Text="Par prix :" />
             </StackPanel>
 
-            <StackPanel Grid.Column="1">
-                <TextBox Width="200" />
+            <StackPanel Grid.Column="1" Margin="0,0,10,422">
+                <TextBox x:Name="textMotClefPlat" Width="200" />
 
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                     <RadioButton
+                        x:Name="radioEntree"
                         Margin="0,0,10,0"
                         Content="Entrée"
                         GroupName="Categorie" />
-                    <RadioButton Content="Plat" GroupName="Categorie" />
+                    <RadioButton
+                        x:Name="radioPlat"
+                        Content="Plat"
+                        GroupName="Categorie" />
                 </StackPanel>
 
                 <WrapPanel Margin="0,10,0,0">
                     <RadioButton
+                        x:Name="radioEntreeChaude"
                         Margin="0,0,10,10"
                         Content="Entrée chaude"
                         GroupName="SousCategorie" />
                     <RadioButton
+                        x:Name="radioEntreeFroide"
                         Margin="0,0,10,10"
                         Content="Entrée froide"
                         GroupName="SousCategorie" />
                     <RadioButton
+                        x:Name="radioPlatChaud"
                         Margin="0,0,10,10"
                         Content="Plat chaud"
                         GroupName="SousCategorie" />
                     <RadioButton
+                        x:Name="radioPlatFroid"
                         Margin="0,0,10,10"
                         Content="Plat froid"
                         GroupName="SousCategorie" />
                 </WrapPanel>
 
-                <TextBox Width="200" Margin="0,10,0,0" />
-                <TextBox Width="200" Margin="0,10,0,0" />
+                <TextBox
+                    x:Name="textDisponibilite"
+                    Width="200"
+                    Margin="0,10,0,0" />
+                <TextBox
+                    x:Name="textPrix"
+                    Width="200"
+                    Margin="0,10,0,0" />
             </StackPanel>
         </Grid>
 
