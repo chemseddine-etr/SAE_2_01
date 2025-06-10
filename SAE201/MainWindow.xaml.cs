@@ -27,6 +27,7 @@ namespace SAE201
             InitializeComponent();
             ZoneUserControls.Content = new Acceuil();
         }
+
         public void ChargeData()
         {
             try
