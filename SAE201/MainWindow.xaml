@@ -1,0 +1,79 @@
+﻿<Window
+    x:Class="SAE201.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Classes="clr-namespace:SAE201.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="1600"
+    Height="900"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <Classes:Gestion x:Name="laGestion" Nom="Gestion" />
+    </Window.DataContext>
+    <Grid x:Name="Connection" ContextMenuClosing="Connection_ContextMenuClosing">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            Background="LightGray">
+            <Button
+                Margin="5"
+                Click="BoutonAcceuil_Click"
+                Content="Acceuil" />
+            <Button
+                Margin="5"
+                Click="BoutonsToutesCommandes_Click"
+                Content="Toutes les commandes" />
+            <Button
+                Margin="5"
+                Click="BoutonNewCommande_Click"
+                Content="Nouvelle commande" />
+            <Button
+                Margin="5"
+                Click="BoutonRecupCommande_Click"
+                Content="Commande à récuperer" />
+            <Button
+                Margin="5"
+                Click="BoutonRechercherPlat_Click"
+                Content="Rechercher un plat " />
+            <Button
+                Margin="5"
+                Click="BoutonCreerPlat_Click"
+                Content="Créer un plat " />
+            <Button
+                Margin="5"
+                Click="BoutonRechercherClient_Click"
+                Content="Rechercher un client " />
+            <Button
+                Margin="5"
+                Click="BoutonCreerClient_Click"
+                Content="Créer un client " />
+
+        </StackPanel>
+        <ContentControl
+            x:Name="ZoneUserControls"
+            Grid.Column="1"
+            Width="1300"
+            Height="770"
+            Margin="95,85,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <Button
+            x:Name="Connection1"
+            Grid.Column="1"
+            Margin="1098,26,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="Connection1_Click"
+            Content="Connection" />
+    </Grid>
+</Window>

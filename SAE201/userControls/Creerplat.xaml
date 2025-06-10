@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="SAE201.userControls.Creerplat"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SAE201.userControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="413" d:DesignWidth="630" Background="White">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Titre -->
+        <TextBlock Text="Créer un plat"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10"
+                   Grid.Row="0"/>
+
+        <!-- Formulaire -->
+        <Grid Grid.Row="1" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Libellés -->
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Text="Nom du plat :" Margin="0,0,0,10"/>
+                <TextBlock Text="Prix unitaire (€) :" Margin="0,10,0,10"/>
+                <TextBlock Text="Délai de préparation (min) :" Margin="0,10,0,10"/>
+                <TextBlock Text="Nombre de personnes :" Margin="0,10,0,10"/>
+                <TextBlock Text="Disponible :" Margin="0,10,0,10"/>
+                <TextBlock Text="Période :" Margin="0,10,0,10"/>
+                <TextBlock Text="Sous-catégorie :" Margin="0,10,0,10"/>
+            </StackPanel>
+
+            <!-- Champs liés via Binding -->
+            <StackPanel Grid.Column="1">
+                <TextBox Width="250"/>
+                <TextBox Width="250" Margin="0,17,0,0"/>
+                <TextBox Width="250" Margin="0,17,0,0"/>
+                <TextBox Width="250" Margin="0,17,0,0"/>
+
+                <CheckBox IsChecked="{Binding EstDisponible}"
+                          Content="Oui"
+                          Margin="0,22,0,0"/>
+
+            </StackPanel>
+          
+        </Grid>
+        <!-- Bouton -->
+        <Button Content="Créer" Command="{Binding CreerPlatCommand}" Width="150" Height="40" HorizontalAlignment="Center" Margin="0,20" Grid.Row="2"/>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="SAE201.userControls.Rechercherclient"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:SAE201.Classes"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="114.757" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Width="268"
+            Margin="0,10,0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Rechercher un client" />
+
+        <!--  Corps du formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,5" Text="Par Nom :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Prénom :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Ville :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Rue :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Code postal :" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                <TextBox Width="200" Margin="0,0,0,5" />
+                <TextBox Width="200" Margin="0,10,0,5" />
+                <TextBox Width="200" Margin="0,10,0,5" />
+                <TextBox Width="200" Margin="0,10,0,5" />
+                <TextBox Width="200" Margin="0,10,0,5" />
+            </StackPanel>
+            <DataGrid
+                x:Name="dgClients"
+                Grid.ColumnSpan="2"
+                Margin="0,169,0,-142"
+                HorizontalAlignment="Left"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding LesClients}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Nomclient, ValidatesOnExceptions=true}"
+                        Header="Nom" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Prenomclient, ValidatesOnExceptions=true}"
+                        Header="Prénom" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Tel, ValidatesOnExceptions=true}"
+                        Header="Téléphone" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adresserue, ValidatesOnExceptions=True}"
+                        Header="Rue" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adressecp, ValidatesOnExceptions=True}"
+                        Header="Code postal" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adresseville, ValidatesOnExceptions=True}"
+                        Header="Ville" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!--  Bouton Rechercher  -->
+
+    </Grid>
+
+
+</UserControl>
