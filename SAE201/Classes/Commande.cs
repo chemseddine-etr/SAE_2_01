@@ -17,12 +17,14 @@ namespace SAE201.Classes
         private bool payee;
         private bool retire;
         private Decimal prixtotal;
+        private Client unClient;
+        private Employe unEmploye;
 
         public Commande()
         {
         }
 
-        public Commande(int numcommande, DateTime datecommande, DateTime dateretraitprevue, bool payee, bool retire, Decimal prixtotal)
+        public Commande(int numcommande, DateTime datecommande, DateTime dateretraitprevue, bool payee, bool retire, decimal prixtotal, Client unClient, Employe unEmploye)
         {
             this.Numcommande = numcommande;
             this.Datecommande = datecommande;
@@ -30,6 +32,8 @@ namespace SAE201.Classes
             this.Payee = payee;
             this.Retire = retire;
             this.Prixtotal = prixtotal;
+            this.UnClient = unClient;
+            this.UnEmploye = unEmploye;
         }
 
         public int Numcommande
@@ -110,7 +114,33 @@ namespace SAE201.Classes
             }
         }
 
-        public List<Commande> FindAll()
+        public Client UnClient
+        {
+            get
+            {
+                return this.unClient;
+            }
+
+            set
+            {
+                this.unClient = value;
+            }
+        }
+
+        public Employe UnEmploye
+        {
+            get
+            {
+                return this.unEmploye;
+            }
+
+            set
+            {
+                this.unEmploye = value;
+            }
+        }
+
+        public List<Commande> FindAll(Gestion gestion)
         {
             List<Commande> lesCommandes = new List<Commande>();
             using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from commande;"))
@@ -118,7 +148,7 @@ namespace SAE201.Classes
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
                     lesCommandes.Add(new Commande((int)dr["numcommande"], (DateTime)dr["datecommande"], (DateTime)dr["dateretraitprevue"],
-                   (Boolean)dr["payee"], (Boolean)dr["retiree"], (Decimal)dr["prixtotal"]));
+                   (bool)dr["payee"], (bool)dr["retiree"], (Decimal)dr["prixtotal"], gestion.LesClients.FirstOrDefault(c => c.Numclient == (int)dr["numclient"]), gestion.LesEmploye.FirstOrDefault(c => c.Numemploye == (int)dr["numemploye"])));
             }
             return lesCommandes;
         }

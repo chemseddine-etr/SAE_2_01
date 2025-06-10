@@ -15,18 +15,21 @@ namespace SAE201.Classes
         private string prenomemploye;
         private string password;
         private string login;
+        private Role unRole;
+
 
         public Employe()
         {
         }
 
-        public Employe(int numemploye, string nomemploye, string prenomemploye, string password, string login)
+        public Employe(int numemploye, string nomemploye, string prenomemploye, string password, string login, Role unRole)
         {
             this.Numemploye = numemploye;
             this.Nomemploye = nomemploye;
             this.Prenomemploye = prenomemploye;
             this.Password = password;
             this.Login = login;
+            this.UnRole = unRole;
         }
 
         public int Numemploye
@@ -93,14 +96,29 @@ namespace SAE201.Classes
                 this.login = value;
             }
         }
-        public List<Employe> FindAll()
+
+        public Role UnRole
+        {
+            get
+            {
+                return this.unRole;
+            }
+
+            set
+            {
+                this.unRole = value;
+            }
+        }
+
+        public List<Employe> FindAll(Gestion gestion)
         {
             List<Employe> lesEmployes = new List<Employe>();
             using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from employe;"))
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
-                    lesEmployes.Add(new Employe((int)dr["numemploye"], (string)dr["nomemploye"], (string)dr["prenomemploye"], (string)dr["password"], (string)dr["login"]));
+                    lesEmployes.Add(new Employe((int)dr["numemploye"], (string)dr["nomemploye"], (string)dr["prenomemploye"], (string)dr["password"], (string)dr["login"],
+                        gestion.LesRoles.FirstOrDefault(c => c.Numrole == (int)dr["numrole"])));
             }
             return lesEmployes;
         }

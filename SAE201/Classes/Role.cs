@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,10 @@ namespace SAE201.Classes
     {
         private int numrole;
         private string nomrole;
+
+        public Role()
+        {
+        }
 
         public Role(int numrole, string nomrole)
         {
@@ -41,6 +47,17 @@ namespace SAE201.Classes
             {
                 this.nomrole = value;
             }
+        }
+        public List<Role> FindAll()
+        {
+            List<Role> lesRoles = new List<Role>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from categorie;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesRoles.Add(new Role((int)dr["numrole"], (string)dr["nomrole"]));
+            }
+            return lesRoles;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,30 +10,17 @@ namespace SAE201.Classes
 {
     public class Periode
     {
-        private int numplat;
+        private int numperiode;
         private string libellePeriode;
 
         public Periode()
         {
         }
 
-        public Periode(int numplat, string libellePeriode)
+        public Periode(string libellePeriode, int numperiode)
         {
-            this.Numplat = numplat;
             this.LibellePeriode = libellePeriode;
-        }
-
-        public int Numplat
-        {
-            get
-            {
-                return this.numplat;
-            }
-
-            set
-            {
-                this.numplat = value;
-            }
+            this.Numperiode = numperiode;
         }
 
         public string LibellePeriode
@@ -45,6 +34,31 @@ namespace SAE201.Classes
             {
                 this.libellePeriode = value;
             }
+        }
+
+        public int Numperiode
+        {
+            get
+            {
+                return this.numperiode;
+            }
+
+            set
+            {
+                this.numperiode = value;
+            }
+        }
+
+        public List<Periode> FindAll()
+        {
+            List<Periode> lesPeriodes = new List<Periode>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from categorie;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesPeriodes.Add(new Periode((string)dr["libelleperiode"],(int)dr["numperiode"]));
+            }
+            return lesPeriodes;
         }
     }
 }

@@ -17,6 +17,7 @@ public class Gestion
     private ObservableCollection<SousCategorie> lesSousCategories;
     private ObservableCollection<Role> lesRoles;
     private ObservableCollection<Categorie> lesCategories;
+    private ObservableCollection<CommandePlat> lesCommandesPlats;
 
     public Gestion() : this("")
     {
@@ -26,53 +27,143 @@ public class Gestion
     {
         this.Nom = nom;
         this.LesClients = new ObservableCollection<Client>(new Client().FindAll());
-        this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll());
-        this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll());
-        this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll());
+        this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this));
+        this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this));
+        this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll(this));
         this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll());
         this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this));
-    }
-
-    public ObservableCollection<Client> LesClients
-    {
-        get { return this.lesClients; }
-        set { this.lesClients = value; }
-    }
-
-    public ObservableCollection<Plat> LesPlats
-    {
-        get { return this.lesPlats; }
-        set { this.lesPlats = value; }
-    }
-
-    public ObservableCollection<Employe> LesEmploye
-    {
-        get { return this.lesEmploye; }
-        set { this.lesEmploye = value; }
-    }
-
-    public ObservableCollection<Commande> LesCommande
-    {
-        get { return this.lesCommande; }
-        set { this.lesCommande = value; }
-    }
-
-    public ObservableCollection<Categorie> LesCategories
-    {
-        get { return this.lesCategories; }
-        set { this.lesCategories = value; }
-    }
-
-    public ObservableCollection<SousCategorie> LesSousCategories
-    {
-        get { return this.lesSousCategories; }
-        set { this.lesSousCategories = value; }
+        this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll());
+        this.LesRoles = new ObservableCollection<Role>(new Role().FindAll());
     }
 
     public string Nom
     {
-        get { return this.nom; }
-        set { this.nom = value; }
+        get
+        {
+            return this.nom;
+        }
+
+        set
+        {
+            this.nom = value;
+        }
+    }
+
+    public ObservableCollection<Client> LesClients
+    {
+        get
+        {
+            return this.lesClients;
+        }
+
+        set
+        {
+            this.lesClients = value;
+        }
+    }
+
+    public ObservableCollection<Plat> LesPlats
+    {
+        get
+        {
+            return this.lesPlats;
+        }
+
+        set
+        {
+            this.lesPlats = value;
+        }
+    }
+
+    public ObservableCollection<Employe> LesEmploye
+    {
+        get
+        {
+            return this.lesEmploye;
+        }
+
+        set
+        {
+            this.lesEmploye = value;
+        }
+    }
+
+    public ObservableCollection<Commande> LesCommande
+    {
+        get
+        {
+            return this.lesCommande;
+        }
+
+        set
+        {
+            this.lesCommande = value;
+        }
+    }
+
+    public ObservableCollection<Periode> LesPeriodes
+    {
+        get
+        {
+            return this.lesPeriodes;
+        }
+
+        set
+        {
+            this.lesPeriodes = value;
+        }
+    }
+
+    public ObservableCollection<SousCategorie> LesSousCategories
+    {
+        get
+        {
+            return this.lesSousCategories;
+        }
+
+        set
+        {
+            this.lesSousCategories = value;
+        }
+    }
+
+    public ObservableCollection<Role> LesRoles
+    {
+        get
+        {
+            return this.lesRoles;
+        }
+
+        set
+        {
+            this.lesRoles = value;
+        }
+    }
+
+    public ObservableCollection<Categorie> LesCategories
+    {
+        get
+        {
+            return this.lesCategories;
+        }
+
+        set
+        {
+            this.lesCategories = value;
+        }
+    }
+
+    public ObservableCollection<CommandePlat> LesCommandesPlats
+    {
+        get
+        {
+            return this.lesCommandesPlats;
+        }
+
+        set
+        {
+            this.lesCommandesPlats = value;
+        }
     }
 }
 
