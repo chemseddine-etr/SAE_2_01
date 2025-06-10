@@ -46,23 +46,28 @@
                 <TextBox
                     x:Name="textMotClefClientNom"
                     Width="200"
-                    Margin="0,0,0,5" TextChanged="textMotClefClientNom_TextChanged" />
+                    Margin="0,0,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
                 <TextBox
                     x:Name="textMotClefClientPrenom"
                     Width="200"
-                    Margin="0,10,0,5" />
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
                 <TextBox
                     x:Name="textMotClefClientVille"
                     Width="200"
-                    Margin="0,10,0,5" />
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
                 <TextBox
                     x:Name="textMotClefClientRue"
                     Width="200"
-                    Margin="0,10,0,5" />
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
                 <TextBox
                     x:Name="textMotClefClientCP"
                     Width="200"
-                    Margin="0,10,0,5" />
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
             </StackPanel>
             <DataGrid
                 x:Name="dgClients"

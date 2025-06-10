@@ -24,50 +24,34 @@ namespace SAE201.userControls
         public Rechercherclient()
         {
             InitializeComponent();
-            dgClients.Items.Filter = RechercheClientNom;
-            dgClients.Items.Filter = RechercheClientPrenom;
-            dgClients.Items.Filter = RechercheClientRue;
-            dgClients.Items.Filter = RechercheClientCP;
-            dgClients.Items.Filter = RechercheClientVille;
-            
-            
+            dgClients.Items.Filter = FiltreClientCombine;
         }
 
-        private bool RechercheClientNom(object obj)
+        private bool FiltreClientCombine(object obj)
         {
-            if (String.IsNullOrEmpty(textMotClefClientNom.Text))
-                return true;
-            Client unClient = obj as Client;
-            return (unClient.Nomclient.StartsWith(textMotClefClientNom.Text, StringComparison.OrdinalIgnoreCase));
+            var unClient = obj as Client;
+            if (unClient == null) return false;
+
+            // Vérifier chaque critère de recherche
+            bool nomMatch = string.IsNullOrEmpty(textMotClefClientNom.Text) ||
+                            unClient.Nomclient.StartsWith(textMotClefClientNom.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool prenomMatch = string.IsNullOrEmpty(textMotClefClientPrenom.Text) ||
+                               unClient.Prenomclient.StartsWith(textMotClefClientPrenom.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool villeMatch = string.IsNullOrEmpty(textMotClefClientVille.Text) ||
+                              unClient.Adresseville.StartsWith(textMotClefClientVille.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool rueMatch = string.IsNullOrEmpty(textMotClefClientRue.Text) ||
+                            unClient.Adresserue.StartsWith(textMotClefClientRue.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool cpMatch = string.IsNullOrEmpty(textMotClefClientCP.Text) ||
+                           unClient.Adressecp.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase);
+
+            // Retourner vrai seulement si toutes les conditions sont satisfaites
+            return nomMatch && prenomMatch && villeMatch && rueMatch && cpMatch;
         }
-        private bool RechercheClientPrenom(object obj)
-        {
-            if (String.IsNullOrEmpty(textMotClefClientPrenom.Text))
-                return true;
-            Client unClient = obj as Client;
-            return (unClient.Prenomclient.StartsWith(textMotClefClientPrenom.Text, StringComparison.OrdinalIgnoreCase));
-        }
-        private bool RechercheClientVille(object obj)
-        {
-            if (String.IsNullOrEmpty(textMotClefClientVille.Text))
-                return true;
-            Client unClient = obj as Client;
-            return (unClient.Adresseville.StartsWith(textMotClefClientVille.Text, StringComparison.OrdinalIgnoreCase));
-        }
-        private bool RechercheClientRue(object obj)
-        {
-            if (String.IsNullOrEmpty(textMotClefClientRue.Text))
-                return true;
-            Client unClient = obj as Client;
-            return (unClient.Adresserue.StartsWith(textMotClefClientRue.Text, StringComparison.OrdinalIgnoreCase));
-        }
-        private bool RechercheClientCP(object obj)
-        {
-            if (String.IsNullOrEmpty(textMotClefClientCP.Text))
-                return true;
-            Client unClient = obj as Client;
-            return (unClient.Adressecp.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase));
-        }
+
         private void textMotClefClient_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();

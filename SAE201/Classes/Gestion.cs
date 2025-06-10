@@ -28,7 +28,7 @@ namespace SAE201.Classes
             this.Nom = nom;
             this.LesClients = new ObservableCollection<Client>(new Client().FindAll());
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll());
-            this.LesEmploye = lesEmploye;
+            this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll());
             this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll());
         }
 

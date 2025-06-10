@@ -11,10 +11,6 @@
     Height="900"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.DataContext>
-        <Classes:Gestion x:Name="laGestion" Nom="Gestion" />
-    </Window.DataContext>
-
     <Grid x:Name="Connection" ContextMenuClosing="Connection_ContextMenuClosing">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
