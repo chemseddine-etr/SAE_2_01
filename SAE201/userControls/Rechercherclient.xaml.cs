@@ -73,6 +73,10 @@ namespace SAE201.userControls
             CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
         }
 
+        private void textMotClefClientNom_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
 
+        }
     }
 }

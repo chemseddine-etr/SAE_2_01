@@ -46,7 +46,7 @@
                 <TextBox
                     x:Name="textMotClefClientNom"
                     Width="200"
-                    Margin="0,0,0,5" />
+                    Margin="0,0,0,5" TextChanged="textMotClefClientNom_TextChanged" />
                 <TextBox
                     x:Name="textMotClefClientPrenom"
                     Width="200"
