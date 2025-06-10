@@ -133,6 +133,13 @@ namespace SAE201.Classes
             return res;
 
         }
+        public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
+        { 
+
+            // ExecuteReader avec fermeture automatique de la connexion quand le reader est fermé
+            return command.ExecuteReader(CommandBehavior.CloseConnection);
+        }
+
 
         //  Fermer la connexion 
         public void CloseConnection()

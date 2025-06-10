@@ -89,5 +89,66 @@ namespace SAE201.Classes
             }
             return lesCommandesPlats;
         }
+        public bool Create()
+        {
+            using (var cmdInsert = new NpgsqlCommand(@"INSERT INTO platcommande (numcommande, numplat, quantite, prix) VALUES (@numcommande, @numplat, @quantite, @prix) RETURNING numcommande, numplat"))
+            {
+                cmdInsert.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdInsert.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                cmdInsert.Parameters.AddWithValue("quantite", this.Quantite);
+                cmdInsert.Parameters.AddWithValue("prix", this.Prix);
+
+                using (var reader = DataAccess.Instance.ExecuteReader(cmdInsert))
+                {
+                    if (reader.Read())
+                    {
+                        this.UneCommande.Numcommande = reader.GetInt32(0); // numcommande
+                        this.UnPlat.Numplat = reader.GetInt32(1);          // numplat
+                        return true;
+                    }
+                }
+            }
+            return false; // si l'insertion a échoué
+        }
+
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  platcommande  where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdSelect.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.UneCommande.Numcommande = (int)dt.Rows[0]["numcommande"];
+                this.UnPlat.Numplat = (int)dt.Rows[0]["numplat"];
+                this.Quantite = (int)dt.Rows[0]["quantite"];
+                this.Prix = (Decimal)dt.Rows[0]["prix"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update platcommande set quantite = @quantite , prix =@prix  where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("quantite", this.Quantite);
+                cmdUpdate.Parameters.AddWithValue("prix", this.Prix);
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdUpdate.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from platcommandewhere where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdUpdate.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
     }
 }

@@ -122,6 +122,63 @@ namespace SAE201.Classes
             }
             return lesEmployes;
         }
+        public int Create()
+        {
+            int nb = 0;
+            using (var cmdInsert = new NpgsqlCommand("insert into employe (numemploye,numrole,nomemploye,prenomemploye,password,login ) values (@numemploye,@numrole,@nomemploye,@prenomemploye,@password,@login) RETURNING numemploye"))
+            {
+                cmdInsert.Parameters.AddWithValue("numemploye", this.Numemploye);
+                cmdInsert.Parameters.AddWithValue("numrole", this.UnRole.Numrole);
+                cmdInsert.Parameters.AddWithValue("nomemploye", this.Nomemploye);
+                cmdInsert.Parameters.AddWithValue("prenomemploye", this.Prenomemploye);
+                cmdInsert.Parameters.AddWithValue("password", this.Password);
+                cmdInsert.Parameters.AddWithValue("login", this.Login);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numemploye = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  employe  where numemploye =@numemploye;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numemploye",this.Numemploye);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numemploye = (int)dt.Rows[0]["numemploye"];
+                this.UnRole.Numrole = (int)dt.Rows[0]["numrole"];
+                this.Nomemploye = (string)dt.Rows[0]["nomemploye"];
+                this.Prenomemploye = (string)dt.Rows[0]["prenomemploye"];
+                this.Password = (string)dt.Rows[0]["password"];
+                this.Login = (string)dt.Rows[0]["login"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update employe set numemploye =@numemploye ,  numrole = @maitre,  nomemploye = @nomemploye , prenomemploye =@prenomemploye , password =@password , login =@login  where numemploye =@numemploye;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numemploye", this.Numemploye);
+                cmdUpdate.Parameters.AddWithValue("numrole", this.UnRole.Numrole);
+                cmdUpdate.Parameters.AddWithValue("nomemploye", this.Nomemploye);
+                cmdUpdate.Parameters.AddWithValue("prenomemploye", this.Prenomemploye);
+                cmdUpdate.Parameters.AddWithValue("password", this.Password);
+                cmdUpdate.Parameters.AddWithValue("login", this.Login);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from employe  where numemploye =@numemploye;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numemploye", this.Numemploye);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
 
 
     }

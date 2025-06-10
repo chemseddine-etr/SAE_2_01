@@ -137,5 +137,65 @@ namespace SAE201.Classes
             }
             return lesPlats;
         }
+        public int Create()
+        {
+            int nb = 0;
+            using (var cmdInsert = new NpgsqlCommand("insert into plat (numplat,numsouscategorie,numperiode,nomplat,prixunitaire,delaipreparation,nbpersonnes ) values (@numplat,@numsouscategorie,@numperiode,@nomplat,@prixunitaire,@delaipreparation,@nbpersonnes) RETURNING numplat"))
+            {
+                cmdInsert.Parameters.AddWithValue("numplat", this.Numplat);
+                cmdInsert.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);
+                cmdInsert.Parameters.AddWithValue("numperiode", this.UnePeriode.Numperiode);
+                cmdInsert.Parameters.AddWithValue("nomplat", this.Nomplat);
+                cmdInsert.Parameters.AddWithValue("prixunitaire", this.Prixunitaire);
+                cmdInsert.Parameters.AddWithValue("delaipreparation", this.Delaispreparation);
+                cmdInsert.Parameters.AddWithValue("nbpersonnes", this.Nbpersonnes);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numplat = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  plat  where numplat =@numplat;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numplat", this.Numplat);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numplat = (int)dt.Rows[0]["numplat"];
+                this.UneSousCategorie.Numsouscategorie = (int)dt.Rows[0]["numsouscategorie"];
+                this.UnePeriode.Numperiode = (int)dt.Rows[0]["numperiode"];
+                this.Nomplat = (string)dt.Rows[0]["nomplat"];
+                this.Prixunitaire = (Decimal)dt.Rows[0]["prixunitaire"];
+                this.Delaispreparation = (int)dt.Rows[0]["delaipreparation"];
+                this.Nbpersonnes = (int)dt.Rows[0]["nbpersonnes"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update plat set numplat =@numplat ,  numsouscategorie =@numsouscategorie,  numperiode =@numperiode , nomplat =@nomplat , prixunitaire =@prixunitaire ,delaipreparation delaipreparation , nbpersonnes =@nbpersonnes  where idchien =@id;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numplat", this.Numplat);
+                cmdUpdate.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);
+                cmdUpdate.Parameters.AddWithValue("numperiode", this.UnePeriode.Numperiode);
+                cmdUpdate.Parameters.AddWithValue("nomplat", this.Nomplat);
+                cmdUpdate.Parameters.AddWithValue("prixunitaire", this.Prixunitaire);
+                cmdUpdate.Parameters.AddWithValue("delaipreparation", this.Delaispreparation);
+                cmdUpdate.Parameters.AddWithValue("nbpersonnes", this.Nbpersonnes);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from plat  where numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numplat", this.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
     }
 }
