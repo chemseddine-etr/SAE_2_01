@@ -27,6 +27,7 @@ namespace SAE201
             InitializeComponent();
             ZoneUserControls.Content = new Acceuil();
         }
+
         public void ChargeData()
         {
             try
@@ -60,9 +61,9 @@ namespace SAE201
 
         private void BoutonNewCommande_Click(object sender, RoutedEventArgs e)
         {
-            if (!(ZoneUserControls.Content is ToutesLesCommandes))
+            if (!(ZoneUserControls.Content is NouvelleCommande))
             {
-                ZoneUserControls.Content = new ToutesLesCommandes();
+                ZoneUserControls.Content = new NouvelleCommande();
             }
         }
 

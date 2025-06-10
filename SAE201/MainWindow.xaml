@@ -30,7 +30,7 @@
                 Margin="5"
                 Click="BoutonsToutesCommandes_Click"
                 Content="Toutes les commandes" />
-            <Button
+            <Button x:Name="butNouvelleCommande"
                 Margin="5"
                 Click="BoutonNewCommande_Click"
                 Content="Nouvelle commande" />
