@@ -24,6 +24,13 @@ namespace SAE201.userControls
         public Rechercherclient()
         {
             InitializeComponent();
+            dgClients.Items.Filter = RechercheClientNom;
+            dgClients.Items.Filter = RechercheClientPrenom;
+            dgClients.Items.Filter = RechercheClientRue;
+            dgClients.Items.Filter = RechercheClientCP;
+            dgClients.Items.Filter = RechercheClientVille;
+            
+            
         }
 
         private bool RechercheClientNom(object obj)
@@ -38,29 +45,34 @@ namespace SAE201.userControls
             if (String.IsNullOrEmpty(textMotClefClientPrenom.Text))
                 return true;
             Client unClient = obj as Client;
-            return (unClient.Nomclient.StartsWith(textMotClefClientPrenom.Text, StringComparison.OrdinalIgnoreCase));
+            return (unClient.Prenomclient.StartsWith(textMotClefClientPrenom.Text, StringComparison.OrdinalIgnoreCase));
         }
         private bool RechercheClientVille(object obj)
         {
             if (String.IsNullOrEmpty(textMotClefClientVille.Text))
                 return true;
             Client unClient = obj as Client;
-            return (unClient.Nomclient.StartsWith(textMotClefClientVille.Text, StringComparison.OrdinalIgnoreCase));
+            return (unClient.Adresseville.StartsWith(textMotClefClientVille.Text, StringComparison.OrdinalIgnoreCase));
         }
         private bool RechercheClientRue(object obj)
         {
             if (String.IsNullOrEmpty(textMotClefClientRue.Text))
                 return true;
             Client unClient = obj as Client;
-            return (unClient.Nomclient.StartsWith(textMotClefClientRue.Text, StringComparison.OrdinalIgnoreCase));
+            return (unClient.Adresserue.StartsWith(textMotClefClientRue.Text, StringComparison.OrdinalIgnoreCase));
         }
         private bool RechercheClientCP(object obj)
         {
             if (String.IsNullOrEmpty(textMotClefClientCP.Text))
                 return true;
             Client unClient = obj as Client;
-            return (unClient.Nomclient.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase));
+            return (unClient.Adressecp.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase));
         }
+        private void textMotClefClient_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
+        }
+
 
     }
 }

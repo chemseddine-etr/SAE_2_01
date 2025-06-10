@@ -14,6 +14,7 @@
     <Window.DataContext>
         <Classes:Gestion x:Name="laGestion" Nom="Gestion" />
     </Window.DataContext>
+    
     <Grid x:Name="Connection" ContextMenuClosing="Connection_ContextMenuClosing">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150" />
