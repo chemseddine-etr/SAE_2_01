@@ -24,10 +24,10 @@ namespace SAE201
         public Rechercherplat()
         {
             InitializeComponent();
-            dgPlats.Items.Filter = FiltrePlatCombine;
+            //dgPlats.Items.Filter = FiltrePlatCombine;
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        /*private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(dgPlats.ItemsSource).Refresh();
         }
@@ -74,7 +74,7 @@ namespace SAE201
 
             // Retourner vrai seulement si toutes les conditions sont satisfaites
             return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
-        }
+        }*/
 
     }
 }
