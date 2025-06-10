@@ -27,10 +27,10 @@ namespace SAE201
             //dgPlats.Items.Filter = FiltrePlatCombine;
         }
 
-        //private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    CollectionViewSource.GetDefaultView(dgPlats.ItemsSource).Refresh();
-        //}
+        /*private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource).Refresh();
+        }
 
         //private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
         //{
@@ -72,9 +72,9 @@ namespace SAE201
         //    bool prixMatch = string.IsNullOrEmpty(textPrix.Text) ||
         //                     (decimal.TryParse(textPrix.Text, out decimal prixMax) && unPlat.Prixunitaire <= prixMax);
 
-        //    // Retourner vrai seulement si toutes les conditions sont satisfaites
-        //    return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
-        //}
+            // Retourner vrai seulement si toutes les conditions sont satisfaites
+            return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
+        }*/
 
     }
 }
