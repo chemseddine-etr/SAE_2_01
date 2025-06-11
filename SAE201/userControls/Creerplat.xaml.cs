@@ -100,7 +100,7 @@ namespace SAE201.userControls
                 int newId = plat.Create();
                 gestion.LesPlats.Add(plat);
 
-                MessageBox.Show($"Plat créé avec succès (ID : {newId})", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Plat créé avec succès", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 // 7. Réinitialisation des champs
                 TxtNomPlat.Clear();

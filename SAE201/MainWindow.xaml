@@ -19,6 +19,7 @@
 
 
         <StackPanel
+            x:Name="Menu"
             Grid.Column="0"
             VerticalAlignment="Top"
             Background="LightGray">
@@ -30,7 +31,8 @@
                 Margin="5"
                 Click="BoutonsToutesCommandes_Click"
                 Content="Toutes les commandes" />
-            <Button x:Name="butNouvelleCommande"
+            <Button
+                x:Name="butNouvelleCommande"
                 Margin="5"
                 Click="BoutonNewCommande_Click"
                 Content="Nouvelle commande" />

@@ -143,7 +143,7 @@
             Grid.RowSpan="2"
             Width="100"
             Height="50"
-            Margin="810,57,0,546"
+            Margin="835,47,25,563"
             Click="CreerplatRechercherPlat_Click"
             Content="Créer un Plat" />
         <Button
@@ -151,7 +151,8 @@
             Grid.Row="1"
             Width="100"
             Height="50"
-            Margin="835,96,25,457"
+            Margin="835,75,25,478"
+            Click="butSuppr_Click"
             Content=""
             FontFamily="Segoe MDL2 Assets"
             FontSize="16"

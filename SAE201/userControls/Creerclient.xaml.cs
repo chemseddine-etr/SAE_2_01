@@ -58,7 +58,7 @@ namespace SAE201.userControls
 
                 gestion.LesClients.Add(client);
 
-                MessageBox.Show($"Client créé avec succès (numéro : {nouvelId})");
+                MessageBox.Show($"Client créé avec succès ");
 
                 // --- Nettoyage des champs ---
                 txtNom.Clear();

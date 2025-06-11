@@ -111,11 +111,23 @@
         <!--  Bouton Rechercher  -->
         <Button
             x:Name="Creer_client"
-            Grid.Row="1"
-            Width="202"
-            Margin="733,20,25,411"
+            Width="100"
+            Height="50"
+            Margin="784,57,76,438"
             Click="Creer_client_Click"
-            Content="Créer un Client" />
+            Content="Créer un Client" Grid.RowSpan="2" />
+        <Button
+            x:Name="butSuppr"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="784,82,76,356"
+            Click="butSupprClient_Click"
+            Content="&#xE74D;"
+            FontFamily="Segoe MDL2 Assets"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
 
     </Grid>
 

@@ -128,5 +128,43 @@ namespace SAE201
                 mainWin.ZoneUserControls.Content = new Creerplat();
             }
         }
+
+        private void butSuppr_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupère l'objet Plat sélectionné dans le DataGrid
+            if (dgPlats.SelectedItem is Plat platSelec)
+            {
+                // Demande de confirmation
+                var result = MessageBox.Show($"Voulez-vous vraiment supprimer le plat « {platSelec.Nomplat} » ?","Confirmation de suppression",MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // 1) Suppression en base
+                        int ligneSelectionner = platSelec.Delete();
+                        if (ligneSelectionner <= 0)
+                        {
+                            MessageBox.Show("Aucun plat supprimé (ID peut-être invalide).", "Suppression échouée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        // 2) Suppression de la collection liée à l'IU
+                        var gestion = (Gestion)Application.Current.MainWindow.DataContext;
+                        gestion.LesPlats.Remove(platSelec);
+
+                        MessageBox.Show("Plat supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors de la suppression : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un plat à supprimer.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

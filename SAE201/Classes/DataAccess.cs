@@ -13,7 +13,7 @@ namespace SAE201.Classes
     public class DataAccess
     {
         private static readonly DataAccess instance = new DataAccess();
-        private readonly string connectionString = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options='-c search_path=201';Include Error Detail=true;";
+        private static string connectionString ="Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
         private NpgsqlConnection connection;
 
         public static DataAccess Instance
@@ -37,6 +37,14 @@ namespace SAE201.Classes
                 LogError.Log(ex, "Pb de connexion GetConnection \n" + connectionString);
                 throw;
             }
+        }
+        public static void Init(string connString)
+        {
+            if (string.IsNullOrWhiteSpace(connString))
+                throw new ArgumentException("La chaîne de connexion ne peut pas être vide.");
+
+            connectionString = connString;
+            instance.connection = new NpgsqlConnection(connectionString);
         }
         public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
         {

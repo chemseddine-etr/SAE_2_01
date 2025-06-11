@@ -21,8 +21,9 @@ namespace SAE201.userControls
     public partial class Acceuil : UserControl
     {
         public Acceuil()
-        {
+        { 
             InitializeComponent();
+           
         }
     }
 }

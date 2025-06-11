@@ -23,17 +23,41 @@ namespace SAE201.userControls
     {
         public Connection()
         {
+           
             InitializeComponent();
-        }
-
-        private void Connection_Click(object sender, RoutedEventArgs e)
-        {
-
+            
         }
 
         private void Se_Connecter_Click(object sender, RoutedEventArgs e)
         {
-           
+
+            string username = loginTextbox.Text;
+            string password = mdpTextBox.Password;
+            string connString = $"Host=srv-peda-new;Port=5433;Username={username};Password={password};Database=BD_SAE;Options=-c search_path=MAIN";
+
+            try
+            {
+                DataAccess.Init(connString);
+                using (var conn = DataAccess.Instance.GetConnection())
+                {
+                    MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                // 1) Récupère MainWindow et met à jour l'état connecté
+                var mainWin = (MainWindow)Application.Current.MainWindow;
+                Window parentWindow = Window.GetWindow(this);
+
+                 mainWin = (MainWindow)Application.Current.MainWindow;
+                 mainWin.ZoneUserControls.Content = new Acceuil();
+                
+            
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur de connexion : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+        
     }
 }

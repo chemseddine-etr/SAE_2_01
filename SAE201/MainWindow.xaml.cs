@@ -25,11 +25,13 @@ namespace SAE201
         {
             ChargeData();
             InitializeComponent();
-            ZoneUserControls.Content = new Acceuil();
+            ZoneUserControls.Content = new Connection();
         }
 
         public void ChargeData()
         {
+            string defaultConn = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
+            DataAccess.Init(defaultConn);
             try
             {
                 LaGestion = new Gestion("laGestion");
