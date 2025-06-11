@@ -85,7 +85,7 @@ namespace SAE201.Classes
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
-                    lesCommandesPlats.Add(new CommandePlat(gestion.LesCommande.FirstOrDefault(c => c.Numcommande == (int)dr["numcommande"]),gestion.LesPlats.FirstOrDefault(c => c.Numplat == (int)dr["numplat"]), (int)dr["quantite"], (Decimal)dr["prix"]));
+                    lesCommandesPlats.Add(new CommandePlat(gestion.LesCommandes.FirstOrDefault(c => c.Numcommande == (int)dr["numcommande"]),gestion.LesPlats.FirstOrDefault(c => c.Numplat == (int)dr["numplat"]), (int)dr["quantite"], (Decimal)dr["prix"]));
             }
             return lesCommandesPlats;
         }

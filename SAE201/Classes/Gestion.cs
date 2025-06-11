@@ -12,7 +12,7 @@ public class Gestion
     private ObservableCollection<Client> lesClients;
     private ObservableCollection<Plat> lesPlats;
     private ObservableCollection<Employe> lesEmploye;
-    private ObservableCollection<Commande> lesCommande;
+    private ObservableCollection<Commande> lesCommandes;
     private ObservableCollection<Periode> lesPeriodes;
     private ObservableCollection<SousCategorie> lesSousCategories;
     private ObservableCollection<Role> lesRoles;
@@ -33,7 +33,7 @@ public class Gestion
             this.LesClients = new ObservableCollection<Client>(new Client().FindAll() ?? new List<Client>());
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
             this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
-            this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
+            this.LesCommandes = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
             this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll() ?? new List<Categorie>());
             this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this) ?? new List<SousCategorie>());
             this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll() ?? new List<Periode>());
@@ -94,16 +94,16 @@ public class Gestion
         }
     }
 
-    public ObservableCollection<Commande> LesCommande
+    public ObservableCollection<Commande> LesCommandes
     {
         get
         {
-            return this.lesCommande;
+            return this.lesCommandes;
         }
 
         set
         {
-            this.lesCommande = value;
+            this.lesCommandes = value;
         }
     }
 

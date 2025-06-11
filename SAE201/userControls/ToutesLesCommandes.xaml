@@ -45,11 +45,28 @@
                     Height="468"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
-                    ItemsSource="{Binding LesCommande}">
+                    ItemsSource="{Binding LesCommandes}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*" Header="Numéro de commande" Binding="{Binding Numcommande, ValidatesOnExceptions=True}"/>
-                        <DataGridTextColumn Width="*" Header="Date de création" Binding="{Binding Datecommande, ValidatesOnExceptions=True}"/>
-                        <DataGridTextColumn Width="*" Header="Vendeur" Binding="{Binding Numclient, ValidatesOnExceptions=True}"/>
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Numcommande, ValidatesOnExceptions=True}"
+                            Header="Numéro de commande" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Datecommande, ValidatesOnExceptions=True}"
+                            Header="Date de création" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding UnEmploye.Nomemploye, ValidatesOnExceptions=True}"
+                            Header="Vendeur" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding UnClient.Nomclient, ValidatesOnExceptions=True}"
+                            Header="Nom du Client" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding UnClient.Prenomclient, ValidatesOnExceptions=True}"
+                            Header="Prénom du Client" />
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
