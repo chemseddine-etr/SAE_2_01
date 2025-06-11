@@ -68,6 +68,7 @@
                     Width="200"
                     Margin="0,10,0,5"
                     TextChanged="textMotClefClient_TextChanged" />
+
             </StackPanel>
             <DataGrid
                 x:Name="dgClients"
@@ -104,9 +105,17 @@
                         Header="Ville" />
                 </DataGrid.Columns>
             </DataGrid>
+
         </Grid>
 
         <!--  Bouton Rechercher  -->
+        <Button
+            x:Name="Creer_client"
+            Grid.Row="1"
+            Width="202"
+            Margin="733,20,25,411"
+            Click="Creer_client_Click"
+            Content="Créer un Client" />
 
     </Grid>
 

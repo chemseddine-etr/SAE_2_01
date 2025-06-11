@@ -21,9 +21,11 @@ namespace SAE201.userControls
     /// </summary>
     public partial class Creerclient : UserControl
     {
+        private Gestion gestion;
         public Creerclient()
         {
             InitializeComponent();
+            this.gestion = (Gestion)Application.Current.MainWindow.DataContext;
         }
 
         private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
@@ -41,6 +43,9 @@ namespace SAE201.userControls
                 };
 
                 int nouvelId = client.Create();  // Ne spécifie jamais Numclient toi-même
+
+                gestion.LesClients.Add(client);
+
                 MessageBox.Show($"Client créé avec succès (numéro : {nouvelId})");
             }
             catch (Exception ex)

@@ -25,6 +25,7 @@ namespace SAE201.userControls
         {
             InitializeComponent();
             dgClients.Items.Filter = FiltreClientCombine;
+            
         }
 
         private bool FiltreClientCombine(object obj)
@@ -61,6 +62,15 @@ namespace SAE201.userControls
         {
             CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
 
+        }
+
+        private void Creer_client_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
         }
     }
 }
