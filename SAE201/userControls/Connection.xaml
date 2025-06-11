@@ -5,37 +5,79 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SAE201.userControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="413"
-    d:DesignWidth="630"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
     Background="White"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel Margin="0,0,0,167">
+        <StackPanel Margin="20">
             <TextBox
-                Width="134"
+                Margin="0,85,0,0"
                 HorizontalAlignment="Center"
-                FontSize="25"
-                Text="Connection" />
+                FontSize="40"
+                Text="Connexion" />
             <Label
-                Width="300"
+                Width="607"
                 Margin="40,20"
-                Content="login :" />
-            <TextBox x:Name="loginTextbox" Width="300" />
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Identifiant :"
+                FontSize="30" />
+            <TextBox
+                x:Name="loginTextbox"
+                Width="607"
+                Height="49"
+                FontSize="30" />
             <Label
-                Width="300"
+                Width="607"
                 Margin="40,20"
-                Content="Mots de passe :" />
-            <PasswordBox x:Name="mdpTextBox" Width="300" />
+                Content="Mot de passe :"
+                FontSize="30" />
+            <PasswordBox
+                x:Name="mdpTextBox"
+                Width="607"
+                Height="49"
+                FontSize="30" />
+            <Button
+                x:Name="Connecter"
+                Width="370"
+                Height="63"
+                Margin="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                Click="Se_Connecter_Click"
+                Content="Se connecter"
+                Cursor="Hand"
+                FontSize="30">
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="31.5">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
         </StackPanel>
 
 
-        <Button
-            x:Name="Connecter"
-            Width="150"
-            Height="40"
-            Margin="0,298,0,75"
-            HorizontalAlignment="Center"
-            Click="Se_Connecter_Click"
-            Content="Se connecter" />
+
     </Grid>
 </UserControl>

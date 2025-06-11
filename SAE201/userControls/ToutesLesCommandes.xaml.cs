@@ -1,7 +1,10 @@
 ﻿using SAE201.Classes;
+using SAE201.userControls;
 using System;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows;
 
 namespace SAE201.Usercontrol
 {
@@ -11,8 +14,11 @@ namespace SAE201.Usercontrol
         {
             InitializeComponent();
 
+            dgCommandes.SelectionChanged += dgCommandes_SelectionChanged;
+
             // 1) On définit le filtre dès l'initialisation
             dgCommandes.Items.Filter = FiltreCommandeCombine;
+
 
             // 2) On rafraîchit le filtre à chaque modification d'un TextBox
             txtFilterNumCommande.TextChanged += FiltreChanged;
@@ -65,6 +71,19 @@ namespace SAE201.Usercontrol
                 && matchVendeur
                 && matchNomClient
                 && matchPrenomClient;
+        }
+
+        private void dgCommandes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgCommandes.SelectedItem is Commande selectedCommande)
+            {
+                var detailUC = new DetailCommande(selectedCommande);
+
+                if (Application.Current.MainWindow is MainWindow mw)
+                {
+                    mw.ZoneUserControls.Content = detailUC;
+                }
+            }
         }
     }
 }

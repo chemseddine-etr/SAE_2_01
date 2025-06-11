@@ -59,6 +59,9 @@ namespace SAE201.userControls
             }
         }
 
-        
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

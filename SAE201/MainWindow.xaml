@@ -7,20 +7,21 @@
     xmlns:local="clr-namespace:SAE201"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="1600"
-    Height="900"
+    Width="1300"
+    Height="850"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid x:Name="Connection" ContextMenuClosing="Connection_ContextMenuClosing">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="264" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
 
         <StackPanel
             x:Name="Menu"
             Grid.Column="0"
+            Height="253"
             VerticalAlignment="Top"
             Background="LightGray">
             <Button
@@ -61,15 +62,16 @@
         <ContentControl
             x:Name="ZoneUserControls"
             Grid.Column="1"
-            Width="1300"
-            Height="770"
-            Margin="95,85,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            Width="1000"
+            Height="700"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" />
         <Button
             x:Name="Connection1"
             Grid.Column="1"
-            Margin="1098,26,0,0"
+            Width="66"
+            Height="20"
+            Margin="884,23,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="Connection1_Click"

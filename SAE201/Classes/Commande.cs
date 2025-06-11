@@ -140,7 +140,7 @@ namespace SAE201.Classes
             }
         }
 
-        public List<Commande> FindAll(Gestion gestion)
+        public List<Commande> FindAll(Gestion gestion) 
         {
             List<Commande> lesCommandes = new List<Commande>();
             using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from commande;"))
@@ -148,7 +148,8 @@ namespace SAE201.Classes
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
                     lesCommandes.Add(new Commande((int)dr["numcommande"], (DateTime)dr["datecommande"], (DateTime)dr["dateretraitprevue"],
-                   (bool)dr["payee"], (bool)dr["retiree"], (Decimal)dr["prixtotal"], gestion.LesClients.FirstOrDefault(c => c.Numclient == (int)dr["numclient"]), gestion.LesEmploye.FirstOrDefault(c => c.Numemploye == (int)dr["numemploye"])));
+                   (bool)dr["payee"], (bool)dr["retiree"], (Decimal)dr["prixtotal"], gestion.LesClients.FirstOrDefault(c => c.Numclient == (int)dr["numclient"]), 
+                   gestion.LesEmploye.FirstOrDefault(c => c.Numemploye == (int)dr["numemploye"])));
             }
             return lesCommandes;
         }

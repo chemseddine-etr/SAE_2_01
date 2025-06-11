@@ -1,0 +1,21 @@
+categorie
+
+	nomcategorie
+periode
+
+	libelleperiode
+
+plat
+
+	nomplat
+	delaipreparation
+	nbpersonnes
+
+platcommande
+
+	quantite
+	prix
+
+souscategorie
+ 
+	nomsouscategorie

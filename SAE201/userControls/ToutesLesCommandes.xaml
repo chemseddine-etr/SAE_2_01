@@ -77,7 +77,7 @@
                 Height="468"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding LesCommandes}">
+                ItemsSource="{Binding LesCommandes}" SelectionChanged="dgCommandes_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="*"

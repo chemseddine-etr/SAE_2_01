@@ -70,7 +70,7 @@ namespace SAE201.Classes
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
-                    lesSousCategories.Add(new SousCategorie((int)dr["numsouscategorie"], (string)dr["nomsouscategorie"],
+                        lesSousCategories.Add(new SousCategorie((int)dr["numsouscategorie"], (string)dr["nomsouscategorie"],
                         gestion.LesCategories.FirstOrDefault(c => c.Numcategorie == (int)dr["numcategorie"])));
             }
             return lesSousCategories;

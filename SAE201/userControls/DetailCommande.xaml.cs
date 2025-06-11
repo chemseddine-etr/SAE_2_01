@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE201.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace SAE201.userControls
     /// </summary>
     public partial class DetailCommande : UserControl
     {
-        public DetailCommande()
+        private Commande commande;
+
+        public DetailCommande(Commande selectedCommande)
         {
             InitializeComponent();
+            commande = selectedCommande;
+            DataContext = commande;
         }
     }
 }
