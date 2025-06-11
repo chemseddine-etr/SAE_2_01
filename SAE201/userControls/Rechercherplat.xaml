@@ -94,6 +94,7 @@
                     x:Name="textPrix"
                     Width="200"
                     Margin="0,10,0,0" />
+
             </StackPanel>
         </Grid>
 
@@ -139,12 +140,25 @@
         </DataGrid>
         <Button
             x:Name="CreerplatRechercherPlat"
-            Grid.Row="1"
-            Width="150"
-            Margin="753,30,57,516"
+            Grid.RowSpan="2"
+            Width="100"
+            Height="50"
+            Margin="810,57,0,546"
             Click="CreerplatRechercherPlat_Click"
             Content="Créer un Plat" />
+        <Button
+            x:Name="butSuppr"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="835,96,25,457"
+            Content=""
+            FontFamily="Segoe MDL2 Assets"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
     </Grid>
+
 
 
 </UserControl>
