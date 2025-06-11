@@ -140,9 +140,10 @@
         <Button
             x:Name="CreerplatRechercherPlat"
             Grid.Row="1"
-            Width="200"
-            Margin="732,66,28,480"
-            Content="Créer un Plat" Click="CreerplatRechercherPlat_Click" />
+            Width="150"
+            Margin="753,30,57,516"
+            Click="CreerplatRechercherPlat_Click"
+            Content="Créer un Plat" />
     </Grid>
 
 

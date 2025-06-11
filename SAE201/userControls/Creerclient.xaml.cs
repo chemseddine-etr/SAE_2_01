@@ -30,6 +30,17 @@ namespace SAE201.userControls
 
         private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
         {
+            // 1. Vérification des champs obligatoires
+            if (string.IsNullOrWhiteSpace(txtNom.Text) ||
+                string.IsNullOrWhiteSpace(txtPrenom.Text) ||
+                string.IsNullOrWhiteSpace(txtTelephone.Text) ||
+                string.IsNullOrWhiteSpace(txtRue.Text) ||
+                string.IsNullOrWhiteSpace(txtCP.Text) ||
+                string.IsNullOrWhiteSpace(txtVille.Text))
+            {
+                MessageBox.Show("Tous les champs sont obligatoires.", "Champs manquants",MessageBoxButton.OK,MessageBoxImage.Warning);
+                return;
+            }
             try
             {
                 Client client = new Client
@@ -41,6 +52,7 @@ namespace SAE201.userControls
                     Adressecp = txtCP.Text,
                     Adresseville = txtVille.Text
                 };
+                
 
                 int nouvelId = client.Create();  // Ne spécifie jamais Numclient toi-même
 
@@ -63,5 +75,13 @@ namespace SAE201.userControls
 
         }
 
+        private void Chercherclient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Rechercherclient))
+            {
+                mainWin.ZoneUserControls.Content = new Rechercherclient();
+            }
+        }
     }
 }

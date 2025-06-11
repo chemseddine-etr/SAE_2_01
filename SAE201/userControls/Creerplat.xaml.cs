@@ -30,45 +30,62 @@ namespace SAE201.userControls
 
         private void NewPlat_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
-                // Récupération de l'instance de gestion (définie dans MainWindow.DataContext)
+                // 1. Validation des champs obligatoires
+                if (string.IsNullOrWhiteSpace(TxtNomPlat.Text) ||
+                    string.IsNullOrWhiteSpace(TxtPrix.Text) ||
+                    string.IsNullOrWhiteSpace(TxtDelais.Text) ||
+                    string.IsNullOrWhiteSpace(TxtNbPersonnes.Text) ||
+                    string.IsNullOrWhiteSpace(TxtPeriode.Text) ||
+                    string.IsNullOrWhiteSpace(TxtSouscategorie.Text))
+                {
+                    MessageBox.Show(
+                        "Tous les champs sont obligatoires.",
+                        "Champs manquants",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 2. Récupération de l'instance de gestion
                 Gestion gestion = (Gestion)Application.Current.MainWindow.DataContext;
 
-                // Vérification et parsing des champs
+                // 3. Parsing sécurisé
                 if (!decimal.TryParse(TxtPrix.Text, out decimal prix))
                 {
-                    MessageBox.Show("Le prix n'est pas valide.");
+                    MessageBox.Show("Le prix n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 if (!int.TryParse(TxtDelais.Text, out int delais))
                 {
-                    MessageBox.Show("Le délai de préparation n'est pas valide.");
+                    MessageBox.Show("Le délai de préparation n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 if (!int.TryParse(TxtNbPersonnes.Text, out int nbPers))
                 {
-                    MessageBox.Show("Le nombre de personnes n'est pas valide.");
+                    MessageBox.Show("Le nombre de personnes n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 string nomPeriode = TxtPeriode.Text.Trim();
                 string nomSousCategorie = TxtSouscategorie.Text.Trim();
 
-                // Rechercher les objets liés dans la gestion
-                Periode periode = gestion.LesPeriodes.FirstOrDefault(p => p.LibellePeriode.Equals(nomPeriode, StringComparison.OrdinalIgnoreCase));
-                SousCategorie sousCat = gestion.LesSousCategories.FirstOrDefault(sc => sc.Nomsouscategorie.Equals(nomSousCategorie, StringComparison.OrdinalIgnoreCase));
+                // 4. Recherche des objets liés
+                Periode periode = gestion.LesPeriodes
+                    .FirstOrDefault(p => p.LibellePeriode.Equals(nomPeriode, StringComparison.OrdinalIgnoreCase));
+                SousCategorie sousCat = gestion.LesSousCategories
+                    .FirstOrDefault(sc => sc.Nomsouscategorie.Equals(nomSousCategorie, StringComparison.OrdinalIgnoreCase));
 
                 if (periode == null || sousCat == null)
                 {
-                    MessageBox.Show("Période ou sous-catégorie introuvable.");
+                    MessageBox.Show("Période ou sous-catégorie introuvable.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                // Création du plat
+                // 5. Création de l'objet Plat
                 Plat plat = new Plat
                 {
                     Nomplat = TxtNomPlat.Text.Trim(),
@@ -79,28 +96,26 @@ namespace SAE201.userControls
                     UneSousCategorie = sousCat
                 };
 
-                // Insertion en base
+                // 6. Insertion en base et mise à jour de l'UI
                 int newId = plat.Create();
-
-                // Ajout à la liste observable
                 gestion.LesPlats.Add(plat);
 
                 MessageBox.Show($"Plat créé avec succès (ID : {newId})", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Réinitialiser les champs
-                TxtNomPlat.Text = "";
-                TxtPrix.Text = "";
-                TxtDelais.Text = "";
-                TxtNbPersonnes.Text = "";
-                TxtPeriode.Text = "";
-                TxtSouscategorie.Text = "";
-                TxtCategorie.Text = "";
+                // 7. Réinitialisation des champs
+                TxtNomPlat.Clear();
+                TxtPrix.Clear();
+                TxtDelais.Clear();
+                TxtNbPersonnes.Clear();
+                TxtPeriode.Clear();
+                TxtSouscategorie.Clear();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur lors de la création du plat : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void chercherplat_Click(object sender, RoutedEventArgs e)
         {
