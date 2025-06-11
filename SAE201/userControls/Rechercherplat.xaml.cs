@@ -24,57 +24,101 @@ namespace SAE201
         public Rechercherplat()
         {
             InitializeComponent();
-            //dgPlats.Items.Filter = FiltrePlatCombine;
-        }
+            dgPlats.Items.Filter = FiltrePlatCombine;
 
-        /*private void RadioButton_Checked(object sender, RoutedEventArgs e)
+            textMotClefPlat.TextChanged += textMotClefPlat_TextChanged;
+            textDisponibilite.TextChanged += textDisponibilite_TextChanged;
+            textPrix.TextChanged += textPrix_TextChanged;
+            radioEntree.Checked += RadioButton_Checked;
+            radioPlat.Checked += RadioButton_Checked;
+            radioEntreeChaude.Checked += RadioButton_Checked;
+            radioEntreeFroide.Checked += RadioButton_Checked;
+            radioPlatChaud.Checked += RadioButton_Checked;
+            radioPlatFroid.Checked += RadioButton_Checked;
+
+        }
+        private string _filterCategorie;
+        private string _filterSousCategorie;
+        private decimal? _filterPrix;
+
+
+        private bool FiltrePlatCombine(object obj)
         {
-            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource).Refresh();
+
+            
+            {
+                var unPlat = obj as Plat;
+                if (unPlat == null) return false;
+
+                bool motClefMatch = string.IsNullOrWhiteSpace(textMotClefPlat.Text) ||
+                    (unPlat.Nomplat != null && unPlat.Nomplat.Contains(textMotClefPlat.Text, StringComparison.OrdinalIgnoreCase));
+
+                string categoriePlat = unPlat.UneSousCategorie?.UneCategorie?.Nomcategorie ?? "";
+                bool categorieMatch = string.IsNullOrEmpty(_filterCategorie) ||
+                    string.Equals(categoriePlat, _filterCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string sousCategoriePlat = unPlat.UneSousCategorie?.Nomsouscategorie ?? "";
+                bool sousCategorieMatch = string.IsNullOrEmpty(_filterSousCategorie) ||
+                    string.Equals(sousCategoriePlat, _filterSousCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string disponibilitePlat = unPlat.UnePeriode?.LibellePeriode ?? "";
+                bool disponibiliteMatch = string.IsNullOrWhiteSpace(textDisponibilite.Text) ||
+                    disponibilitePlat.Contains(textDisponibilite.Text, StringComparison.OrdinalIgnoreCase);
+
+                bool prixMatch = !_filterPrix.HasValue || (unPlat.Prixunitaire <= _filterPrix.Value);
+
+                return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
+            }
+
+
         }
 
-        //private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    CollectionViewSource.GetDefaultView(dgPlats.ItemsSource).Refresh();
-        //}
 
-        //private bool FiltrePlatCombine(object obj)
-        //{
-        //    var unPlat = obj as Plat; // Assurez-vous d'avoir une classe Plat appropriée
-        //    if (unPlat == null) return false;
 
-        //    // Filtrage par mot-clé
-        //    bool motClefMatch = string.IsNullOrEmpty(textMotClefPlat.Text) ||
-        //                        unPlat.Nomplat.ToLower().Contains(textMotClefPlat.Text.ToLower());
+        private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
 
-        //    // Filtrage par catégorie
-        //    bool categorieMatch = true;
-        //    if (radioEntree.IsChecked == true && unPlat.Categorie != "Entrée")
-        //        categorieMatch = false;
-        //    if (radioPlat.IsChecked == true && unPlat.Categorie != "Plat")
-        //        categorieMatch = false;
+        private void textDisponibilite_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
 
-        //    // Filtrage par sous-catégorie
-        //    bool sousCategorieMatch = true;
-        //    if (radioEntreeChaude.IsChecked == true && unPlat.SousCategorie != "Entrée chaude")
-        //        sousCategorieMatch = false;
-        //    if (radioEntreeFroide.IsChecked == true && unPlat.SousCategorie != "Entrée froide")
-        //        sousCategorieMatch = false;
-        //    if (radioPlatChaud.IsChecked == true && unPlat.SousCategorie != "Plat chaud")
-        //        sousCategorieMatch = false;
-        //    if (radioPlatFroid.IsChecked == true && unPlat.SousCategorie != "Plat froid")
-        //        sousCategorieMatch = false;
+        private void textPrix_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (decimal.TryParse(textPrix.Text, out var prix))
+                _filterPrix = prix;
+            else
+                _filterPrix = null;
 
-        //    // Filtrage par disponibilité
-        //    bool disponibiliteMatch = string.IsNullOrEmpty(textDisponibilite.Text) ||
-        //                              unPlat.Disponibilite.ToString().Contains(textDisponibilite.Text);
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
 
-        //    // Filtrage par prix
-        //    bool prixMatch = string.IsNullOrEmpty(textPrix.Text) ||
-        //                     (decimal.TryParse(textPrix.Text, out decimal prixMax) && unPlat.Prixunitaire <= prixMax);
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var rb = sender as RadioButton;
+                if (rb == null) return;
 
-            // Retourner vrai seulement si toutes les conditions sont satisfaites
-            return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
-        }*/
+                if (rb.GroupName == "Categorie")
+                {
+                    _filterCategorie = rb.Content?.ToString();
+                }
+                else if (rb.GroupName == "SousCategorie")
+                {
+                    _filterSousCategorie = rb.Content?.ToString();
+                }
+
+                CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du filtrage : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
     }
 }

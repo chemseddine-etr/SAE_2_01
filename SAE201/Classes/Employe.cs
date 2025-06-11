@@ -117,11 +117,34 @@ namespace SAE201.Classes
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
-                    lesEmployes.Add(new Employe((int)dr["numemploye"], (string)dr["nomemploye"], (string)dr["prenomemploye"], (string)dr["password"], (string)dr["login"],
-                        gestion.LesRoles.FirstOrDefault(c => c.Numrole == (int)dr["numrole"])));
+                {
+                    // Vérifiez que gestion.LesRoles n'est pas null
+                    if (gestion.LesRoles == null)
+                    {
+                        // Log ou gérer l'erreur
+                        continue; // Passons à l'itération suivante si la collection est null
+                    }
+
+                    // Utiliser FirstOrDefault de manière sécurisée
+                    var role = gestion.LesRoles.FirstOrDefault(c => c.Numrole == (int)dr["numrole"]);
+
+                    // Ajoutez un employé à la liste seulement si toutes les données nécessaires sont disponibles.
+                    if (role != null)
+                    {
+                        lesEmployes.Add(new Employe(
+                            (int)dr["numemploye"],
+                            (string)dr["nomemploye"],
+                            (string)dr["prenomemploye"],
+                            (string)dr["password"],
+                            (string)dr["login"],
+                            role
+                        ));
+                    }
+                }
             }
             return lesEmployes;
         }
+
         public int Create()
         {
             int nb = 0;

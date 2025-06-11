@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SAE201.Classes
 {
-    public class Plat
+    public class Plat 
     {
         private int numplat;
         private string nomplat;
@@ -124,19 +125,6 @@ namespace SAE201.Classes
                 this.uneSousCategorie = value;
             }
         }
-
-        public List<Plat> FindAll(Gestion gestion)
-        {
-            List<Plat> lesPlats = new List<Plat>();
-            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from plat;"))
-            {
-                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
-                foreach (DataRow dr in dt.Rows)
-                    lesPlats.Add(new Plat((int)dr["numplat"], (string)dr["nomplat"], (Decimal)dr["prixunitaire"], (int)dr["delaipreparation"], (int)dr["nbpersonnes"], 
-                        gestion.LesPeriodes.FirstOrDefault(c => c.Numperiode == (int)dr["numperiode"]),gestion.LesSousCategories.FirstOrDefault(c => c.Numsouscategorie == (int)dr["numsouscategorie"])));
-            }
-            return lesPlats;
-        }
         public int Create()
         {
             int nb = 0;
@@ -197,5 +185,31 @@ namespace SAE201.Classes
                 return DataAccess.Instance.ExecuteSet(cmdUpdate);
             }
         }
+
+        public List<Plat> FindAll(Gestion gestion)
+        {
+            List<Plat> lesPlats = new List<Plat>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from plat;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                {
+  
+                    {
+                        lesPlats.Add(new Plat(
+                            (int)dr["numplat"],
+                            (string)dr["nomplat"],
+                            (Decimal)dr["prixunitaire"],
+                            (int)dr["delaipreparation"],
+                            (int)dr["nbpersonnes"], gestion.LesPeriodes?.FirstOrDefault(c => c.Numperiode == (int)dr["numperiode"]), gestion.LesSousCategories?.FirstOrDefault(c => c.Numsouscategorie == (int)dr["numsouscategorie"])
+                            
+                        ));
+                    }
+                    // Optionnellement, gérer le cas où periode ou sousCategorie est null.
+                }
+            }
+            return lesPlats;
+        }
+
     }
 }

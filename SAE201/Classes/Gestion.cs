@@ -25,15 +25,21 @@ public class Gestion
 
     public Gestion(string nom)
     {
-        this.Nom = nom;
-        this.LesClients = new ObservableCollection<Client>(new Client().FindAll());
-        this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this));
-        this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this));
-        this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll(this));
-        this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll());
-        this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this));
-        this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll());
-        this.LesRoles = new ObservableCollection<Role>(new Role().FindAll());
+
+        { 
+            this.Nom = nom;
+
+          
+            this.LesClients = new ObservableCollection<Client>(new Client().FindAll() ?? new List<Client>());
+            this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
+            this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
+            this.LesCommande = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
+            this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll() ?? new List<Categorie>());
+            this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this) ?? new List<SousCategorie>());
+            this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll() ?? new List<Periode>());
+            this.LesRoles = new ObservableCollection<Role>(new Role().FindAll() ?? new List<Role>());
+        }
+
     }
 
     public string Nom

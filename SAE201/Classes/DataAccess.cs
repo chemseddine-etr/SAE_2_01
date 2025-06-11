@@ -10,7 +10,7 @@ using Npgsql;
 namespace SAE201.Classes
 {
 
-    public  class DataAccess
+    public class DataAccess
     {
         private static readonly DataAccess instance = new DataAccess();
         private readonly string connectionString = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options='-c search_path=201'";
@@ -27,7 +27,7 @@ namespace SAE201.Classes
         //  Constructeur privé pour empêcher l'instanciation multiple
         private DataAccess()
         {
-            
+
             try
             {
                 connection = new NpgsqlConnection(connectionString);
@@ -35,6 +35,20 @@ namespace SAE201.Classes
             catch (Exception ex)
             {
                 LogError.Log(ex, "Pb de connexion GetConnection \n" + connectionString);
+                throw;
+            }
+        }
+        public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
+        {
+            try
+            {
+                command.Connection = GetConnection();
+                // ExecuteReader avec fermeture automatique de la connexion quand le reader est fermé
+                return command.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreur lors de l'exécution de la commande SQL avec ExecuteReader.");
                 throw;
             }
         }
@@ -52,11 +66,11 @@ namespace SAE201.Classes
                 catch (Exception ex)
                 {
                     LogError.Log(ex, "Pb de connexion GetConnection \n" + connectionString);
-                    throw;                
+                    throw;
                 }
             }
 
-        
+
             return connection;
         }
 
@@ -91,9 +105,11 @@ namespace SAE201.Classes
                 nb = (int)cmd.ExecuteScalar();
 
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 LogError.Log(ex, "Pb avec une requete insert " + cmd.CommandText);
-                throw; }
+                throw;
+            }
             return nb;
         }
 
@@ -109,7 +125,8 @@ namespace SAE201.Classes
                 cmd.Connection = GetConnection();
                 nb = cmd.ExecuteNonQuery();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 LogError.Log(ex, "Pb avec une requete set " + cmd.CommandText);
                 throw;
             }
@@ -126,20 +143,14 @@ namespace SAE201.Classes
                 cmd.Connection = GetConnection();
                 res = cmd.ExecuteScalar();
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 LogError.Log(ex, "Pb avec une requete select " + cmd.CommandText);
                 throw;
             }
             return res;
 
         }
-        public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
-        { 
-
-            // ExecuteReader avec fermeture automatique de la connexion quand le reader est fermé
-            return command.ExecuteReader(CommandBehavior.CloseConnection);
-        }
-
 
         //  Fermer la connexion 
         public void CloseConnection()

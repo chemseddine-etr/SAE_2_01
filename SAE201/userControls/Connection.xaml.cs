@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE201.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace SAE201.userControls
 
         private void Se_Connecter_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
     }
 }

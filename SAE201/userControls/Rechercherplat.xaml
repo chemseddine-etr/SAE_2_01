@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SAE201"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:SAE201.Classes"
     d:DesignHeight="700"
     d:DesignWidth="1000"
     Background="White"
@@ -47,10 +48,12 @@
                     <RadioButton
                         x:Name="radioEntree"
                         Margin="0,0,10,0"
+                        Checked="RadioButton_Checked"
                         Content="Entrée"
                         GroupName="Categorie" />
                     <RadioButton
                         x:Name="radioPlat"
+                        Checked="RadioButton_Checked"
                         Content="Plat"
                         GroupName="Categorie" />
                 </StackPanel>
@@ -59,21 +62,25 @@
                     <RadioButton
                         x:Name="radioEntreeChaude"
                         Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
                         Content="Entrée chaude"
                         GroupName="SousCategorie" />
                     <RadioButton
                         x:Name="radioEntreeFroide"
                         Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
                         Content="Entrée froide"
                         GroupName="SousCategorie" />
                     <RadioButton
                         x:Name="radioPlatChaud"
                         Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
                         Content="Plat chaud"
                         GroupName="SousCategorie" />
                     <RadioButton
                         x:Name="radioPlatFroid"
                         Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
                         Content="Plat froid"
                         GroupName="SousCategorie" />
                 </WrapPanel>
@@ -114,6 +121,19 @@
                     Width="*"
                     Binding="{Binding Nbpersonnes, ValidatesOnExceptions=True}"
                     Header="Nombre de personnes" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.UneCategorie.Nomcategorie, ValidatesOnExceptions=True}"
+                    Header="Catégorie" />
+
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.Nomsouscategorie, ValidatesOnExceptions=True}"
+                    Header="Sous-catégorie" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UnePeriode.LibellePeriode, ValidatesOnExceptions=True}"
+                    Header="Disponibilité" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
