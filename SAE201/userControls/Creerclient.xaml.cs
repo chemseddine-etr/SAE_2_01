@@ -47,11 +47,20 @@ namespace SAE201.userControls
                 gestion.LesClients.Add(client);
 
                 MessageBox.Show($"Client créé avec succès (numéro : {nouvelId})");
+
+                // --- Nettoyage des champs ---
+                txtNom.Clear();
+                txtPrenom.Clear();
+                txtTelephone.Clear();
+                txtRue.Clear();
+                txtCP.Clear();
+                txtVille.Clear();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur lors de la création du client : " + ex.Message);
             }
+
         }
 
     }

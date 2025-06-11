@@ -128,9 +128,8 @@ namespace SAE201.Classes
         public int Create()
         {
             int nb = 0;
-            using (var cmdInsert = new NpgsqlCommand("insert into plat (numplat,numsouscategorie,numperiode,nomplat,prixunitaire,delaipreparation,nbpersonnes ) values (@numplat,@numsouscategorie,@numperiode,@nomplat,@prixunitaire,@delaipreparation,@nbpersonnes) RETURNING numplat"))
+            using (var cmdInsert = new NpgsqlCommand("insert into plat (numsouscategorie,numperiode,nomplat,prixunitaire,delaipreparation,nbpersonnes ) values (@numsouscategorie,@numperiode,@nomplat,@prixunitaire,@delaipreparation,@nbpersonnes) RETURNING numplat"))
             {
-                cmdInsert.Parameters.AddWithValue("numplat", this.Numplat);
                 cmdInsert.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);
                 cmdInsert.Parameters.AddWithValue("numperiode", this.UnePeriode.Numperiode);
                 cmdInsert.Parameters.AddWithValue("nomplat", this.Nomplat);
@@ -189,27 +188,47 @@ namespace SAE201.Classes
         public List<Plat> FindAll(Gestion gestion)
         {
             List<Plat> lesPlats = new List<Plat>();
+
+            // Vérification préalable des dépendances
+            if (gestion.LesPeriodes == null || gestion.LesSousCategories == null)
+            {
+                throw new InvalidOperationException("Les périodes ou les sous-catégories ne sont pas initialisées dans l'objet Gestion.");
+            }
+
             using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from plat;"))
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+
                 foreach (DataRow dr in dt.Rows)
                 {
-  
+                    var periode = gestion.LesPeriodes
+                        .FirstOrDefault(p => p.Numperiode == (int)dr["numperiode"]);
+
+                    var sousCategorie = gestion.LesSousCategories
+                        .FirstOrDefault(s => s.Numsouscategorie == (int)dr["numsouscategorie"]);
+
+                    // Tu peux ajouter un log ou continuer même si null
+                    if (periode == null || sousCategorie == null)
                     {
-                        lesPlats.Add(new Plat(
-                            (int)dr["numplat"],
-                            (string)dr["nomplat"],
-                            (Decimal)dr["prixunitaire"],
-                            (int)dr["delaipreparation"],
-                            (int)dr["nbpersonnes"], gestion.LesPeriodes?.FirstOrDefault(c => c.Numperiode == (int)dr["numperiode"]), gestion.LesSousCategories?.FirstOrDefault(c => c.Numsouscategorie == (int)dr["numsouscategorie"])
-                            
-                        ));
+                        // Logique de fallback si tu veux continuer
+                        continue; // ou logguer l’erreur
                     }
-                    // Optionnellement, gérer le cas où periode ou sousCategorie est null.
+
+                    lesPlats.Add(new Plat(
+                        (int)dr["numplat"],
+                        (string)dr["nomplat"],
+                        (Decimal)dr["prixunitaire"],
+                        (int)dr["delaipreparation"],
+                        (int)dr["nbpersonnes"],
+                        periode,
+                        sousCategorie
+                    ));
                 }
             }
+
             return lesPlats;
         }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SAE201.Classes;
+using SAE201.userControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +120,13 @@ namespace SAE201
             }
         }
 
-
+        private void CreerplatRechercherPlat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerplat))
+            {
+                mainWin.ZoneUserControls.Content = new Creerplat();
+            }
+        }
     }
 }

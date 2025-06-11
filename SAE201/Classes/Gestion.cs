@@ -29,15 +29,18 @@ public class Gestion
         { 
             this.Nom = nom;
 
-          
+            this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll() ?? new List<Categorie>());
+            this.LesRoles = new ObservableCollection<Role>(new Role().FindAll() ?? new List<Role>());
+            this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll() ?? new List<Periode>());
+            this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this) ?? new List<SousCategorie>());
             this.LesClients = new ObservableCollection<Client>(new Client().FindAll() ?? new List<Client>());
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
             this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
             this.LesCommandes = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
-            this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll() ?? new List<Categorie>());
-            this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this) ?? new List<SousCategorie>());
-            this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll() ?? new List<Periode>());
-            this.LesRoles = new ObservableCollection<Role>(new Role().FindAll() ?? new List<Role>());
+            
+            
+           
+            
         }
 
     }

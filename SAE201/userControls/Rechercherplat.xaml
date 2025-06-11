@@ -49,7 +49,7 @@
                         x:Name="radioEntree"
                         Margin="0,0,10,0"
                         Checked="RadioButton_Checked"
-                        Content="Entrée"
+                        Content="Entree"
                         GroupName="Categorie" />
                     <RadioButton
                         x:Name="radioPlat"
@@ -63,13 +63,13 @@
                         x:Name="radioEntreeChaude"
                         Margin="0,0,10,10"
                         Checked="RadioButton_Checked"
-                        Content="Entrée chaude"
+                        Content="Entree chaude"
                         GroupName="SousCategorie" />
                     <RadioButton
                         x:Name="radioEntreeFroide"
                         Margin="0,0,10,10"
                         Checked="RadioButton_Checked"
-                        Content="Entrée froide"
+                        Content="Entree froide"
                         GroupName="SousCategorie" />
                     <RadioButton
                         x:Name="radioPlatChaud"
@@ -83,6 +83,7 @@
                         Checked="RadioButton_Checked"
                         Content="Plat froid"
                         GroupName="SousCategorie" />
+
                 </WrapPanel>
 
                 <TextBox
@@ -136,6 +137,12 @@
                     Header="Disponibilité" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button
+            x:Name="CreerplatRechercherPlat"
+            Grid.Row="1"
+            Width="200"
+            Margin="732,66,28,480"
+            Content="Créer un Plat" Click="CreerplatRechercherPlat_Click" />
     </Grid>
 
 
