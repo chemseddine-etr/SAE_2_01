@@ -13,7 +13,7 @@ namespace SAE201.Classes
     public class DataAccess
     {
         private static readonly DataAccess instance = new DataAccess();
-        private readonly string connectionString = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options='-c search_path=201'";
+        private readonly string connectionString = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options='-c search_path=201';Include Error Detail=true;";
         private NpgsqlConnection connection;
 
         public static DataAccess Instance

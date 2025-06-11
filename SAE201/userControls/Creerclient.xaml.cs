@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE201.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,26 @@ namespace SAE201.userControls
 
         private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Client client = new Client
+                {
+                    Nomclient = txtNom.Text,
+                    Prenomclient = txtPrenom.Text,
+                    Tel = txtTelephone.Text,
+                    Adresserue = txtRue.Text,
+                    Adressecp = txtCP.Text,
+                    Adresseville = txtVille.Text
+                };
 
+                int nouvelId = client.Create();  // Ne spécifie jamais Numclient toi-même
+                MessageBox.Show($"Client créé avec succès (numéro : {nouvelId})");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la création du client : " + ex.Message);
+            }
         }
+
     }
 }
