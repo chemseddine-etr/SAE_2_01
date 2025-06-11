@@ -49,6 +49,7 @@ namespace SAE201.userControls
 
                  mainWin = (MainWindow)Application.Current.MainWindow;
                  mainWin.ZoneUserControls.Content = new Acceuil();
+                 mainWin.Menu.Visibility = Visibility.Visible;
                 
             
             }

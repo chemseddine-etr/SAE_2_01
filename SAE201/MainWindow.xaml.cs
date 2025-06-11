@@ -26,6 +26,8 @@ namespace SAE201
             ChargeData();
             InitializeComponent();
             ZoneUserControls.Content = new Connection();
+            Menu.Visibility = Visibility.Collapsed;
+            
         }
 
         public void ChargeData()
@@ -114,12 +116,13 @@ namespace SAE201
 
         private void Connection1_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (!(ZoneUserControls.Content is Connection))
             {
                 ZoneUserControls.Content = new Connection();
             }
         }
+       
 
 
 
