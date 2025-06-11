@@ -37,10 +37,6 @@ public class Gestion
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
             this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
             this.LesCommandes = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
-            
-            
-           
-            
         }
 
     }

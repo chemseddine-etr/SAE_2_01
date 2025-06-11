@@ -11,75 +11,105 @@
     Background="White"
     mc:Ignorable="d">
 
-
     <Grid Margin="20">
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="45*" />
-            <RowDefinition Height="41*" />
-            <RowDefinition Height="244*" />
+            <RowDefinition Height="Auto" />
+            <!--  Titre  -->
+            <RowDefinition Height="Auto" />
+            <!--  Recherche client  -->
+            <RowDefinition Height="Auto" />
+            <!--  Filtres DataGrid  -->
+            <RowDefinition Height="*" />
+            <!--  DataGrid + bouton  -->
         </Grid.RowDefinitions>
 
+        <!--  Titre  -->
         <TextBlock
-            Width="296"
-            Margin="0,10,0,10"
+            Grid.Row="0"
+            Margin="0,0,0,10"
             HorizontalAlignment="Center"
             FontSize="28"
             FontWeight="Bold"
             Text="Toutes les commandes" />
 
-        <StackPanel Grid.Row="1" Margin="20,20,20,20">
-            <TextBlock Margin="20,0,20,0" Text="Rechercher par client" />
-            <TextBox Margin="20,0,20,0" />
-        </StackPanel>
+        <!--  Recherche par client existant  -->
 
-        <StackPanel
+        <!--  Ligne de filtres alignée sur le DataGrid  -->
+        <UniformGrid
             Grid.Row="2"
-            Width="960"
-            Margin="0,0,0,20"
+            Margin="0,0,0,5"
+            Columns="5">
+            <!--  Numéro de commande  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Numéro de commande" />
+                <TextBox x:Name="txtFilterNumCommande" Width="Auto" />
+            </StackPanel>
+            <!--  Date de création  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Date de création" />
+                <TextBox x:Name="txtFilterDateCommande" Width="Auto" />
+            </StackPanel>
+            <!--  Vendeur  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Vendeur" />
+                <TextBox x:Name="txtFilterVendeur" Width="Auto" />
+            </StackPanel>
+            <!--  Nom du Client  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Nom du client" />
+                <TextBox x:Name="txtFilterNomClient" Width="Auto" />
+            </StackPanel>
+            <!--  Prénom du Client  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Prénom du client" />
+                <TextBox x:Name="txtFilterPrenomClient" Width="Auto" />
+            </StackPanel>
+        </UniformGrid>
+
+        <!--  DataGrid et bouton Supprimer  -->
+        <StackPanel
+            Grid.Row="3"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
-            <ScrollViewer>
-                <DataGrid
-                    Width="862"
-                    Height="468"
-                    AutoGenerateColumns="False"
-                    IsReadOnly="True"
-                    ItemsSource="{Binding LesCommandes}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Numcommande, ValidatesOnExceptions=True}"
-                            Header="Numéro de commande" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Datecommande, ValidatesOnExceptions=True}"
-                            Header="Date de création" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding UnEmploye.Nomemploye, ValidatesOnExceptions=True}"
-                            Header="Vendeur" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding UnClient.Nomclient, ValidatesOnExceptions=True}"
-                            Header="Nom du Client" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding UnClient.Prenomclient, ValidatesOnExceptions=True}"
-                            Header="Prénom du Client" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </ScrollViewer>
+            <DataGrid
+                x:Name="dgCommandes"
+                Width="862"
+                Height="468"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding LesCommandes}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Numcommande}"
+                        Header="Numéro de commande" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Datecommande}"
+                        Header="Date de création" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnEmploye.Nomemploye}"
+                        Header="Vendeur" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnClient.Nomclient}"
+                        Header="Nom du client" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnClient.Prenomclient}"
+                        Header="Prénom du client" />
+                </DataGrid.Columns>
+            </DataGrid>
             <Button
                 x:Name="butSuppr"
                 Width="30"
                 Height="30"
-                Margin="30"
-                Content="&#xE74D;"
+                Margin="30,0,0,0"
+                Content=""
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="16"
                 ToolTip="Supprimer" />
-
         </StackPanel>
     </Grid>
 </UserControl>
