@@ -23,16 +23,25 @@
             Grid.Column="0"
             Height="834"
             Background="#ebebeb">
-            <Image Height="88" Source="/Images/image-removebg-preview.png" Stretch="Fill" Width="242" Cursor="" Margin="0,10,0,0"/>
+            <Image
+                Width="242"
+                Height="88"
+                Margin="0,10,0,0"
+                Cursor=""
+                Source="/Images/image-removebg-preview.png"
+                Stretch="Fill" />
             <Button
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonAcceuil_Click"
                 Content="Acceuil"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -57,11 +66,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonsToutesCommandes_Click"
                 Content="Toutes les commandes"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -87,11 +99,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonNewCommande_Click"
                 Content="Nouvelle commande"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -116,11 +131,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonRecupCommande_Click"
                 Content="Commande à récuperer"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -145,11 +163,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonRechercherPlat_Click"
                 Content="Rechercher un plat"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -174,11 +195,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonCreerPlat_Click"
                 Content="Créer un plat"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -203,11 +227,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonRechercherClient_Click"
                 Content="Rechercher un client"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -232,11 +259,14 @@
                 Width="250"
                 Height="60"
                 Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 BorderThickness="0"
                 Click="BoutonCreerClient_Click"
                 Content="Créer un client"
                 Cursor="Hand"
-                FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                FontSize="16"
+                FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border
@@ -274,17 +304,17 @@
             Height="52"
             Margin="820,10,0,0"
             HorizontalAlignment="Left"
-            FontSize="16"
-            FontWeight="Bold"
             VerticalAlignment="Top"
             Click="Connection1_Click"
-            Content="Connection" >
+            Content="Connection"
+            FontSize="16"
+            FontWeight="Bold">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border
-            x:Name="border"
-            Background="{TemplateBinding Background}"
-            CornerRadius="25">
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="25">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>

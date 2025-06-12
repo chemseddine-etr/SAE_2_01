@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using SAE201.Usercontrol;
+using SAE201.userControls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -40,6 +42,23 @@ namespace SAE201.userControls
             set
             {
                 this.commande = value;
+            }
+        }
+        private void butCréerclient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
+        }
+
+        private void Addplat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is AjouterPlat))
+            {
+                mainWin.ZoneUserControls.Content = new AjouterPlat();
             }
         }
     }

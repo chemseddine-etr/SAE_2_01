@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SAE201.userControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Height="545"
-    d:DesignWidth="800"
+    Height="700"
+    d:DesignWidth="1000"
     Background="white"
     mc:Ignorable="d">
     <Grid Margin="20">
@@ -16,9 +16,8 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            Width="302"
             HorizontalAlignment="Center"
-            FontSize="28"
+            FontSize="40"
             FontWeight="Bold"
             Text="Détail de la commande" />
 
@@ -26,54 +25,64 @@
             <StackPanel Margin="20" Orientation="Horizontal">
                 <TextBlock
                     Margin="25,0,0,0"
-                    FontSize="20"
+                    FontSize="30"
                     Text="• Liste des plats" />
-                <Button
+                <Button x:Name="Addplat"
                     Margin="50,0,0,0"
                     Content="Ajouter un plat"
-                    FontSize="20" />
+                    FontSize="25" Click="Addplat_Click" />
             </StackPanel>
 
-            <DataGrid x:Name="dgPlatsCommande" Height="142">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nom plat" />
-                    <DataGridTextColumn Header="Catégorie" />
-                    <DataGridTextColumn Header="Sous-Catégorie" />
-                    <DataGridTextColumn Header="Nb personnes" />
-                    <DataGridTextColumn Header="Prix" />
-                    <DataGridTextColumn Header="Temps préparation (jour)" />
-                    <DataGridTextColumn Header="Disponibilité" />
-                    <DataGridTextColumn Header="Quantité" />
-                    <DataGridTextColumn Header="Supprimer" />
+            <ScrollViewer>
+                <DataGrid
+                    x:Name="dgPlatsCommande"
+                    Height="142"
+                    FontSize="16">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nom plat" />
+                        <DataGridTextColumn Header="Catégorie" />
+                        <DataGridTextColumn Header="Sous-Catégorie" />
+                        <DataGridTextColumn Header="Nb personnes" />
+                        <DataGridTextColumn Header="Prix" />
+                        <DataGridTextColumn Header="Temps préparation (jour)" />
+                        <DataGridTextColumn Header="Disponibilité" />
+                        <DataGridTextColumn Header="Quantité" />
+                        <DataGridTextColumn Header="Supprimer" />
 
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
 
-            </DataGrid>
+                </DataGrid>
 
+            </ScrollViewer>
             <TextBlock
                 Margin="0,20,0,0"
-                FontSize="20"
+                FontSize="25"
                 Text="Montant total :" />
 
             <TextBlock
                 Margin="45,20"
-                FontSize="20"
+                FontSize="30"
                 Text="• Détails" />
             <TextBlock
                 Margin="0,0,0,10"
-                FontSize="16"
+                FontSize="25"
                 Text="Date de création :" />
             <TextBlock
                 Margin="0,0,0,10"
-                FontSize="16"
+                FontSize="25"
                 Text="Date de retrait :" />
             <TextBlock
                 Margin="0,0,0,10"
-                FontSize="16"
+                FontSize="25"
                 Text="Vendeur :" />
             <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                <TextBlock FontSize="16" Text="Client :" />
-                <Button Margin="100,0" Content="Créer client" />
+                <TextBlock FontSize="25" Text="Client :" />
+                <Button
+                    x:Name="butCréerclient"
+                    Margin="100,0"
+                    Click="butCréerclient_Click"
+                    Content="Créer client"
+                    FontSize="25" />
             </StackPanel>
 
 

@@ -1,0 +1,159 @@
+﻿<UserControl
+    x:Class="SAE201.userControls.AjouterPlat"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Rechercher un plat" />
+
+        <!--  Corps du formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,5" Text="Par mot clef :" />
+                <TextBlock Margin="0,10,0,5" Text="Par catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par sous-catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par disponibilité :" />
+                <TextBlock Margin="0,10,0,5" Text="Par prix :" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,10,422">
+                <TextBox x:Name="textMotClefPlat" Width="200" />
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <RadioButton
+                        x:Name="radioEntree"
+                        Margin="0,0,10,0"
+                        Checked="RadioButton_Checked"
+                        Content="Entree"
+                        GroupName="Categorie" />
+                    <RadioButton
+                        x:Name="radioPlat"
+                        Checked="RadioButton_Checked"
+                        Content="Plat"
+                        GroupName="Categorie" />
+                </StackPanel>
+
+                <WrapPanel Margin="0,10,0,0">
+                    <RadioButton
+                        x:Name="radioEntreeChaude"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree chaude"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioEntreeFroide"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree froide"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatChaud"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat chaud"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatFroid"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat froid"
+                        GroupName="SousCategorie" />
+
+                </WrapPanel>
+
+                <TextBox
+                    x:Name="textDisponibilite"
+                    Width="200"
+                    Margin="0,10,0,0" />
+                <TextBox
+                    x:Name="textPrix"
+                    Width="200"
+                    Margin="0,10,0,0" />
+
+            </StackPanel>
+        </Grid>
+
+        <DataGrid
+            x:Name="dgPlats"
+            Grid.Row="1"
+            Margin="0,177,0,0"
+            HorizontalAlignment="Center"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding LesPlats}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nomplat, ValidatesOnExceptions=true}"
+                    Header="Nom" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Prixunitaire, ValidatesOnExceptions=true}"
+                    Header="Prix" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Delaispreparation, ValidatesOnExceptions=true}"
+                    Header="délais de préparation" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nbpersonnes, ValidatesOnExceptions=True}"
+                    Header="Nombre de personnes" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.UneCategorie.Nomcategorie, ValidatesOnExceptions=True}"
+                    Header="Catégorie" />
+
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.Nomsouscategorie, ValidatesOnExceptions=True}"
+                    Header="Sous-catégorie" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UnePeriode.LibellePeriode, ValidatesOnExceptions=True}"
+                    Header="Disponibilité" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+            x:Name="CreerplatRechercherPlat"
+            Grid.RowSpan="2"
+            Width="100"
+            Height="50"
+            Margin="835,47,25,563"
+            Click="CreerplatRechercherPlat_Click"
+            Content="Créer un Plat" />
+        <Button
+            x:Name="butAdd"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="835,75,25,478"
+            Click="butAdd_Click"
+            Content="Ajouter"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
+    </Grid>
+</UserControl>
