@@ -106,5 +106,46 @@ namespace SAE201.userControls
                 MessageBox.Show("Veuillez sélectionner un client à supprimer.", "Aucun client sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        /*private void Editer_client_Click(object sender, RoutedEventArgs e)
+        {
+
+            Client clientSelectionne = (Client)dgClients.SelectedItem;
+
+            // Crée une copie pour modification
+            Client copie = new Client(
+                clientSelectionne.Numclient,
+                clientSelectionne.Nomclient,
+                clientSelectionne.Prenomclient,
+                clientSelectionne.Tel,
+                clientSelectionne.Adresserue,
+                clientSelectionne.Adressecp,
+                clientSelectionne.Adresseville
+            );
+
+            WindowClient wClient = new WindowClient(copie, WindowClient.Action.Modifier);
+            bool? result = wClient.ShowDialog();
+
+            if (result == true)
+            {
+                try
+                {
+                    copie.Update();
+                    // Mise à jour de la vue
+                    clientSelectionne.Nomclient = copie.Nomclient;
+                    clientSelectionne.Prenomclient = copie.Prenomclient;
+                    clientSelectionne.Tel = copie.Tel;
+                    clientSelectionne.Adresserue = copie.Adresserue;
+                    clientSelectionne.Adressecp = copie.Adressecp;
+                    clientSelectionne.Adresseville = copie.Adresseville;
+
+                    dgClients.Items.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+            }
+        }*/
     }
 }
