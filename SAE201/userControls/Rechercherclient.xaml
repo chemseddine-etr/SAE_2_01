@@ -69,6 +69,7 @@
                     Margin="0,10,0,5"
                     TextChanged="textMotClefClient_TextChanged" />
 
+
             </StackPanel>
             <DataGrid
                 x:Name="dgClients"
@@ -111,11 +112,12 @@
         <!--  Bouton Rechercher  -->
         <Button
             x:Name="Creer_client"
+            Grid.RowSpan="2"
             Width="100"
             Height="50"
             Margin="784,57,76,438"
             Click="Creer_client_Click"
-            Content="Créer un Client" Grid.RowSpan="2" />
+            Content="Créer un Client" />
         <Button
             x:Name="butSuppr"
             Grid.Row="1"
@@ -128,6 +130,15 @@
             FontSize="16"
             RenderTransformOrigin="0.518,0.497"
             ToolTip="Supprimer" />
+
+        <Button
+            x:Name="Editer_client"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="884,39,-24,399"
+            Content="Editer"
+            FontSize="16" />
 
     </Grid>
 
