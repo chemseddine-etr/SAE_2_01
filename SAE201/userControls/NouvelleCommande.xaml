@@ -25,12 +25,12 @@
             Text="Nouvelle commande" />
 
         <StackPanel Grid.Row="1" Margin="20,100,20,20">
-            <TextBlock FontSize="20" Text="Nom de la commande" />
-            <TextBox Height="30" Margin="0,0,0,20" />
+            <Label Content="Client" FontSize="20" />
+            <ComboBox IsEditable="True" x:Name="menuClient"/>
             <Label Content="Date du jour" FontSize="20" />
-            <TextBox Height="30" Margin="0,0,0,20" />
-            <Label Content="Vendeur" FontSize="20" />
-            <TextBox Height="30" Margin="0,0,0,20" />
+            <DatePicker x:Name="dateJour" Margin="0,0,0,20"/>
+            <Label Content="Date de retrait prévue" FontSize="20" />
+            <DatePicker x:Name="dateRetrait" Margin="0,0,0,20"/>
             <StackPanel
                 Margin="0,20,0,20"
                 HorizontalAlignment="Center"
@@ -45,11 +45,11 @@
                     FontSize="20" Click="butCréerClient_Click" />
             </StackPanel>
             <Button
-                x:Name="butCréerCommande"
+                x:Name="butCreerCommande"
                 Width="228"
                 Margin="0,50,0,0"
                 Content="Créer commande"
-                FontSize="20" />
+                FontSize="20" Click="butCreerCommande_Click" />
 
         </StackPanel>
 

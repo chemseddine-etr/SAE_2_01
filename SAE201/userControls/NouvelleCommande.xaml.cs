@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SAE201.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,5 +34,43 @@ namespace SAE201.userControls
                 mainWin.ZoneUserControls.Content = new Creerclient();
             }
         }
+
+        private void butCreerCommande_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((!dateJour.SelectedDate.HasValue) || (!dateRetrait.SelectedDate.HasValue))
+                {
+                    MessageBox.Show("Veuillez selectionner une date", "champs manquants",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                Gestion gestion = (Gestion)Application.Current.MainWindow.DataContext;
+
+
+                Commande uneCommande = new Commande
+                {
+                    
+                    Datecommande = (DateTime)dateJour.SelectedDate,
+                    Dateretraitprevue = (DateTime)dateRetrait.SelectedDate
+                };
+
+                int newId = uneCommande.Create();
+                gestion.LesCommandes.Add(uneCommande);
+
+                MessageBox.Show($"Commande bel et bien créée", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                dateJour.SelectedDate = null;
+                dateRetrait.SelectedDate = null;
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreue");
+                MessageBox.Show("Erreur lors de la creation de la commande :" + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

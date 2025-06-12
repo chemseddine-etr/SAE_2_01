@@ -74,10 +74,10 @@ namespace SAE201.userControls
                 string nomSousCategorie = TxtSouscategorie.Text.Trim();
 
                 // 4. Recherche des objets liés
-                Periode periode = gestion.LesPeriodes
-                    .FirstOrDefault(p => p.LibellePeriode.Equals(nomPeriode, StringComparison.OrdinalIgnoreCase));
-                SousCategorie sousCat = gestion.LesSousCategories
-                    .FirstOrDefault(sc => sc.Nomsouscategorie.Equals(nomSousCategorie, StringComparison.OrdinalIgnoreCase));
+                Periode periode = gestion.LesPeriodes.FirstOrDefault
+                    (p => p.LibellePeriode.Equals(nomPeriode, StringComparison.OrdinalIgnoreCase));
+                SousCategorie sousCat = gestion.LesSousCategories.FirstOrDefault
+                    (sc => sc.Nomsouscategorie.Equals(nomSousCategorie, StringComparison.OrdinalIgnoreCase));
 
                 if (periode == null || sousCat == null)
                 {
