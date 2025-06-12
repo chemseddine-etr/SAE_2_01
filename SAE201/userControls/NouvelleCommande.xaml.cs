@@ -24,5 +24,14 @@ namespace SAE201.userControls
         {
             InitializeComponent();
         }
+
+        private void butCréerClient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
+        }
     }
 }

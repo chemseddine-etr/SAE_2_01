@@ -42,7 +42,7 @@
                     Width="143"
                     Margin="100,0,0,0"
                     Content="Créer client"
-                    FontSize="20" />
+                    FontSize="20" Click="butCréerClient_Click" />
             </StackPanel>
             <Button
                 x:Name="butCréerCommande"

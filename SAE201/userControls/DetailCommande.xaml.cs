@@ -26,8 +26,21 @@ namespace SAE201.userControls
         public DetailCommande(Commande selectedCommande)
         {
             InitializeComponent();
-            commande = selectedCommande;
-            DataContext = commande;
+            Commande = selectedCommande;
+            DataContext = Commande;
+        }
+
+        public Commande Commande
+        {
+            get
+            {
+                return this.commande;
+            }
+
+            set
+            {
+                this.commande = value;
+            }
         }
     }
 }
