@@ -33,7 +33,7 @@ namespace SAE201.userControls
 
             string username = loginTextbox.Text;
             string password = mdpTextBox.Password;
-            string connString = $"Host=srv-peda-new;Port=5433;Username={username};Password={password};Database=BD_SAE;Options=-c search_path=MAIN";
+            string connString = $"Host=srv-peda-new;Port=5433;Username={username};Password={password};Database=BD_SAE;Options=-c search_path=201";
 
             try
             {

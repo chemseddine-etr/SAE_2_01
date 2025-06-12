@@ -54,7 +54,7 @@ namespace SAE201.userControls
                 };
                 
 
-                int nouvelId = client.Create();  // Ne spécifie jamais Numclient toi-même
+                int nouvelId = client.Create();
 
                 gestion.LesClients.Add(client);
 
