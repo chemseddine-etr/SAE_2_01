@@ -11,11 +11,11 @@
     mc:Ignorable="d">
     <Grid>
         <StackPanel Margin="20">
-            <TextBox
+            <Label
                 Margin="0,85,0,0"
                 HorizontalAlignment="Center"
                 FontSize="40"
-                Text="Connexion" />
+                Content="Connexion" />
             <Label
                 Width="607"
                 Margin="40,20"

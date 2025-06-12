@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SAE201.userControls"
              mc:Ignorable="d" 
-             d:DesignHeight="413" d:DesignWidth="630" Background="White">
+             d:DesignHeight="700" d:DesignWidth="1000" Background="White">
     <Grid>
-        <TextBox HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Bienvenue dans L'application de gestion de commande de Sibilia" VerticalAlignment="Top" Width="580" Height="28" Margin="0,225,0,0" FontSize="20"/>
-        <Image Margin="169,64,169,223" Source="/Images/Logo.png" Stretch="Fill"/>
+        <StackPanel Margin="20">
+            <Image Source="/Images/Logo.png" Stretch="Fill" Margin="0,20"/>
+            <Label Content="Bienvenue sur l'application de gestion de commande de Sibilia" Width="894" Height="64" FontSize="32" Margin="0,60" HorizontalAlignment="Center"/>
+        </StackPanel>
+
 
     </Grid>
 </UserControl>

@@ -68,9 +68,9 @@
 
         <!--  DataGrid et bouton Supprimer  -->
         <StackPanel
-            Grid.Row="3"
+            Grid.Row="2"
             HorizontalAlignment="Center"
-            Orientation="Horizontal">
+            Orientation="Horizontal" Margin="0,0,0,0" Grid.RowSpan="2" Width="960">
             <DataGrid
                 x:Name="dgCommandes"
                 Width="862"
@@ -105,7 +105,7 @@
                 x:Name="butSuppr"
                 Width="30"
                 Height="30"
-                Margin="30,0,0,0"
+                Margin="20,0,0,0"
                 Content=""
                 FontFamily="Segoe MDL2 Assets"
                 FontSize="16"
