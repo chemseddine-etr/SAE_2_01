@@ -156,7 +156,7 @@ namespace SAE201.Classes
         public int Create()
         {
             int nb = 0;
-            using (var cmdInsert = new NpgsqlCommand("insert into commande (numcommande,numclient,numemploye,datecommande,dateretraitprevue,payee,retiree,prixtotal ) values (@numcommande,@numclient,@numemploye,@datecommande,@dateretraitprevue,@payee,@retiree,@prixtotal) RETURNING numcommande"))
+            using (var cmdInsert = new NpgsqlCommand("insert into commande (numcommande,numclient,numemploye,datecommande,dateretraitprevue,payee,retiree,prixtotal ) values (@numcommande,@numclient,@numemploye,@datecommande,@dateretraitprevue,@payee,@retiree,@prixtotal) RETURNING numcommande;"))
             {
                 cmdInsert.Parameters.AddWithValue("numcommande", this.Numcommande);
                 cmdInsert.Parameters.AddWithValue("numclient", this.UnClient.Numclient);
