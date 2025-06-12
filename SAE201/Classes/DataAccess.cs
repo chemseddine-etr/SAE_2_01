@@ -44,7 +44,6 @@ namespace SAE201.Classes
                 throw new ArgumentException("La chaîne de connexion ne peut pas être vide.");
 
             connectionString = connString;
-            instance.connection = new NpgsqlConnection(connectionString);
         }
         public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
         {
@@ -65,21 +64,17 @@ namespace SAE201.Classes
         // pour récupérer la connexion (et l'ouvrir si nécessaire)
         public NpgsqlConnection GetConnection()
         {
-            if (connection.State == ConnectionState.Closed || connection.State == ConnectionState.Broken)
+            try
             {
-                try
-                {
-                    connection.Open();
-                }
-                catch (Exception ex)
-                {
-                    LogError.Log(ex, "Pb de connexion GetConnection \n" + connectionString);
-                    throw;
-                }
+                var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+                return conn;
             }
-
-
-            return connection;
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreur lors de l'ouverture de la connexion\n" + connectionString);
+                throw;
+            }
         }
 
         //  pour requêtes SELECT et retourne un DataTable ( table de données en mémoire)
