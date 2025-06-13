@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SAE201.Classes.Categorie" Collapsed="true">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAE=</HashCode>
+      <FileName>Classes\Categorie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Client" Collapsed="true">
+    <Position X="14.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAgIAAAAAiAAAAIgQAIAgAAGAAEAAAgABAAIAAQI=</HashCode>
+      <FileName>Classes\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Commande" Collapsed="true">
+    <Position X="6" Y="1.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>CC0AARAgBAAQAAAAAAAQAAEgAAEBAEAAAAAAAAhJAAE=</HashCode>
+      <FileName>Classes\Commande.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.DataAccess" Collapsed="true">
+    <Position X="8.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAACgAAAABIBAAAABAABAAQAgCABAAAAA=</HashCode>
+      <FileName>Classes\DataAccess.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Employe" Collapsed="true">
+    <Position X="10.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAABAggASAIIgAgEAAEACAAAQAgAAEAA=</HashCode>
+      <FileName>Classes\Employe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gestion" Collapsed="true">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABABgAAAAQCAASAAAACIQAAACAAAEQGAAACBQAIIAA=</HashCode>
+      <FileName>Classes\Gestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Periode" Collapsed="true">
+    <Position X="12.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAIAACACAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Periode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.LogError" Collapsed="true">
+    <Position X="10.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\LogError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Plat">
+    <Position X="10.75" Y="4.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BiQQCAAgBAAAAAQAAAAQAAAgAAEAAEIAAAACAAYAEAg=</HashCode>
+      <FileName>Classes\Plat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.Role" Collapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAIQAAACAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Classes\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE201.Classes.SousCategorie" Collapsed="true">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAEAEAAAABAQAAAAAAAAAEAAAABAAAAAAAA=</HashCode>
+      <FileName>Classes\SousCategorie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
