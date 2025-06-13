@@ -54,7 +54,7 @@
                 Margin="0,50,0,0"
                 Click="butCreerCommande_Click"
                 Content="Créer commande"
-                FontSize="20" Click="butCreerCommande_Click" />
+                FontSize="20" />
 
         </StackPanel>
 
