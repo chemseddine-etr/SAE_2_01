@@ -69,15 +69,19 @@
         <!--  DataGrid et bouton Supprimer  -->
         <StackPanel
             Grid.Row="2"
+            Grid.RowSpan="2"
+            Width="960"
+            Margin="0,0,0,0"
             HorizontalAlignment="Center"
-            Orientation="Horizontal" Margin="0,0,0,0" Grid.RowSpan="2" Width="960">
+            Orientation="Horizontal">
             <DataGrid
                 x:Name="dgCommandes"
                 Width="862"
                 Height="468"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding LesCommandes}" SelectionChanged="dgCommandes_SelectionChanged">
+                ItemsSource="{Binding LesCommandes}"
+                SelectionChanged="dgCommandes_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="*"
@@ -99,6 +103,14 @@
                         Width="*"
                         Binding="{Binding UnClient.Prenomclient}"
                         Header="Prénom du client" />
+                    <DataGridCheckBoxColumn
+                        Width="*"
+                        Binding="{Binding Retiree}"
+                        Header="Retirer" />
+                    <DataGridCheckBoxColumn
+                        Width="*"
+                        Binding="{Binding Payee}"
+                        Header="Payee" />
                 </DataGrid.Columns>
             </DataGrid>
             <Button
