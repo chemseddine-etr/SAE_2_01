@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 public class Gestion
 {
@@ -37,6 +38,14 @@ public class Gestion
             this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
             this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
             this.LesCommandes = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
+            try
+            {
+                this.LesCommandesPlats = new ObservableCollection<CommandePlat>(new CommandePlat().FindAll(this) ?? new List<CommandePlat>());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du chargement des plats commandes : " + ex.Message);
+            }
         }
 
     }

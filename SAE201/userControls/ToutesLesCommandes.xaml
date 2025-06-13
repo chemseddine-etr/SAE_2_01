@@ -17,9 +17,9 @@
             <!--  Titre  -->
             <RowDefinition Height="Auto" />
             <!--  Recherche client  -->
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="68" />
             <!--  Filtres DataGrid  -->
-            <RowDefinition Height="*" />
+            <RowDefinition />
             <!--  DataGrid + bouton  -->
         </Grid.RowDefinitions>
 
@@ -30,15 +30,14 @@
             HorizontalAlignment="Center"
             FontSize="28"
             FontWeight="Bold"
-            Text="Toutes les commandes" />
+            Text="Toutes les commandes" Width="296" />
 
         <!--  Recherche par client existant  -->
 
         <!--  Ligne de filtres alignée sur le DataGrid  -->
         <UniformGrid
-            Grid.Row="2"
-            Margin="0,0,0,5"
-            Columns="5">
+            Margin="0,47,0,5"
+            Columns="5" Grid.RowSpan="3">
             <!--  Numéro de commande  -->
             <StackPanel>
                 <TextBlock FontWeight="Bold" Text="Numéro de commande" />
@@ -64,14 +63,14 @@
                 <TextBlock FontWeight="Bold" Text="Prénom du client" />
                 <TextBox x:Name="txtFilterPrenomClient" Width="Auto" />
             </StackPanel>
+            <Button x:Name="btnDetailcommande" Margin="100,5,-42,5" Content="Détail commande" Click="btnDetailcommande_Click" />
         </UniformGrid>
 
         <!--  DataGrid et bouton Supprimer  -->
         <StackPanel
-            Grid.Row="2"
-            Grid.RowSpan="2"
+            Grid.RowSpan="4"
             Width="960"
-            Margin="0,0,0,0"
+            Margin="0,47,0,0"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
             <DataGrid

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SAE201.userControls
 {
@@ -24,13 +25,35 @@ namespace SAE201.userControls
     public partial class DetailCommande : UserControl
     {
         private Commande commande;
+        private ObservableCollection<PlatCommandeAffiche> platsCommande;
 
-
-        public DetailCommande(Commande selectedCommande)
+        public DetailCommande(Commande c)
         {
             InitializeComponent();
-            Commande = selectedCommande;
+            this.commande = c;
             DataContext = Commande;
+
+            var gestion = (Gestion)Application.Current.MainWindow.DataContext;
+            gestion.LesCommandesPlats.Clear();
+            foreach (var cp in new CommandePlat().FindAll(gestion))
+            {
+                gestion.LesCommandesPlats.Add(cp);
+            }
+
+            // Récupère les plats liés à cette commande
+            var liste = gestion.LesCommandesPlats
+                .Where(cp => cp.UneCommande.Numcommande == commande.Numcommande)
+                .Select(cp => new PlatCommandeAffiche { CP = cp })
+                .ToList();
+
+            var platsCommandeRaw = gestion.LesCommandesPlats
+                .Where(cp => cp.UneCommande.Numcommande == commande.Numcommande).ToList();
+
+            MessageBox.Show($"Nb plats trouvés : {platsCommandeRaw.Count}"); // DEBUG
+
+            platsCommande = new ObservableCollection<PlatCommandeAffiche>(liste);
+
+            dgPlatsCommande.ItemsSource = platsCommande;
         }
 
         public Commande Commande
@@ -56,10 +79,22 @@ namespace SAE201.userControls
 
         private void Addplat_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (MainWindow)Application.Current.MainWindow;
-            if (!(mainWin.ZoneUserControls.Content is AjouterPlat))
+            var ajouterPlatUC = new AjouterPlat(commande);
+            ((MainWindow)Application.Current.MainWindow).ZoneUserControls.Content = ajouterPlatUC;
+        }
+
+        private void SupprimerPlatCommande_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var platAffiche = btn.DataContext as PlatCommandeAffiche;
+
+            if (platAffiche != null)
             {
-                mainWin.ZoneUserControls.Content = new AjouterPlat();
+                // Supprimer en BDD
+                platAffiche.CP.Delete();
+                    
+                // Supprimer de l'affichage
+                platsCommande.Remove(platAffiche);
             }
         }
     }

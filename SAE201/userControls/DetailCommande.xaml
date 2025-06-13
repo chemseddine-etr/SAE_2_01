@@ -27,30 +27,77 @@
                     Margin="25,0,0,0"
                     FontSize="30"
                     Text="• Liste des plats" />
-                <Button x:Name="Addplat"
+                <Button
+                    x:Name="Addplat"
                     Margin="50,0,0,0"
+                    Click="Addplat_Click"
                     Content="Ajouter un plat"
-                    FontSize="25" Click="Addplat_Click" />
+                    FontSize="25" />
             </StackPanel>
 
-            <ScrollViewer>
+            <ScrollViewer Height="189">
                 <DataGrid
                     x:Name="dgPlatsCommande"
-                    Height="142"
-                    FontSize="16">
+                    Width="942"
+                    AutoGenerateColumns="False"
+                    FontSize="15"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nom plat" />
-                        <DataGridTextColumn Header="Catégorie" />
-                        <DataGridTextColumn Header="Sous-Catégorie" />
-                        <DataGridTextColumn Header="Nb personnes" />
-                        <DataGridTextColumn Header="Prix" />
-                        <DataGridTextColumn Header="Temps préparation (jour)" />
-                        <DataGridTextColumn Header="Disponibilité" />
-                        <DataGridTextColumn Header="Quantité" />
-                        <DataGridTextColumn Header="Supprimer" />
+                        <DataGridTextColumn
+                            Width="95"
+                            Binding="{Binding NomPlat}"
+                            CanUserResize="False"
+                            Header="Nom plat" />
+                        <DataGridTextColumn
+                            Width="95"
+                            Binding="{Binding Categorie}"
+                            CanUserResize="False"
+                            Header="Catégorie" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding SousCategorie}"
+                            CanUserResize="False"
+                            Header="Sous-catégorie" />
+                        <DataGridTextColumn
+                            Width="115"
+                            Binding="{Binding NbPersonnes}"
+                            CanUserResize="False"
+                            Header="Nb personnes" />
 
+                        <DataGridTextColumn
+                            Width="95"
+                            Binding="{Binding TempsPreparation}"
+                            CanUserResize="False"
+                            Header="Préparation" />
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding Disponibilite}"
+                            CanUserResize="False"
+                            Header="Disponibilité" />
+                        <DataGridTextColumn
+                            Width="60"
+                            Binding="{Binding PrixUnitaire}"
+                            CanUserResize="False"
+                            Header="Prix" />
+                        <DataGridTextColumn
+                            Width="75"
+                            Binding="{Binding Quantite}"
+                            CanUserResize="False"
+                            Header="Quantité" />
+                        <DataGridTextColumn
+                            Width="95"
+                            Binding="{Binding PrixTotal}"
+                            CanUserResize="False"
+                            Header="Prix total" />
+                        <DataGridTemplateColumn CanUserResize="False" Header="Supprimer">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="SupprimerPlatCommande_Click" Content="🗑" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
-
                 </DataGrid>
 
             </ScrollViewer>

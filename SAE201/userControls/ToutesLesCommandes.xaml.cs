@@ -71,5 +71,18 @@ namespace SAE201.Usercontrol
                 && matchPrenomClient;
         }
 
+        private void btnDetailcommande_Click(object sender, RoutedEventArgs e)
+        {
+            var commandeSelectionnee = (Commande)dgCommandes.SelectedItem;
+            if (commandeSelectionnee != null)
+            {
+                var detailUC = new DetailCommande(commandeSelectionnee);
+                ((MainWindow)Application.Current.MainWindow).ZoneUserControls.Content = detailUC;
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une commande.");
+            }
+        }
     }
 }

@@ -1,0 +1,4456 @@
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Categorie
+    {
+        private int numcategorie;
+        private string nomcategorie;
+
+        public Categorie()
+        {
+        }
+
+        public Categorie(int numcategorie, string nomcategorie)
+        {
+            this.Numcategorie = numcategorie;
+            this.Nomcategorie = nomcategorie;
+        }
+
+        public int Numcategorie
+        {
+            get
+            {
+                return this.numcategorie;
+            }
+
+            set
+            {
+                this.numcategorie = value;
+            }
+        }
+
+        public string Nomcategorie
+        {
+            get
+            {
+                return this.nomcategorie;
+            }
+
+            set
+            {
+                this.nomcategorie = value;
+            }
+        }
+        public List<Categorie> FindAll()
+        {
+            List<Categorie> lesCategories = new List<Categorie>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from categorie;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesCategories.Add(new Categorie((int)dr["numcategorie"], (string)dr["nomcategorie"]));
+            }
+            return lesCategories;
+        }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Client
+    {
+        private int numclient;
+        private string nomclient;
+        private string prenomclient;
+        private string tel;
+        private string adresserue;
+        private string adressecp;
+        private string adresseville;
+
+        public Client()
+        {
+        }
+
+        public Client(int numclient, string nomclient, string prenomclient, string tel, string adresserue, string adresseCP, string adresseVille)
+        {
+            this.Numclient = numclient;
+            this.Nomclient = nomclient;
+            this.Prenomclient = prenomclient;
+            this.Tel = tel;
+            this.Adresserue = adresserue;
+            this.Adressecp = adresseCP;
+            this.Adresseville = adresseVille;
+        }
+
+        public int Numclient
+        {
+            get
+            {
+                return this.numclient;
+            }
+
+            set
+            {
+                this.numclient = value;
+            }
+        }
+
+        public string Nomclient
+        {
+            get
+            {
+                return this.nomclient;
+            }
+
+            set
+            {
+                this.nomclient = value;
+            }
+        }
+
+        public string Prenomclient
+        {
+            get
+            {
+                return this.prenomclient;
+            }
+
+            set
+            {
+                this.prenomclient = value;
+            }
+        }
+
+        public string Tel
+        {
+            get
+            {
+                return this.tel;
+            }
+
+            set
+            {
+                this.tel = value;
+            }
+        }
+
+        public string Adresserue
+        {
+            get
+            {
+                return this.adresserue;
+            }
+
+            set
+            {
+                this.adresserue = value;
+            }
+        }
+
+        public string Adressecp
+        {
+            get
+            {
+                return this.adressecp;
+            }
+
+            set
+            {
+                this.adressecp = value;
+            }
+        }
+
+        public string Adresseville
+        {
+            get
+            {
+                return this.adresseville;
+            }
+
+            set
+            {
+                this.adresseville = value;
+            }
+        }
+        public List<Client> FindAll()
+        {
+            List<Client> lesClients = new List<Client>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from client;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesClients.Add(new Client((int)dr["numclient"], (string)dr["nomclient"], (string)dr["prenomclient"], (string)dr["tel"], (string)dr["adresserue"],
+                    (string)dr["adressecp"], (string)dr["adresseville"]));
+            }
+            return lesClients;
+        }
+        public int Create()
+        {
+            int nb = 0;
+            using (var cmdInsert = new NpgsqlCommand("insert into client (nomclient,prenomclient,tel,adresserue,adressecp,adresseville ) values (@nomclient,@prenomclient,@tel,@adresserue,@adressecp,@adresseville) RETURNING numclient"))
+            {
+                cmdInsert.Parameters.AddWithValue("nomclient", this.Nomclient);
+                cmdInsert.Parameters.AddWithValue("prenomclient", this.Prenomclient);
+                cmdInsert.Parameters.AddWithValue("tel", this.Tel);
+                cmdInsert.Parameters.AddWithValue("adresserue", this.Adresserue);
+                cmdInsert.Parameters.AddWithValue("adressecp", this.Adressecp);
+                cmdInsert.Parameters.AddWithValue("adresseville", this.Adresseville);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numclient = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from client  where numclient =@numclient;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numclient", this.numclient);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numclient = (int)dt.Rows[0]["numclient"];
+                this.Nomclient = (string)dt.Rows[0]["nomclient"];
+                this.Prenomclient = (string)dt.Rows[0]["prenomclient"];
+                this.Tel = (string)dt.Rows[0]["tel"];
+                this.Adresserue = (string)dt.Rows[0]["adresserue"];
+                this.Adressecp = (string)dt.Rows[0]["adressecp"];
+                this.Adresseville = (string)dt.Rows[0]["adresseville"];
+                
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update client set nomclient =@nomclient ,  prenomclient = @prenomclient,  tel = @tel , adresserue = @adresserue , adressecp =@adressecp , adresseville =@adresseville  where numclient =@numclient;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("nomclient", this.Nomclient);
+                cmdUpdate.Parameters.AddWithValue("prenomclient", this.Prenomclient);
+                cmdUpdate.Parameters.AddWithValue("tel", this.Tel);
+                cmdUpdate.Parameters.AddWithValue("adresserue", this.Adresserue);
+                cmdUpdate.Parameters.AddWithValue("adressecp", this.Adressecp);
+                cmdUpdate.Parameters.AddWithValue("adresseville", this.Adresseville);
+                cmdUpdate.Parameters.AddWithValue("numclient", this.Numclient);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from client  where numclient =@numclient;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numclient", this.Numclient);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public override string? ToString()
+        {
+            return $"{Nomclient} {Prenomclient}";
+        }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Commande
+    {
+        private int numcommande;
+        private DateTime datecommande;
+        private DateTime dateretraitprevue;
+        private bool payee;
+        private bool retire;
+        private Decimal prixtotal;
+        private Client unClient;
+        private Employe unEmploye;
+
+        public Commande()
+        {
+        }
+
+        public Commande(int numcommande, DateTime datecommande, DateTime dateretraitprevue, bool payee, bool retire, decimal prixtotal, Client unClient, Employe unEmploye)
+        {
+            this.Numcommande = numcommande;
+            this.Datecommande = datecommande;
+            this.Dateretraitprevue = dateretraitprevue;
+            this.Payee = payee;
+            this.Retire = retire;
+            this.Prixtotal = prixtotal;
+            this.UnClient = unClient;
+            this.UnEmploye = unEmploye;
+        }
+
+        public int Numcommande
+        {
+            get
+            {
+                return this.numcommande;
+            }
+
+            set
+            {
+                this.numcommande = value;
+            }
+        }
+
+        public DateTime Datecommande
+        {
+            get
+            {
+                return this.datecommande;
+            }
+
+            set
+            {
+                this.datecommande = value;
+            }
+        }
+
+        public DateTime Dateretraitprevue
+        {
+            get
+            {
+                return this.dateretraitprevue;
+            }
+
+            set
+            {
+                this.dateretraitprevue = value;
+            }
+        }
+
+        public bool Payee
+        {
+            get
+            {
+                return this.payee;
+            }
+
+            set
+            {
+                this.payee = value;
+            }
+        }
+
+        public bool Retire
+        {
+            get
+            {
+                return this.retire;
+            }
+
+            set
+            {
+                this.retire = value;
+            }
+        }
+
+        public Decimal Prixtotal
+        {
+            get
+            {
+                return this.prixtotal;
+            }
+
+            set
+            {
+                this.prixtotal = value;
+            }
+        }
+
+        public Client UnClient
+        {
+            get
+            {
+                return this.unClient;
+            }
+
+            set
+            {
+                this.unClient = value;
+            }
+        }
+
+        public Employe UnEmploye
+        {
+            get
+            {
+                return this.unEmploye;
+            }
+
+            set
+            {
+                this.unEmploye = value;
+            }
+        }
+
+        public List<Commande> FindAll(Gestion gestion) 
+        {
+            List<Commande> lesCommandes = new List<Commande>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from commande;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesCommandes.Add(new Commande((int)dr["numcommande"], (DateTime)dr["datecommande"], (DateTime)dr["dateretraitprevue"],
+                   (bool)dr["payee"], (bool)dr["retiree"], (Decimal)dr["prixtotal"], gestion.LesClients.FirstOrDefault(c => c.Numclient == (int)dr["numclient"]), 
+                   gestion.LesEmploye.FirstOrDefault(c => c.Numemploye == (int)dr["numemploye"])));
+            }
+            return lesCommandes;
+        }
+        public int Create()
+        {
+            int nb;
+            using (var cmdInsert = new NpgsqlCommand("insert into commande (numclient,numemploye,datecommande,dateretraitprevue,payee,retiree,prixtotal ) values (@numclient,@numemploye,@datecommande,@dateretraitprevue,@payee,@retiree,@prixtotal) RETURNING numcommande;"))
+            {
+                cmdInsert.Parameters.AddWithValue("numclient", this.UnClient.Numclient);
+                cmdInsert.Parameters.AddWithValue("numemploye", this.UnEmploye.Numemploye);
+                cmdInsert.Parameters.AddWithValue("datecommande", this.Datecommande);
+                cmdInsert.Parameters.AddWithValue("dateretraitprevue", this.Dateretraitprevue);
+                cmdInsert.Parameters.AddWithValue("payee", this.Payee);
+                cmdInsert.Parameters.AddWithValue("retiree", this.Retire);     
+                cmdInsert.Parameters.AddWithValue("prixtotal", this.Prixtotal);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numcommande = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  commande  where numcommande =@numcommande;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numcommande", this.Numcommande);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numcommande = (int)dt.Rows[0]["numcommande"];
+                this.UnClient.Numclient = (int)dt.Rows[0]["numclient"];
+                this.UnEmploye.Numemploye = (int)dt.Rows[0]["numemploye"];
+                this.Datecommande = (DateTime)dt.Rows[0]["datecommande"];
+                this.Dateretraitprevue = (DateTime)dt.Rows[0]["dateretraitprevue"];
+                this.Payee = (bool)dt.Rows[0]["payee"];
+                this.Retire = (bool)dt.Rows[0]["retiree"];
+                this.Prixtotal = (Decimal)dt.Rows[0]["prixtotal"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update commande set numcommande =@numcommande ,  numclient = @numclient,  numemploye = @numemploye , datecommande =@datecommande , dateretraitprevue =@dateretraitprevue , payee =@payee , retiree= @retiree, prixtotal @=prixtotal  where numcommande =@numcommande;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.Numcommande);
+                cmdUpdate.Parameters.AddWithValue("numclient", this.unClient.Numclient);
+                cmdUpdate.Parameters.AddWithValue("numemploye", this.unEmploye.Numemploye);
+                cmdUpdate.Parameters.AddWithValue("datecommande", this.Datecommande);
+                cmdUpdate.Parameters.AddWithValue("dateretraitprevue", this.Dateretraitprevue);
+                cmdUpdate.Parameters.AddWithValue("payee", this.Payee);
+                cmdUpdate.Parameters.AddWithValue("retiree", this.Retire);
+                cmdUpdate.Parameters.AddWithValue("prixtotal", this.Prixtotal);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from commande  where numcommande =@numcommande;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.Numcommande);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class CommandePlat
+    {
+        private Commande uneCommande;
+        private Plat unPlat;
+        private int quantite;
+        private Decimal prix;
+
+        public CommandePlat()
+        {
+        }
+
+        public CommandePlat(Commande uneCommande, Plat unPlat, int quantite, decimal prix)
+        {
+            this.UneCommande = uneCommande;
+            this.UnPlat = unPlat;
+            this.Quantite = quantite;
+            this.Prix = prix;
+        }
+
+        public Commande UneCommande
+        {
+            get
+            {
+                return this.uneCommande;
+            }
+
+            set
+            {
+                this.uneCommande = value;
+            }
+        }
+
+        public Plat UnPlat
+        {
+            get
+            {
+                return this.unPlat;
+            }
+
+            set
+            {
+                this.unPlat = value;
+            }
+        }
+
+        public int Quantite
+        {
+            get
+            {
+                return this.quantite;
+            }
+
+            set
+            {
+                this.quantite = value;
+            }
+        }
+
+        public decimal Prix
+        {
+            get
+            {
+                return this.prix;
+            }
+
+            set
+            {
+                this.prix = value;
+            }
+        }
+        public List<CommandePlat> FindAll(Gestion gestion)
+        {
+            List<CommandePlat> lesCommandesPlats = new List<CommandePlat>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from categorie;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                    lesCommandesPlats.Add(new CommandePlat(gestion.LesCommandes.FirstOrDefault(c => c.Numcommande == (int)dr["numcommande"]),gestion.LesPlats.FirstOrDefault(c => c.Numplat == (int)dr["numplat"]), (int)dr["quantite"], (Decimal)dr["prix"]));
+            }
+            return lesCommandesPlats;
+        }
+        public bool Create()
+        {
+            using (var cmdInsert = new NpgsqlCommand(@"INSERT INTO platcommande (numcommande, numplat, quantite, prix) VALUES (@numcommande, @numplat, @quantite, @prix) RETURNING numcommande, numplat"))
+            {
+                cmdInsert.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdInsert.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                cmdInsert.Parameters.AddWithValue("quantite", this.Quantite);
+                cmdInsert.Parameters.AddWithValue("prix", this.Prix);
+
+                using (var reader = DataAccess.Instance.ExecuteReader(cmdInsert))
+                {
+                    if (reader.Read())
+                    {
+                        this.UneCommande.Numcommande = reader.GetInt32(0); // numcommande
+                        this.UnPlat.Numplat = reader.GetInt32(1);          // numplat
+                        return true;
+                    }
+                }
+            }
+            return false; // si l'insertion a échoué
+        }
+
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  platcommande  where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdSelect.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.UneCommande.Numcommande = (int)dt.Rows[0]["numcommande"];
+                this.UnPlat.Numplat = (int)dt.Rows[0]["numplat"];
+                this.Quantite = (int)dt.Rows[0]["quantite"];
+                this.Prix = (Decimal)dt.Rows[0]["prix"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update platcommande set quantite = @quantite , prix =@prix  where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("quantite", this.Quantite);
+                cmdUpdate.Parameters.AddWithValue("prix", this.Prix);
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdUpdate.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from platcommandewhere where numcommande =@numcommande and numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
+                cmdUpdate.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+    }
+}
+
+
+using System.Collections.Generic;
+using System.Data;
+using System.Windows;
+using Microsoft.Extensions.Logging;
+using Npgsql;
+
+
+namespace SAE201.Classes
+{
+
+    public class DataAccess
+    {
+        private static readonly DataAccess instance = new DataAccess();
+        private static string connectionString ="Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
+        private NpgsqlConnection connection;
+
+        public static DataAccess Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        //  Constructeur privé pour empêcher l'instanciation multiple
+        private DataAccess()
+        {
+
+            try
+            {
+                connection = new NpgsqlConnection(connectionString);
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Pb de connexion GetConnection \n" + connectionString);
+                throw;
+            }
+        }
+        public static void Init(string connString)
+        {
+            if (string.IsNullOrWhiteSpace(connString))
+                throw new ArgumentException("La chaîne de connexion ne peut pas être vide.");
+
+            connectionString = connString;
+        }
+        public NpgsqlDataReader ExecuteReader(NpgsqlCommand command)
+        {
+            try
+            {
+                command.Connection = GetConnection();
+                // ExecuteReader avec fermeture automatique de la connexion quand le reader est fermé
+                return command.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreur lors de l'exécution de la commande SQL avec ExecuteReader.");
+                throw;
+            }
+        }
+
+
+        // pour récupérer la connexion (et l'ouvrir si nécessaire)
+        public NpgsqlConnection GetConnection()
+        {
+            try
+            {
+                var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+                return conn;
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreur lors de l'ouverture de la connexion\n" + connectionString);
+                throw;
+            }
+        }
+
+        //  pour requêtes SELECT et retourne un DataTable ( table de données en mémoire)
+        public DataTable ExecuteSelect(NpgsqlCommand cmd)
+        {
+            DataTable dataTable = new DataTable();
+            try
+            {
+                cmd.Connection = GetConnection();
+                using (var adapter = new NpgsqlDataAdapter(cmd))
+                {
+                    adapter.Fill(dataTable);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreur SQL");
+                throw;
+            }
+            return dataTable;
+        }
+
+        //   pour requêtes INSERT et renvoie l'ID généré
+
+        public int ExecuteInsert(NpgsqlCommand cmd)
+        {
+            int nb = 0;
+            try
+            {
+                cmd.Connection = GetConnection();
+                nb = (int)cmd.ExecuteScalar();
+
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Pb avec une requete insert " + cmd.CommandText);
+                throw;
+            }
+            return nb;
+        }
+
+
+
+
+        //  pour requêtes UPDATE, DELETE
+        public int ExecuteSet(NpgsqlCommand cmd)
+        {
+            int nb = 0;
+            try
+            {
+                cmd.Connection = GetConnection();
+                nb = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Pb avec une requete set " + cmd.CommandText);
+                throw;
+            }
+            return nb;
+
+        }
+
+        // pour requêtes avec une seule valeur retour  (ex : COUNT, SUM) 
+        public object ExecuteSelectUneValeur(NpgsqlCommand cmd)
+        {
+            object res = null;
+            try
+            {
+                cmd.Connection = GetConnection();
+                res = cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Pb avec une requete select " + cmd.CommandText);
+                throw;
+            }
+            return res;
+
+        }
+
+        //  Fermer la connexion 
+        public void CloseConnection()
+        {
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+        }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Employe
+    {
+        private int numemploye;
+        private string nomemploye;
+        private string prenomemploye;
+        private string password;
+        private string login;
+        private Role unRole;
+
+
+        public Employe()
+        {
+        }
+
+        public Employe(int numemploye, string nomemploye, string prenomemploye, string password, string login, Role unRole)
+        {
+            this.Numemploye = numemploye;
+            this.Nomemploye = nomemploye;
+            this.Prenomemploye = prenomemploye;
+            this.Password = password;
+            this.Login = login;
+            this.UnRole = unRole;
+        }
+
+        public int Numemploye
+        {
+            get
+            {
+                return this.numemploye;
+            }
+
+            set
+            {
+                this.numemploye = value;
+            }
+        }
+
+        public string Nomemploye
+        {
+            get
+            {
+                return this.nomemploye;
+            }
+
+            set
+            {
+                this.nomemploye = value;
+            }
+        }
+
+        public string Prenomemploye
+        {
+            get
+            {
+                return this.prenomemploye;
+            }
+
+            set
+            {
+                this.prenomemploye = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return this.password;
+            }
+
+            set
+            {
+                this.password = value;
+            }
+        }
+
+        public string Login
+        {
+            get
+            {
+                return this.login;
+            }
+
+            set
+            {
+                this.login = value;
+            }
+        }
+
+        public Role UnRole
+        {
+            get
+            {
+                return this.unRole;
+            }
+
+            set
+            {
+                this.unRole = value;
+            }
+        }
+
+        public List<Employe> FindAll(Gestion gestion)
+        {
+            List<Employe> lesEmployes = new List<Employe>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from employe;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    // Vérifiez que gestion.LesRoles n'est pas null
+                    if (gestion.LesRoles == null)
+                    {
+                        // Log ou gérer l'erreur
+                        continue; // Passons à l'itération suivante si la collection est null
+                    }
+
+                    // Utiliser FirstOrDefault de manière sécurisée
+                    var role = gestion.LesRoles.FirstOrDefault(c => c.Numrole == (int)dr["numrole"]);
+
+                    // Ajoutez un employé à la liste seulement si toutes les données nécessaires sont disponibles.
+                    if (role != null)
+                    {
+                        lesEmployes.Add(new Employe(
+                            (int)dr["numemploye"],
+                            (string)dr["nomemploye"],
+                            (string)dr["prenomemploye"],
+                            (string)dr["password"],
+                            (string)dr["login"],
+                            role
+                        ));
+                    }
+                }
+            }
+            return lesEmployes;
+        }
+
+        public int Create()
+        {
+            int nb = 0;
+            using (var cmdInsert = new NpgsqlCommand("insert into employe (numemploye,numrole,nomemploye,prenomemploye,password,login ) values (@numemploye,@numrole,@nomemploye,@prenomemploye,@password,@login) RETURNING numemploye"))
+            {
+                cmdInsert.Parameters.AddWithValue("numemploye", this.Numemploye);
+                cmdInsert.Parameters.AddWithValue("numrole", this.UnRole.Numrole);
+                cmdInsert.Parameters.AddWithValue("nomemploye", this.Nomemploye);
+                cmdInsert.Parameters.AddWithValue("prenomemploye", this.Prenomemploye);
+                cmdInsert.Parameters.AddWithValue("password", this.Password);
+                cmdInsert.Parameters.AddWithValue("login", this.Login);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numemploye = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  employe  where numemploye =@numemploye;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numemploye",this.Numemploye);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numemploye = (int)dt.Rows[0]["numemploye"];
+                this.UnRole.Numrole = (int)dt.Rows[0]["numrole"];
+                this.Nomemploye = (string)dt.Rows[0]["nomemploye"];
+                this.Prenomemploye = (string)dt.Rows[0]["prenomemploye"];
+                this.Password = (string)dt.Rows[0]["password"];
+                this.Login = (string)dt.Rows[0]["login"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update employe set numemploye =@numemploye ,  numrole = @maitre,  nomemploye = @nomemploye , prenomemploye =@prenomemploye , password =@password , login =@login  where numemploye =@numemploye;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numemploye", this.Numemploye);
+                cmdUpdate.Parameters.AddWithValue("numrole", this.UnRole.Numrole);
+                cmdUpdate.Parameters.AddWithValue("nomemploye", this.Nomemploye);
+                cmdUpdate.Parameters.AddWithValue("prenomemploye", this.Prenomemploye);
+                cmdUpdate.Parameters.AddWithValue("password", this.Password);
+                cmdUpdate.Parameters.AddWithValue("login", this.Login);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from employe  where numemploye =@numemploye;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numemploye", this.Numemploye);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+
+    }
+}
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+public class Gestion
+{
+    private string nom;
+    private ObservableCollection<Client> lesClients;
+    private ObservableCollection<Plat> lesPlats;
+    private ObservableCollection<Employe> lesEmploye;
+    private ObservableCollection<Commande> lesCommandes;
+    private ObservableCollection<Periode> lesPeriodes;
+    private ObservableCollection<SousCategorie> lesSousCategories;
+    private ObservableCollection<Role> lesRoles;
+    private ObservableCollection<Categorie> lesCategories;
+    private ObservableCollection<CommandePlat> lesCommandesPlats;
+
+    public Gestion() : this("")
+    {
+    }
+
+    public Gestion(string nom)
+    {
+
+        { 
+            this.Nom = nom;
+
+            this.LesCategories = new ObservableCollection<Categorie>(new Categorie().FindAll() ?? new List<Categorie>());
+            this.LesRoles = new ObservableCollection<Role>(new Role().FindAll() ?? new List<Role>());
+            this.LesPeriodes = new ObservableCollection<Periode>(new Periode().FindAll() ?? new List<Periode>());
+            this.LesSousCategories = new ObservableCollection<SousCategorie>(new SousCategorie().FindAll(this) ?? new List<SousCategorie>());
+            this.LesClients = new ObservableCollection<Client>(new Client().FindAll() ?? new List<Client>());
+            this.LesPlats = new ObservableCollection<Plat>(new Plat().FindAll(this) ?? new List<Plat>());
+            this.LesEmploye = new ObservableCollection<Employe>(new Employe().FindAll(this) ?? new List<Employe>());
+            this.LesCommandes = new ObservableCollection<Commande>(new Commande().FindAll(this) ?? new List<Commande>());
+        }
+
+    }
+
+    public string Nom
+    {
+        get
+        {
+            return this.nom;
+        }
+
+        set
+        {
+            this.nom = value;
+        }
+    }
+
+    public ObservableCollection<Client> LesClients
+    {
+        get
+        {
+            return this.lesClients;
+        }
+
+        set
+        {
+            this.lesClients = value;
+        }
+    }
+
+    public ObservableCollection<Plat> LesPlats
+    {
+        get
+        {
+            return this.lesPlats;
+        }
+
+        set
+        {
+            this.lesPlats = value;
+        }
+    }
+
+    public ObservableCollection<Employe> LesEmploye
+    {
+        get
+        {
+            return this.lesEmploye;
+        }
+
+        set
+        {
+            this.lesEmploye = value;
+        }
+    }
+
+    public ObservableCollection<Commande> LesCommandes
+    {
+        get
+        {
+            return this.lesCommandes;
+        }
+
+        set
+        {
+            this.lesCommandes = value;
+        }
+    }
+
+    public ObservableCollection<Periode> LesPeriodes
+    {
+        get
+        {
+            return this.lesPeriodes;
+        }
+
+        set
+        {
+            this.lesPeriodes = value;
+        }
+    }
+
+    public ObservableCollection<SousCategorie> LesSousCategories
+    {
+        get
+        {
+            return this.lesSousCategories;
+        }
+
+        set
+        {
+            this.lesSousCategories = value;
+        }
+    }
+
+    public ObservableCollection<Role> LesRoles
+    {
+        get
+        {
+            return this.lesRoles;
+        }
+
+        set
+        {
+            this.lesRoles = value;
+        }
+    }
+
+    public ObservableCollection<Categorie> LesCategories
+    {
+        get
+        {
+            return this.lesCategories;
+        }
+
+        set
+        {
+            this.lesCategories = value;
+        }
+    }
+
+    public ObservableCollection<CommandePlat> LesCommandesPlats
+    {
+        get
+        {
+            return this.lesCommandesPlats;
+        }
+
+        set
+        {
+            this.lesCommandesPlats = value;
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class LogError
+    {
+        public static void Log(Exception ex, string msg)
+        {
+            string logFile = "error.log";
+            string content = $"{DateTime.Now}:{msg}\n {ex.Message}\n{ex.StackTrace}\n";
+            try
+            {
+                File.AppendAllText(logFile, content);
+            }
+            catch
+            { }
+        }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Periode
+    {
+        private int numperiode;
+        private string libellePeriode;
+
+        public Periode()
+        {
+        }
+
+        public Periode(string libellePeriode, int numperiode)
+        {
+            this.LibellePeriode = libellePeriode;
+            this.Numperiode = numperiode;
+        }
+
+        public string LibellePeriode
+        {
+            get
+            {
+                return this.libellePeriode;
+            }
+
+            set
+            {
+                this.libellePeriode = value;
+            }
+        }
+
+        public int Numperiode
+        {
+            get
+            {
+                return this.numperiode;
+            }
+
+            set
+            {
+                this.numperiode = value;
+            }
+        }
+
+        public List<Periode> FindAll()
+        {
+            List<Periode> lesPeriodes = new List<Periode>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from periode;")) // Assurez-vous que la table est correcte
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+
+                // Vérifiez que la table et ses lignes ne sont pas nulles
+                if (dt != null && dt.Rows != null)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        // Vérifiez que les valeurs de colonnes ne sont pas DBNull.Value
+                        if (dr["libelleperiode"] != DBNull.Value && dr["numperiode"] != DBNull.Value)
+                        {
+                            lesPeriodes.Add(new Periode(
+                                (string)dr["libelleperiode"],
+                                (int)dr["numperiode"]
+                            ));
+                        }
+                    }
+                }
+            }
+            return lesPeriodes;
+        }
+
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using static System.Collections.Specialized.BitVector32;
+
+namespace SAE201.Classes
+{
+    public class Plat 
+    {
+        private int numplat;
+        private string nomplat;
+        private Decimal prixunitaire;
+        private int delaispreparation;
+        private int nbpersonnes;
+        private Periode unePeriode;
+        private SousCategorie uneSousCategorie;
+
+        public Plat()
+        {
+        }
+
+        public Plat(int numplat, string nomplat, decimal prixunitaire, int delaispreparation, int nbpersonnes, Periode unePeriode, SousCategorie uneSousCategorie)
+        {
+            this.Numplat = numplat;
+            this.Nomplat = nomplat;
+            this.Prixunitaire = prixunitaire;
+            this.Delaispreparation = delaispreparation;
+            this.Nbpersonnes = nbpersonnes;
+            this.UnePeriode = unePeriode;
+            this.UneSousCategorie = uneSousCategorie;
+        }
+
+        public int Numplat
+        {
+            get
+            {
+                return this.numplat;
+            }
+
+            set
+            {
+                this.numplat = value;
+            }
+        }
+
+        public string Nomplat
+        {
+            get
+            {
+                return this.nomplat;
+            }
+
+            set
+            {
+                this.nomplat = value;
+            }
+        }
+
+        public Decimal Prixunitaire
+        {
+            get
+            {
+                return this.prixunitaire;
+            }
+
+            set
+            {
+                this.prixunitaire = value;
+            }
+        }
+
+        public int Delaispreparation
+        {
+            get
+            {
+                return this.delaispreparation;
+            }
+
+            set
+            {
+                this.delaispreparation = value;
+            }
+        }
+
+        public int Nbpersonnes
+        {
+            get
+            {
+                return this.nbpersonnes;
+            }
+
+            set
+            {
+                this.nbpersonnes = value;
+            }
+        }
+
+        public Periode UnePeriode
+        {
+            get
+            {
+                return this.unePeriode;
+            }
+
+            set
+            {
+                this.unePeriode = value;
+            }
+        }
+
+        public SousCategorie UneSousCategorie
+        {
+            get
+            {
+                return this.uneSousCategorie;
+            }
+
+            set
+            {
+                this.uneSousCategorie = value;
+            }
+        }
+        public int Create()
+        {
+            int nb = 0;
+            using (var cmdInsert = new NpgsqlCommand("insert into plat (numsouscategorie,numperiode,nomplat,prixunitaire,delaipreparation,nbpersonnes ) values (@numsouscategorie,@numperiode,@nomplat,@prixunitaire,@delaipreparation,@nbpersonnes) RETURNING numplat"))
+            {
+                cmdInsert.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);
+                cmdInsert.Parameters.AddWithValue("numperiode", this.UnePeriode.Numperiode);
+                cmdInsert.Parameters.AddWithValue("nomplat", this.Nomplat);
+                cmdInsert.Parameters.AddWithValue("prixunitaire", this.Prixunitaire);
+                cmdInsert.Parameters.AddWithValue("delaipreparation", this.Delaispreparation);
+                cmdInsert.Parameters.AddWithValue("nbpersonnes", this.Nbpersonnes);
+                nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
+            }
+            this.Numplat = nb;
+            return nb;
+        }
+
+        public void Read()
+        {
+            using (var cmdSelect = new NpgsqlCommand("select * from  plat  where numplat =@numplat;"))
+            {
+                cmdSelect.Parameters.AddWithValue("numplat", this.Numplat);
+
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                this.Numplat = (int)dt.Rows[0]["numplat"];
+                this.UneSousCategorie.Numsouscategorie = (int)dt.Rows[0]["numsouscategorie"];
+                this.UnePeriode.Numperiode = (int)dt.Rows[0]["numperiode"];
+                this.Nomplat = (string)dt.Rows[0]["nomplat"];
+                this.Prixunitaire = (Decimal)dt.Rows[0]["prixunitaire"];
+                this.Delaispreparation = (int)dt.Rows[0]["delaipreparation"];
+                this.Nbpersonnes = (int)dt.Rows[0]["nbpersonnes"];
+
+            }
+
+        }
+
+        public int Update()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("update plat set numplat =@numplat ,  numsouscategorie =@numsouscategorie,  numperiode =@numperiode , nomplat =@nomplat , prixunitaire =@prixunitaire ,delaipreparation =@delaipreparation , nbpersonnes =@nbpersonnes  where numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numplat", this.Numplat);
+                cmdUpdate.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);
+                cmdUpdate.Parameters.AddWithValue("numperiode", this.UnePeriode.Numperiode);
+                cmdUpdate.Parameters.AddWithValue("nomplat", this.Nomplat);
+                cmdUpdate.Parameters.AddWithValue("prixunitaire", this.Prixunitaire);
+                cmdUpdate.Parameters.AddWithValue("delaipreparation", this.Delaispreparation);
+                cmdUpdate.Parameters.AddWithValue("nbpersonnes", this.Nbpersonnes);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public int Delete()
+        {
+            using (var cmdUpdate = new NpgsqlCommand("delete from plat  where numplat =@numplat;"))
+            {
+                cmdUpdate.Parameters.AddWithValue("numplat", this.Numplat);
+                return DataAccess.Instance.ExecuteSet(cmdUpdate);
+            }
+        }
+
+        public List<Plat> FindAll(Gestion gestion)
+        {
+            List<Plat> lesPlats = new List<Plat>();
+
+            // Vérification préalable des dépendances
+            if (gestion.LesPeriodes == null || gestion.LesSousCategories == null)
+            {
+                throw new InvalidOperationException("Les périodes ou les sous-catégories ne sont pas initialisées dans l'objet Gestion.");
+            }
+
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from plat;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    var periode = gestion.LesPeriodes
+                        .FirstOrDefault(p => p.Numperiode == (int)dr["numperiode"]);
+
+                    var sousCategorie = gestion.LesSousCategories
+                        .FirstOrDefault(s => s.Numsouscategorie == (int)dr["numsouscategorie"]);
+
+                    // Tu peux ajouter un log ou continuer même si null
+                    if (periode == null || sousCategorie == null)
+                    {
+                        // Logique de fallback si tu veux continuer
+                        continue; // ou logguer l’erreur
+                    }
+
+                    lesPlats.Add(new Plat(
+                        (int)dr["numplat"],
+                        (string)dr["nomplat"],
+                        (Decimal)dr["prixunitaire"],
+                        (int)dr["delaipreparation"],
+                        (int)dr["nbpersonnes"],
+                        periode,
+                        sousCategorie
+                    ));
+                }
+            }
+
+            return lesPlats;
+        }
+
+
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Role
+    {
+        private int numrole;
+        private string nomrole;
+
+        public Role()
+        {
+        }
+
+        public Role(int numrole, string nomrole)
+        {
+            this.Numrole = numrole;
+            this.Nomrole = nomrole;
+        }
+
+        public int Numrole
+        {
+            get
+            {
+                return this.numrole;
+            }
+
+            set
+            {
+                this.numrole = value;
+            }
+        }
+
+        public string Nomrole
+        {
+            get
+            {
+                return this.nomrole;
+            }
+
+            set
+            {
+                this.nomrole = value;
+            }
+        }
+        public List<Role> FindAll()
+        {
+            List<Role> lesRoles = new List<Role>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from role;")) // Assurez-vous d'interroger la bonne table, ici 'role'
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+
+                // Vérifiez que la DataTable et ses lignes ne sont pas null
+                if (dt != null && dt.Rows != null)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        // Vérifiez que les valeurs des colonnes ne sont pas DBNull.Value
+                        if (dr["numrole"] != DBNull.Value && dr["nomrole"] != DBNull.Value)
+                        {
+                            lesRoles.Add(new Role(
+                                (int)dr["numrole"],
+                                (string)dr["nomrole"]
+                            ));
+                        }
+                    }
+                }
+            }
+            return lesRoles;
+        }
+
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class Session
+    {
+        public static Employe UtilisateurConnecte { get; set; }
+    }
+}
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SAE201.Classes
+{
+    public class SousCategorie
+    {
+        private int numsouscategorie;
+        private string nomsouscategorie;
+        private Categorie uneCategorie;
+
+        public SousCategorie()
+        {
+        }
+
+        public SousCategorie(int numsouscategorie, string nomsouscategorie, Categorie uneCategorie)
+        {
+            this.Numsouscategorie = numsouscategorie;
+            this.Nomsouscategorie = nomsouscategorie;
+            this.UneCategorie = uneCategorie;
+        }
+
+        public int Numsouscategorie
+        {
+            get
+            {
+                return this.numsouscategorie;
+            }
+
+            set
+            {
+                this.numsouscategorie = value;
+            }
+        }
+
+        public string Nomsouscategorie
+        {
+            get
+            {
+                return this.nomsouscategorie;
+            }
+
+            set
+            {
+                this.nomsouscategorie = value;
+            }
+        }
+
+        public Categorie UneCategorie
+        {
+            get
+            {
+                return this.uneCategorie;
+            }
+
+            set
+            {
+                this.uneCategorie = value;
+            }
+        }
+        public List<SousCategorie> FindAll(Gestion gestion)
+        {
+            List<SousCategorie> lesSousCategories = new List<SousCategorie>();
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from souscategorie;"))
+            {
+                DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
+                foreach (DataRow dr in dt.Rows)
+                        lesSousCategories.Add(new SousCategorie((int)dr["numsouscategorie"], (string)dr["nomsouscategorie"],
+                        gestion.LesCategories.FirstOrDefault(c => c.Numcategorie == (int)dr["numcategorie"])));
+            }
+            return lesSousCategories;
+        }
+    }
+}
+Voila toutes les classes maintenant; ci après touts les user controls (xaml et xaml.cs juste apres):
+<UserControl x:Class="SAE201.userControls.Acceuil"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SAE201.userControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000" Background="White">
+    <Grid>
+        <StackPanel Margin="20">
+            <Image Source="/Images/Logo.png" Stretch="Fill" Margin="0,20"/>
+            <Label Content="Bienvenue sur l'application de gestion de commande de Sibilia" Width="894" Height="64" FontSize="32" Margin="0,60" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Acceuil.xaml
+    /// </summary>
+    public partial class Acceuil : UserControl
+    {
+        public Acceuil()
+        { 
+            InitializeComponent();
+           
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.AjouterPlat"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Ajouter un plat" />
+
+        <!--  Corps du formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,5" Text="Par mot clef :" />
+                <TextBlock Margin="0,10,0,5" Text="Par catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par sous-catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par disponibilité :" />
+                <TextBlock Margin="0,10,0,5" Text="Par prix :" />
+                <TextBlock Margin="0,10,0,5" Text="Quantité :" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,10,379">
+                <TextBox x:Name="textMotClefPlat" Width="200" />
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <RadioButton
+                        x:Name="radioEntree"
+                        Margin="0,0,10,0"
+                        Checked="RadioButton_Checked"
+                        Content="Entree"
+                        GroupName="Categorie" />
+                    <RadioButton
+                        x:Name="radioPlat"
+                        Checked="RadioButton_Checked"
+                        Content="Plat"
+                        GroupName="Categorie" />
+                </StackPanel>
+
+                <WrapPanel Margin="0,10,0,0">
+                    <RadioButton
+                        x:Name="radioEntreeChaude"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree chaude"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioEntreeFroide"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree froide"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatChaud"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat chaud"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatFroid"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat froid"
+                        GroupName="SousCategorie" />
+
+                </WrapPanel>
+
+                <TextBox
+                    x:Name="textDisponibilite"
+                    Width="200"
+                    Margin="0,10,0,0" />
+                <TextBox
+                    x:Name="textPrix"
+                    Width="200"
+                    Margin="0,10,0,0" />
+
+                <TextBox x:Name="textQuantite" Width="200" Margin="0,20,0,0" />
+
+            </StackPanel>
+        </Grid>
+
+        <DataGrid
+            x:Name="dgPlats"
+            Grid.Row="1"
+            Margin="0,210,0,0"
+            HorizontalAlignment="Center"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding LesPlats}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nomplat, ValidatesOnExceptions=true}"
+                    Header="Nom" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Prixunitaire, ValidatesOnExceptions=true}"
+                    Header="Prix" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Delaispreparation, ValidatesOnExceptions=true}"
+                    Header="délais de préparation" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nbpersonnes, ValidatesOnExceptions=True}"
+                    Header="Nombre de personnes" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.UneCategorie.Nomcategorie, ValidatesOnExceptions=True}"
+                    Header="Catégorie" />
+
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.Nomsouscategorie, ValidatesOnExceptions=True}"
+                    Header="Sous-catégorie" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UnePeriode.LibellePeriode, ValidatesOnExceptions=True}"
+                    Header="Disponibilité" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+            x:Name="CreerplatRechercherPlat"
+            Grid.RowSpan="2"
+            Width="100"
+            Height="50"
+            Margin="835,47,25,563"
+            Click="CreerplatRechercherPlat_Click"
+            Content="Créer un Plat" />
+        <Button
+            x:Name="butAdd"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="835,75,25,478"
+            Click="butAdd_Click"
+            Content="Ajouter"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour AjouterPlat.xaml
+    /// </summary>
+    public partial class AjouterPlat : UserControl
+    {
+        public AjouterPlat()
+        {
+            InitializeComponent();
+            dgPlats.Items.Filter = FiltrePlatCombine;
+
+            textMotClefPlat.TextChanged += textMotClefPlat_TextChanged;
+            textDisponibilite.TextChanged += textDisponibilite_TextChanged;
+            textPrix.TextChanged += textPrix_TextChanged;
+            radioEntree.Checked += RadioButton_Checked;
+            radioPlat.Checked += RadioButton_Checked;
+            radioEntreeChaude.Checked += RadioButton_Checked;
+            radioEntreeFroide.Checked += RadioButton_Checked;
+            radioPlatChaud.Checked += RadioButton_Checked;
+            radioPlatFroid.Checked += RadioButton_Checked;
+
+        }
+        private string _filterCategorie;
+        private string _filterSousCategorie;
+        private decimal? _filterPrix;
+
+        private bool FiltrePlatCombine(object obj)
+        {
+
+
+            {
+                var unPlat = obj as Plat;
+                if (unPlat == null) return false;
+
+                bool motClefMatch = string.IsNullOrWhiteSpace(textMotClefPlat.Text) ||
+                    (unPlat.Nomplat != null && unPlat.Nomplat.Contains(textMotClefPlat.Text, StringComparison.OrdinalIgnoreCase));
+
+                string categoriePlat = unPlat.UneSousCategorie?.UneCategorie?.Nomcategorie ?? "";
+                bool categorieMatch = string.IsNullOrEmpty(_filterCategorie) ||
+                    string.Equals(categoriePlat, _filterCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string sousCategoriePlat = unPlat.UneSousCategorie?.Nomsouscategorie ?? "";
+                bool sousCategorieMatch = string.IsNullOrEmpty(_filterSousCategorie) ||
+                    string.Equals(sousCategoriePlat, _filterSousCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string disponibilitePlat = unPlat.UnePeriode?.LibellePeriode ?? "";
+                bool disponibiliteMatch = string.IsNullOrWhiteSpace(textDisponibilite.Text) ||
+                    disponibilitePlat.Contains(textDisponibilite.Text, StringComparison.OrdinalIgnoreCase);
+
+                bool prixMatch = !_filterPrix.HasValue || (unPlat.Prixunitaire <= _filterPrix.Value);
+
+                return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
+            }
+
+
+        }
+
+        private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void textDisponibilite_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void textPrix_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (decimal.TryParse(textPrix.Text, out var prix))
+                _filterPrix = prix;
+            else
+                _filterPrix = null;
+
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var rb = sender as RadioButton;
+                if (rb == null) return;
+
+                if (rb.GroupName == "Categorie")
+                {
+                    _filterCategorie = rb.Content?.ToString();
+                }
+                else if (rb.GroupName == "SousCategorie")
+                {
+                    _filterSousCategorie = rb.Content?.ToString();
+                }
+
+                CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du filtrage : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CreerplatRechercherPlat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerplat))
+            {
+                mainWin.ZoneUserControls.Content = new Creerplat();
+            }
+        }
+
+        private void butAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.Connection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Margin="20">
+            <Label
+                Margin="0,85,0,0"
+                HorizontalAlignment="Center"
+                FontSize="40"
+                Content="Connexion" />
+            <Label
+                Width="607"
+                Margin="40,20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="Identifiant :"
+                FontSize="30" />
+            <TextBox
+                x:Name="loginTextbox"
+                Width="607"
+                Height="49"
+                FontSize="30" />
+            <Label
+                Width="607"
+                Margin="40,20"
+                Content="Mot de passe :"
+                FontSize="30" />
+            <PasswordBox
+                x:Name="mdpTextBox"
+                Width="607"
+                Height="49"
+                FontSize="30" />
+            <Button
+                x:Name="Connecter"
+                Width="370"
+                Height="63"
+                Margin="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                Click="Se_Connecter_Click"
+                Content="Se connecter"
+                Cursor="Hand"
+                FontSize="30">
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="31.5">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+        </StackPanel>
+
+
+
+    </Grid>
+</UserControl>
+using Npgsql;
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Connection.xaml
+    /// </summary>
+    public partial class Connection : UserControl
+    {
+        public Connection()
+        {
+           
+            InitializeComponent();
+            
+        }
+
+        private void Se_Connecter_Click(object sender, RoutedEventArgs e)
+        {
+
+            string username = loginTextbox.Text;
+            string password = mdpTextBox.Password;
+            string connString = $"Host=srv-peda-new;Port=5433;Username={username};Password={password};Database=BD_SAE;Options=-c search_path=201";
+
+            try
+            {
+                DataAccess.Init(connString);
+                using (var conn = DataAccess.Instance.GetConnection())
+                { }
+
+                // 1) Récupère MainWindow et met à jour l'état connecté
+                var mainWin = (MainWindow)Application.Current.MainWindow;
+
+                using (var cmd = new NpgsqlCommand("SELECT * FROM employe WHERE login = @login", DataAccess.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("login", username);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Employe emp = new Employe
+                            {
+                                Numemploye = (int)reader["numemploye"],
+                                Nomemploye = (string)reader["nomemploye"],
+                                Prenomemploye = (string)reader["prenomemploye"],
+                                Login = (string)reader["login"]
+                                // ajoute les autres champs si nécessaires
+                            };
+                            mainWin.EmployeConnecte = emp;
+                        }
+                    }
+                }
+
+
+                Window parentWindow = Window.GetWindow(this);
+
+                 mainWin = (MainWindow)Application.Current.MainWindow;
+                 mainWin.ZoneUserControls.Content = new Acceuil();
+                 mainWin.Menu.Visibility = Visibility.Visible;
+                
+            
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur de connexion : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.Creerclient"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Titre  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Créer un client" />
+
+        <!--  Formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,10" Text="Nom :" />
+                <TextBlock Margin="0,10,0,10" Text="Prénom :" />
+                <TextBlock Margin="0,10,0,10" Text="Téléphone :" />
+                <TextBlock Margin="0,10,0,10" Text="Rue :" />
+                <TextBlock Margin="0,10,0,10" Text="Code Postal :" />
+                <TextBlock Margin="0,10,0,10" Text="Ville :" />
+
+            </StackPanel>
+
+            <StackPanel Grid.ColumnSpan="2" Margin="136,0,64,0">
+                <TextBox x:Name="txtNom" Width="250" />
+                <TextBox
+                    x:Name="txtPrenom"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="txtTelephone"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="txtRue"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="txtCP"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="txtVille"
+                    Width="250"
+                    Margin="0,17,0,0" />
+            </StackPanel>
+        </Grid>
+
+        <!--  Bouton  -->
+        <Button
+            x:Name="Creer"
+            Grid.Row="2"
+            Width="150"
+            Height="40"
+            Margin="0,20"
+            HorizontalAlignment="Center"
+            Click="BoutonCreerClient_Click"
+            Content="Créer" />
+        <Button
+            x:Name="Chercherclient"
+            Grid.Row="1"
+            Height="36"
+            Margin="840,99,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="Chercherclient_Click"
+            Content="Chercher un client" />
+
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Creerclient.xaml
+    /// </summary>
+    public partial class Creerclient : UserControl
+    {
+        private Gestion gestion;
+        public Creerclient()
+        {
+            InitializeComponent();
+            this.gestion = (Gestion)Application.Current.MainWindow.DataContext;
+        }
+
+        private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Vérification des champs obligatoires
+            if (string.IsNullOrWhiteSpace(txtNom.Text) ||
+                string.IsNullOrWhiteSpace(txtPrenom.Text) ||
+                string.IsNullOrWhiteSpace(txtTelephone.Text) ||
+                string.IsNullOrWhiteSpace(txtRue.Text) ||
+                string.IsNullOrWhiteSpace(txtCP.Text) ||
+                string.IsNullOrWhiteSpace(txtVille.Text))
+            {
+                MessageBox.Show("Tous les champs sont obligatoires.", "Champs manquants",MessageBoxButton.OK,MessageBoxImage.Warning);
+                return;
+            }
+            try
+            {
+                Client client = new Client
+                {
+                    Nomclient = txtNom.Text,
+                    Prenomclient = txtPrenom.Text,
+                    Tel = txtTelephone.Text,
+                    Adresserue = txtRue.Text,
+                    Adressecp = txtCP.Text,
+                    Adresseville = txtVille.Text
+                };
+                
+
+                int nouvelId = client.Create();
+
+                gestion.LesClients.Add(client);
+
+                MessageBox.Show($"Client créé avec succès ");
+
+                // --- Nettoyage des champs ---
+                txtNom.Clear();
+                txtPrenom.Clear();
+                txtTelephone.Clear();
+                txtRue.Clear();
+                txtCP.Clear();
+                txtVille.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la création du client : " + ex.Message);
+            }
+
+        }
+
+        private void Chercherclient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Rechercherclient))
+            {
+                mainWin.ZoneUserControls.Content = new Rechercherclient();
+            }
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.Creerplat"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Titre  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Créer un plat" />
+
+        <!--  Formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20,0,250">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Libellés  -->
+            <StackPanel Grid.Column="0" Margin="0,0,0,88">
+                <TextBlock Margin="0,0,0,10" Text="Nom du plat :" />
+                <TextBlock Margin="0,10,0,10" Text="Prix unitaire (€) :" />
+                <TextBlock Margin="0,10,0,10" Text="Délai de préparation (jour) :" />
+                <TextBlock Margin="0,10,0,10" Text="Nombre de personnes :" />
+                <TextBlock Margin="0,10,0,10" Text="Période :" />
+                <TextBlock Margin="0,10,0,10" Text="Sous-catégorie :" />
+                <TextBlock Margin="0,10,0,10" Text="Categorie : " />
+            </StackPanel>
+
+            <!--  Champs liés via Binding  -->
+            <StackPanel Grid.Column="1" Margin="0,0,0,88">
+                <TextBox x:Name="TxtNomPlat" Width="250" />
+                <TextBox
+                    x:Name="TxtPrix"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="TxtDelais"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="TxtNbPersonnes"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="TxtPeriode"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="TxtSouscategorie"
+                    Width="250"
+                    Margin="0,17,0,0" />
+                <TextBox
+                    x:Name="TxtCategorie"
+                    Width="250"
+                    Margin="0,17,0,0" />
+
+
+
+
+            </StackPanel>
+
+        </Grid>
+        <!--  Bouton  -->
+        <Button
+            x:Name="Newplat"
+            Grid.Row="1"
+            Width="150"
+            Height="40"
+            Margin="383,313,0,250"
+            HorizontalAlignment="Left"
+            Click="NewPlat_Click"
+            Content="Créer" />
+        <Button
+            x:Name="chercherplat"
+            Grid.Row="1"
+            Width="200"
+            Margin="750,39,10,514"
+            Click="chercherplat_Click"
+            Content="Chercher un plat" />
+    </Grid>
+
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using static System.Collections.Specialized.BitVector32;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Creerplat.xaml
+    /// </summary>
+    public partial class Creerplat : UserControl
+    {
+        public Creerplat()
+        {
+            InitializeComponent();
+        }
+
+        private void NewPlat_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 1. Validation des champs obligatoires
+                if (string.IsNullOrWhiteSpace(TxtNomPlat.Text) ||
+                    string.IsNullOrWhiteSpace(TxtPrix.Text) ||
+                    string.IsNullOrWhiteSpace(TxtDelais.Text) ||
+                    string.IsNullOrWhiteSpace(TxtNbPersonnes.Text) ||
+                    string.IsNullOrWhiteSpace(TxtPeriode.Text) ||
+                    string.IsNullOrWhiteSpace(TxtSouscategorie.Text))
+                {
+                    MessageBox.Show(
+                        "Tous les champs sont obligatoires.",
+                        "Champs manquants",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 2. Récupération de l'instance de gestion
+                Gestion gestion = (Gestion)Application.Current.MainWindow.DataContext;
+
+                // 3. Parsing sécurisé
+                if (!decimal.TryParse(TxtPrix.Text, out decimal prix))
+                {
+                    MessageBox.Show("Le prix n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(TxtDelais.Text, out int delais))
+                {
+                    MessageBox.Show("Le délai de préparation n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(TxtNbPersonnes.Text, out int nbPers))
+                {
+                    MessageBox.Show("Le nombre de personnes n'est pas valide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                string nomPeriode = TxtPeriode.Text.Trim();
+                string nomSousCategorie = TxtSouscategorie.Text.Trim();
+
+                // 4. Recherche des objets liés
+                Periode periode = gestion.LesPeriodes.FirstOrDefault
+                    (p => p.LibellePeriode.Equals(nomPeriode, StringComparison.OrdinalIgnoreCase));
+                SousCategorie sousCat = gestion.LesSousCategories.FirstOrDefault
+                    (sc => sc.Nomsouscategorie.Equals(nomSousCategorie, StringComparison.OrdinalIgnoreCase));
+
+                if (periode == null || sousCat == null)
+                {
+                    MessageBox.Show("Période ou sous-catégorie introuvable.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 5. Création de l'objet Plat
+                Plat plat = new Plat
+                {
+                    Nomplat = TxtNomPlat.Text.Trim(),
+                    Prixunitaire = prix,
+                    Delaispreparation = delais,
+                    Nbpersonnes = nbPers,
+                    UnePeriode = periode,
+                    UneSousCategorie = sousCat
+                };
+
+                // 6. Insertion en base et mise à jour de l'UI
+                int newId = plat.Create();
+                gestion.LesPlats.Add(plat);
+
+                MessageBox.Show($"Plat créé avec succès", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // 7. Réinitialisation des champs
+                TxtNomPlat.Clear();
+                TxtPrix.Clear();
+                TxtDelais.Clear();
+                TxtNbPersonnes.Clear();
+                TxtPeriode.Clear();
+                TxtSouscategorie.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la création du plat : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void chercherplat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Rechercherplat))
+            {
+                mainWin.ZoneUserControls.Content = new Rechercherplat();
+            }
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.DetailCommande"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Height="700"
+    d:DesignWidth="1000"
+    Background="white"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="21*" />
+            <RowDefinition Height="184*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="40"
+            FontWeight="Bold"
+            Text="Détail de la commande" />
+
+        <StackPanel Grid.Row="1">
+            <StackPanel Margin="20" Orientation="Horizontal">
+                <TextBlock
+                    Margin="25,0,0,0"
+                    FontSize="30"
+                    Text="• Liste des plats" />
+                <Button x:Name="Addplat"
+                    Margin="50,0,0,0"
+                    Content="Ajouter un plat"
+                    FontSize="25" Click="Addplat_Click" />
+            </StackPanel>
+
+            <ScrollViewer>
+                <DataGrid
+                    x:Name="dgPlatsCommande"
+                    Height="142"
+                    FontSize="16">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nom plat" />
+                        <DataGridTextColumn Header="Catégorie" />
+                        <DataGridTextColumn Header="Sous-Catégorie" />
+                        <DataGridTextColumn Header="Nb personnes" />
+                        <DataGridTextColumn Header="Prix" />
+                        <DataGridTextColumn Header="Temps préparation (jour)" />
+                        <DataGridTextColumn Header="Disponibilité" />
+                        <DataGridTextColumn Header="Quantité" />
+                        <DataGridTextColumn Header="Supprimer" />
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </ScrollViewer>
+            <TextBlock
+                Margin="0,20,0,0"
+                FontSize="25"
+                Text="Montant total :" />
+
+            <TextBlock
+                Margin="45,20"
+                FontSize="30"
+                Text="• Détails" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="25"
+                Text="Date de création :" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="25"
+                Text="Date de retrait :" />
+            <TextBlock
+                Margin="0,0,0,10"
+                FontSize="25"
+                Text="Vendeur :" />
+            <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                <TextBlock FontSize="25" Text="Client :" />
+                <Button
+                    x:Name="butCréerclient"
+                    Margin="100,0"
+                    Click="butCréerclient_Click"
+                    Content="Créer client"
+                    FontSize="25" />
+            </StackPanel>
+
+
+
+        </StackPanel>
+
+
+
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using SAE201.Usercontrol;
+using SAE201.userControls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour DetailCommande.xaml
+    /// </summary>
+    public partial class DetailCommande : UserControl
+    {
+        private Commande commande;
+
+
+        public DetailCommande(Commande selectedCommande)
+        {
+            InitializeComponent();
+            Commande = selectedCommande;
+            DataContext = Commande;
+        }
+
+        public Commande Commande
+        {
+            get
+            {
+                return this.commande;
+            }
+
+            set
+            {
+                this.commande = value;
+            }
+        }
+        private void butCréerclient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
+        }
+
+        private void Addplat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is AjouterPlat))
+            {
+                mainWin.ZoneUserControls.Content = new AjouterPlat();
+            }
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.userControls.Editerclient"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="Bold"
+            Text="Modifier un Client" />
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Top">
+            <TextBlock Text="Nom" />
+            <TextBox x:Name="txtNom" />
+
+            <TextBlock Text="Prénom" />
+            <TextBox x:Name="txtPrenom" />
+
+            <TextBlock Text="Téléphone" />
+            <TextBox x:Name="txtTelephone" />
+
+            <TextBlock Text="Rue" />
+            <TextBox x:Name="txtRue" />
+
+            <TextBlock Text="Code Postal" />
+            <TextBox x:Name="txtCP" />
+
+            <TextBlock Text="Ville" />
+            <TextBox x:Name="txtVille" />
+        </StackPanel>
+
+        <Button
+            Grid.Row="1"
+            Width="150"
+            Height="50"
+            Margin="0,241,0,56"
+            HorizontalAlignment="Center"
+            Click="BtnMettreAJour_Click"
+            Content="Mettre à jour" />
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Editerclient.xaml
+    /// </summary>
+    public partial class Editerclient : UserControl
+    {
+        private Client client;
+        public Editerclient(Client clientExistant)
+        {
+            InitializeComponent();
+            client = clientExistant;
+            RemplirChamps();
+        }
+
+        private void RemplirChamps()
+        {
+            txtNom.Text = client.Nomclient;
+            txtPrenom.Text = client.Prenomclient;
+            txtTelephone.Text = client.Tel;
+            txtRue.Text = client.Adresserue;
+            txtCP.Text = client.Adressecp;
+            txtVille.Text = client.Adresseville;
+        }
+
+        private void BtnMettreAJour_Click(object sender, RoutedEventArgs e)
+        {
+            client.Nomclient = txtNom.Text;
+            client.Prenomclient = txtPrenom.Text;
+            client.Tel = txtTelephone.Text;
+            client.Adresserue = txtRue.Text;
+            client.Adressecp = txtCP.Text;
+            client.Adresseville = txtVille.Text;
+
+            int result = client.Update();
+            if (result > 0)
+            {
+                MessageBox.Show("Client mis à jour avec succès !");
+                var mainWin = (MainWindow)Application.Current.MainWindow;
+                mainWin.ZoneUserControls.Content = new Rechercherclient();
+            }
+            else
+            {
+                MessageBox.Show("Échec de la mise à jour.");
+
+            }
+        }
+
+
+       
+    }
+}
+<UserControl
+    x:Class="SAE201.Editerplat"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Background="White"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="Bold"
+            Text="Modifier un Plat" />
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Top">
+            <TextBlock Text="Nom du plat" />
+            <TextBox x:Name="TxtNomPlat" />
+
+            <TextBlock Text="Prix" />
+            <TextBox x:Name="TxtPrix" />
+
+            <TextBlock Text="Délai de préparation" />
+            <TextBox x:Name="TxtDelais" />
+
+            <TextBlock Text="Nombre de personnes" />
+            <TextBox x:Name="TxtNbPersonnes" />
+
+            <TextBlock Text="Période" />
+            <TextBox x:Name="TxtPeriode" />
+
+            <TextBlock Text="Sous-catégorie" />
+            <TextBox x:Name="TxtSouscategorie" />
+        </StackPanel>
+
+        <Button
+            Grid.Row="1"
+            Width="150"
+            Height="50"
+            Margin="0,242,0,56"
+            HorizontalAlignment="Center"
+            Content="Mettre à jour" />
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201
+{
+    /// <summary>
+    /// Logique d'interaction pour Editerplat.xaml
+    /// </summary>
+    public partial class Editerplat : UserControl
+    {
+            private Plat plat;
+
+            public Editerplat(Plat platExistant)
+            {
+                InitializeComponent();
+                plat = platExistant;
+                RemplirChamps();
+            }
+
+            private void RemplirChamps()
+            {
+                TxtNomPlat.Text = plat.Nomplat;
+                TxtPrix.Text = plat.Prixunitaire.ToString();
+                TxtDelais.Text = plat.Delaispreparation.ToString();
+                TxtNbPersonnes.Text = plat.Nbpersonnes.ToString();
+                TxtPeriode.Text = plat.UnePeriode.Numperiode.ToString();
+                TxtSouscategorie.Text = plat.UneSousCategorie.Numsouscategorie.ToString();
+            }
+
+            private void BtnMettreAJour_Click(object sender, RoutedEventArgs e)
+            {
+                plat.Nomplat = TxtNomPlat.Text;
+                plat.Prixunitaire = Decimal.TryParse(TxtPrix.Text, out var prix) ? prix : 0;
+                plat.Delaispreparation = int.TryParse(TxtDelais.Text, out var delais) ? delais : 0;
+                plat.Nbpersonnes = int.TryParse(TxtNbPersonnes.Text, out var nb) ? nb : 0;
+
+                plat.UnePeriode.Numperiode = int.TryParse(TxtPeriode.Text, out var periode) ? periode : 0;
+                plat.UneSousCategorie.Numsouscategorie = int.TryParse(TxtSouscategorie.Text, out var sc) ? sc : 0;
+
+                int result = plat.Update();
+                if (result > 0)
+                    MessageBox.Show("Plat mis à jour avec succès !");
+                else
+                    MessageBox.Show("Échec de la mise à jour.");
+            }
+
+            private void NettoyerChamps()
+            {
+                TxtNomPlat.Clear();
+                TxtPrix.Clear();
+                TxtDelais.Clear();
+                TxtNbPersonnes.Clear();
+                TxtPeriode.Clear();
+                TxtSouscategorie.Clear();
+            }
+        }
+    }
+
+<UserControl
+    x:Class="SAE201.userControls.NouvelleCommande"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="16*" />
+            <RowDefinition Height="149*" />
+
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Margin="0,10,0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Nouvelle commande" />
+
+        <StackPanel Grid.Row="1" Margin="20,100,20,20">
+            <Label Content="Client" FontSize="20" />
+            <ComboBox
+                x:Name="menuClient"
+                IsEditable="True"
+                ItemsSource="{Binding LesClients}" 
+                Margin="0,0,0,20"/>
+            <Label Content="Date du jour" FontSize="20" />
+            <DatePicker x:Name="dateJour" Margin="0,0,0,20" />
+            <Label Content="Date de retrait prévue" FontSize="20" />
+            <DatePicker x:Name="dateRetrait" Margin="0,0,0,20" />
+            <StackPanel
+                Margin="0,20,0,20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="Pas encore client ?" />
+                <Button
+                    x:Name="butCréerClient"
+                    Width="143"
+                    Margin="100,0,0,0"
+                    Click="butCréerClient_Click"
+                    Content="Créer client"
+                    FontSize="20" />
+            </StackPanel>
+            <Button
+                x:Name="butCreerCommande"
+                Width="228"
+                Margin="0,50,0,0"
+                Click="butCreerCommande_Click"
+                Content="Créer commande"
+                FontSize="20"/>
+
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour NouvelleCommande.xaml
+    /// </summary>
+    public partial class NouvelleCommande : UserControl
+    {
+        public NouvelleCommande()
+        {
+            InitializeComponent();
+        }
+
+        private void butCréerClient_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
+        }
+
+        private void butCreerCommande_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((!dateJour.SelectedDate.HasValue) || (!dateRetrait.SelectedDate.HasValue))
+                {
+                    MessageBox.Show("Veuillez selectionner une date", "champs manquants",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                Gestion gestion = (Gestion)Application.Current.MainWindow.DataContext;
+
+                var mainWin = (MainWindow)Application.Current.MainWindow;
+
+
+                Commande uneCommande = new Commande
+                {
+                    UnClient = (Client)menuClient.SelectedItem,
+                    UnEmploye = mainWin.EmployeConnecte,
+                    Datecommande = (DateTime)dateJour.SelectedDate,
+                    Dateretraitprevue = (DateTime)dateRetrait.SelectedDate,
+                    Payee = false,
+                    Retire = false,
+                    Prixtotal = 0
+                };
+
+                int newId = uneCommande.Create();
+                gestion.LesCommandes.Add(uneCommande);
+
+                MessageBox.Show($"Commande bel et bien créée", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                dateJour.SelectedDate = null;
+                dateRetrait.SelectedDate = null;
+            }
+            catch (Exception ex)
+            {
+                LogError.Log(ex, "Erreue");
+                MessageBox.Show("Erreur lors de la creation de la commande :" + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void menuClient_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+
+        }
+    }
+}
+
+<UserControl
+    x:Class="SAE201.userControls.Rechercherclient"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.userControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:SAE201.Classes"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="114.757" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Width="268"
+            Margin="0,10,0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Rechercher un client" />
+
+        <!--  Corps du formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,5" Text="Par Nom :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Prénom :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Ville :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Rue :" />
+                <TextBlock Margin="0,10,0,5" Text="Par Code postal :" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                <TextBox
+                    x:Name="textMotClefClientNom"
+                    Width="200"
+                    Margin="0,0,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
+                <TextBox
+                    x:Name="textMotClefClientPrenom"
+                    Width="200"
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
+                <TextBox
+                    x:Name="textMotClefClientVille"
+                    Width="200"
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
+                <TextBox
+                    x:Name="textMotClefClientRue"
+                    Width="200"
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
+                <TextBox
+                    x:Name="textMotClefClientCP"
+                    Width="200"
+                    Margin="0,10,0,5"
+                    TextChanged="textMotClefClient_TextChanged" />
+
+
+            </StackPanel>
+            <DataGrid
+                x:Name="dgClients"
+                Grid.ColumnSpan="2"
+                Margin="0,169,0,-142"
+                HorizontalAlignment="Left"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding LesClients}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Nomclient, ValidatesOnExceptions=true}"
+                        Header="Nom" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Prenomclient, ValidatesOnExceptions=true}"
+                        Header="Prénom" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Tel, ValidatesOnExceptions=true}"
+                        Header="Téléphone" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adresserue, ValidatesOnExceptions=True}"
+                        Header="Rue" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adressecp, ValidatesOnExceptions=True}"
+                        Header="Code postal" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Adresseville, ValidatesOnExceptions=True}"
+                        Header="Ville" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+        <!--  Bouton Rechercher  -->
+        <Button
+            x:Name="Creer_client"
+            Grid.RowSpan="2"
+            Width="100"
+            Height="50"
+            Margin="734,57,126,438"
+            Click="Creer_client_Click"
+            Content="Créer un Client" />
+        <Button
+            x:Name="butSuppr"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="734,80,126,358"
+            Click="butSupprClient_Click"
+            Content="&#xE74D;"
+            FontFamily="Segoe MDL2 Assets"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
+
+        <Button
+            x:Name="Editer_client"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="850,49,10,389"
+            Content="Editer"
+            FontSize="16" Click="Editer_client_Click_1" />
+
+    </Grid>
+
+
+</UserControl>
+
+using SAE201.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201.userControls
+{
+    /// <summary>
+    /// Logique d'interaction pour Rechercherclient.xaml
+    /// </summary>
+    public partial class Rechercherclient : UserControl
+    {
+        public Rechercherclient()
+        {
+            InitializeComponent();
+            dgClients.Items.Filter = FiltreClientCombine;
+            
+        }
+
+        private bool FiltreClientCombine(object obj)
+        {
+            var unClient = obj as Client;
+            if (unClient == null) return false;
+
+            // Vérifier chaque critère de recherche
+            bool nomMatch = string.IsNullOrEmpty(textMotClefClientNom.Text) ||
+                            unClient.Nomclient.StartsWith(textMotClefClientNom.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool prenomMatch = string.IsNullOrEmpty(textMotClefClientPrenom.Text) ||
+                               unClient.Prenomclient.StartsWith(textMotClefClientPrenom.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool villeMatch = string.IsNullOrEmpty(textMotClefClientVille.Text) ||
+                              unClient.Adresseville.StartsWith(textMotClefClientVille.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool rueMatch = string.IsNullOrEmpty(textMotClefClientRue.Text) ||
+                            unClient.Adresserue.StartsWith(textMotClefClientRue.Text, StringComparison.OrdinalIgnoreCase);
+
+            bool cpMatch = string.IsNullOrEmpty(textMotClefClientCP.Text) ||
+                           unClient.Adressecp.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase);
+
+            // Retourner vrai seulement si toutes les conditions sont satisfaites
+            return nomMatch && prenomMatch && villeMatch && rueMatch && cpMatch;
+        }
+
+        private void textMotClefClient_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
+        }
+
+       
+
+        private void Creer_client_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerclient))
+            {
+                mainWin.ZoneUserControls.Content = new Creerclient();
+            }
+        }
+
+        private void butSupprClient_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupère l'objet Plat sélectionné dans le DataGrid
+            if (dgClients.SelectedItem is Client clientSelec)
+            {
+                // Demande de confirmation
+                var result = MessageBox.Show($"Voulez-vous vraiment supprimer le client « {clientSelec.Nomclient} {clientSelec.Prenomclient} » ?", "Confirmation de suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // 1) Suppression en base
+                        int ligneSelectionner = clientSelec.Delete();
+                        if (ligneSelectionner <= 0)
+                        {
+                            MessageBox.Show("Aucun client supprimé ", "Suppression échouée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        // 2) Suppression de la collection liée à l'IU
+                        var gestion = (Gestion)Application.Current.MainWindow.DataContext;
+                        gestion.LesClients.Remove(clientSelec);
+
+                        MessageBox.Show("Client supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors de la suppression : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un client à supprimer.", "Aucun client sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+        private void Editer_client_Click_1(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+
+            if (dgClients.SelectedItem is Client clientSelectionne)
+            {
+                mainWin.ZoneUserControls.Content = new Editerclient(clientSelectionne);
+            }
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.Rechercherplat"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:SAE201.Classes"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Rechercher un plat" />
+
+        <!--  Corps du formulaire  -->
+        <Grid Grid.Row="1" Margin="0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Margin="0,0,0,5" Text="Par mot clef :" />
+                <TextBlock Margin="0,10,0,5" Text="Par catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par sous-catégorie :" />
+                <TextBlock Margin="0,10,0,5" Text="Par disponibilité :" />
+                <TextBlock Margin="0,10,0,5" Text="Par prix :" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,0,10,422">
+                <TextBox x:Name="textMotClefPlat" Width="200" />
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <RadioButton
+                        x:Name="radioEntree"
+                        Margin="0,0,10,0"
+                        Checked="RadioButton_Checked"
+                        Content="Entree"
+                        GroupName="Categorie" />
+                    <RadioButton
+                        x:Name="radioPlat"
+                        Checked="RadioButton_Checked"
+                        Content="Plat"
+                        GroupName="Categorie" />
+                </StackPanel>
+
+                <WrapPanel Margin="0,10,0,0">
+                    <RadioButton
+                        x:Name="radioEntreeChaude"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree chaude"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioEntreeFroide"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Entree froide"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatChaud"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat chaud"
+                        GroupName="SousCategorie" />
+                    <RadioButton
+                        x:Name="radioPlatFroid"
+                        Margin="0,0,10,10"
+                        Checked="RadioButton_Checked"
+                        Content="Plat froid"
+                        GroupName="SousCategorie" />
+
+                </WrapPanel>
+
+                <TextBox
+                    x:Name="textDisponibilite"
+                    Width="200"
+                    Margin="0,10,0,0" />
+                <TextBox
+                    x:Name="textPrix"
+                    Width="200"
+                    Margin="0,10,0,0" />
+
+            </StackPanel>
+        </Grid>
+
+        <DataGrid
+            x:Name="dgPlats"
+            Grid.Row="1"
+            Margin="0,177,0,0"
+            HorizontalAlignment="Center"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding LesPlats}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nomplat, ValidatesOnExceptions=true}"
+                    Header="Nom" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Prixunitaire, ValidatesOnExceptions=true}"
+                    Header="Prix" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Delaispreparation, ValidatesOnExceptions=true}"
+                    Header="délais de préparation" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Nbpersonnes, ValidatesOnExceptions=True}"
+                    Header="Nombre de personnes" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.UneCategorie.Nomcategorie, ValidatesOnExceptions=True}"
+                    Header="Catégorie" />
+
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UneSousCategorie.Nomsouscategorie, ValidatesOnExceptions=True}"
+                    Header="Sous-catégorie" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UnePeriode.LibellePeriode, ValidatesOnExceptions=True}"
+                    Header="Disponibilité" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button
+            x:Name="CreerplatRechercherPlat"
+            Grid.RowSpan="2"
+            Width="100"
+            Height="50"
+            Margin="835,47,25,563"
+            Click="CreerplatRechercherPlat_Click"
+            Content="Créer un Plat" />
+        <Button
+            x:Name="butSuppr"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="835,75,25,478"
+            Click="butSuppr_Click"
+            Content=""
+            FontFamily="Segoe MDL2 Assets"
+            FontSize="16"
+            RenderTransformOrigin="0.518,0.497"
+            ToolTip="Supprimer" />
+        <Button
+            x:Name="Editer_plat"
+            Grid.Row="1"
+            Width="100"
+            Height="50"
+            Margin="704,50,156,503"
+            Click="Editer_plat_Click_1"
+            Content="Editer"
+            FontSize="16" />
+    </Grid>
+
+
+
+</UserControl>
+using SAE201.Classes;
+using SAE201.userControls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201
+{
+    /// <summary>
+    /// Logique d'interaction pour Rechercherplat.xaml
+    /// </summary>
+    public partial class Rechercherplat : UserControl
+    {
+        public Rechercherplat()
+        {
+            InitializeComponent();
+            dgPlats.Items.Filter = FiltrePlatCombine;
+
+            textMotClefPlat.TextChanged += textMotClefPlat_TextChanged;
+            textDisponibilite.TextChanged += textDisponibilite_TextChanged;
+            textPrix.TextChanged += textPrix_TextChanged;
+            radioEntree.Checked += RadioButton_Checked;
+            radioPlat.Checked += RadioButton_Checked;
+            radioEntreeChaude.Checked += RadioButton_Checked;
+            radioEntreeFroide.Checked += RadioButton_Checked;
+            radioPlatChaud.Checked += RadioButton_Checked;
+            radioPlatFroid.Checked += RadioButton_Checked;
+
+        }
+        private string _filterCategorie;
+        private string _filterSousCategorie;
+        private decimal? _filterPrix;
+
+
+        private bool FiltrePlatCombine(object obj)
+        {
+
+            
+            {
+                var unPlat = obj as Plat;
+                if (unPlat == null) return false;
+
+                bool motClefMatch = string.IsNullOrWhiteSpace(textMotClefPlat.Text) ||
+                    (unPlat.Nomplat != null && unPlat.Nomplat.Contains(textMotClefPlat.Text, StringComparison.OrdinalIgnoreCase));
+
+                string categoriePlat = unPlat.UneSousCategorie?.UneCategorie?.Nomcategorie ?? "";
+                bool categorieMatch = string.IsNullOrEmpty(_filterCategorie) ||
+                    string.Equals(categoriePlat, _filterCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string sousCategoriePlat = unPlat.UneSousCategorie?.Nomsouscategorie ?? "";
+                bool sousCategorieMatch = string.IsNullOrEmpty(_filterSousCategorie) ||
+                    string.Equals(sousCategoriePlat, _filterSousCategorie, StringComparison.OrdinalIgnoreCase);
+
+                string disponibilitePlat = unPlat.UnePeriode?.LibellePeriode ?? "";
+                bool disponibiliteMatch = string.IsNullOrWhiteSpace(textDisponibilite.Text) ||
+                    disponibilitePlat.Contains(textDisponibilite.Text, StringComparison.OrdinalIgnoreCase);
+
+                bool prixMatch = !_filterPrix.HasValue || (unPlat.Prixunitaire <= _filterPrix.Value);
+
+                return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
+            }
+
+
+        }
+
+
+
+        private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void textDisponibilite_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void textPrix_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (decimal.TryParse(textPrix.Text, out var prix))
+                _filterPrix = prix;
+            else
+                _filterPrix = null;
+
+            CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var rb = sender as RadioButton;
+                if (rb == null) return;
+
+                if (rb.GroupName == "Categorie")
+                {
+                    _filterCategorie = rb.Content?.ToString();
+                }
+                else if (rb.GroupName == "SousCategorie")
+                {
+                    _filterSousCategorie = rb.Content?.ToString();
+                }
+
+                CollectionViewSource.GetDefaultView(dgPlats.ItemsSource)?.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors du filtrage : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CreerplatRechercherPlat_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+            if (!(mainWin.ZoneUserControls.Content is Creerplat))
+            {
+                mainWin.ZoneUserControls.Content = new Creerplat();
+            }
+        }
+
+        private void butSuppr_Click(object sender, RoutedEventArgs e)
+        {
+            // Récupère l'objet Plat sélectionné dans le DataGrid
+            if (dgPlats.SelectedItem is Plat platSelec)
+            {
+                // Demande de confirmation
+                var result = MessageBox.Show($"Voulez-vous vraiment supprimer le plat « {platSelec.Nomplat} » ?","Confirmation de suppression",MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // 1) Suppression en base
+                        int ligneSelectionner = platSelec.Delete();
+                        if (ligneSelectionner <= 0)
+                        {
+                            MessageBox.Show("Aucun plat supprimé (ID peut-être invalide).", "Suppression échouée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        // 2) Suppression de la collection liée à l'IU
+                        var gestion = (Gestion)Application.Current.MainWindow.DataContext;
+                        gestion.LesPlats.Remove(platSelec);
+
+                        MessageBox.Show("Plat supprimé avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors de la suppression : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un plat à supprimer.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Editer_plat_Click_1(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+
+            if (dgPlats.SelectedItem is Plat platSelectionne)
+            {
+                mainWin.ZoneUserControls.Content = new Editerplat(platSelectionne);
+            }
+        }
+    }
+}
+<UserControl
+    x:Class="SAE201.Usercontrol.ToutesLesCommandes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201.Usercontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:SAE201.Classes"
+    d:DesignHeight="700"
+    d:DesignWidth="1000"
+    Background="White"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  Titre  -->
+            <RowDefinition Height="Auto" />
+            <!--  Recherche client  -->
+            <RowDefinition Height="Auto" MinHeight="68" />
+            <!--  Filtres DataGrid  -->
+            <RowDefinition />
+            <!--  DataGrid + bouton  -->
+        </Grid.RowDefinitions>
+
+        <!--  Titre  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Text="Toutes les commandes" Width="296" />
+
+        <!--  Recherche par client existant  -->
+
+        <!--  Ligne de filtres alignée sur le DataGrid  -->
+        <UniformGrid
+            Margin="0,47,0,5"
+            Columns="5" Grid.RowSpan="3">
+            <!--  Numéro de commande  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Numéro de commande" />
+                <TextBox x:Name="txtFilterNumCommande" Width="Auto" />
+            </StackPanel>
+            <!--  Date de création  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Date de création" />
+                <TextBox x:Name="txtFilterDateCommande" Width="Auto" />
+            </StackPanel>
+            <!--  Vendeur  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Vendeur" />
+                <TextBox x:Name="txtFilterVendeur" Width="Auto" />
+            </StackPanel>
+            <!--  Nom du Client  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Nom du client" />
+                <TextBox x:Name="txtFilterNomClient" Width="Auto" />
+            </StackPanel>
+            <!--  Prénom du Client  -->
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Text="Prénom du client" />
+                <TextBox x:Name="txtFilterPrenomClient" Width="Auto" />
+            </StackPanel>
+            <Button x:Name="btnAjouterPlat" Margin="100,5,-42,5" Content="Ajouter plat" />
+        </UniformGrid>
+
+        <!--  DataGrid et bouton Supprimer  -->
+        <StackPanel
+            Grid.RowSpan="4"
+            Width="960"
+            Margin="0,47,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <DataGrid
+                x:Name="dgCommandes"
+                Width="960"
+                Height="468"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding LesCommandes}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Numcommande}"
+                        Header="Numéro de commande" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Datecommande}"
+                        Header="Date de création" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnEmploye.Nomemploye}"
+                        Header="Vendeur" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnClient.Nomclient}"
+                        Header="Nom du client" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding UnClient.Prenomclient}"
+                        Header="Prénom du client" />
+                    <DataGridCheckBoxColumn
+                        Width="*"
+                        Binding="{Binding Retiree}"
+                        Header="Retirer" />
+                    <DataGridCheckBoxColumn
+                        Width="*"
+                        Binding="{Binding Payee}"
+                        Header="Payee" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>
+using SAE201.Classes;
+using SAE201.userControls;
+using System;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows;
+
+namespace SAE201.Usercontrol
+{
+    public partial class ToutesLesCommandes : UserControl
+    {
+        public ToutesLesCommandes()
+        {
+            InitializeComponent();
+
+            // 1) On définit le filtre dès l'initialisation
+            dgCommandes.Items.Filter = FiltreCommandeCombine;
+
+
+            // 2) On rafraîchit le filtre à chaque modification d'un TextBox
+            txtFilterNumCommande.TextChanged += FiltreChanged;
+            txtFilterDateCommande.TextChanged += FiltreChanged;
+            txtFilterVendeur.TextChanged += FiltreChanged;
+            txtFilterNomClient.TextChanged += FiltreChanged;
+            txtFilterPrenomClient.TextChanged += FiltreChanged;
+        }
+
+        // Ré-applique le filtre
+        private void FiltreChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(dgCommandes.ItemsSource)?.Refresh();
+        }
+
+        // Teste chaque commande selon les cinq critères saisis
+        private bool FiltreCommandeCombine(object obj)
+        {
+            if (obj is not Commande cmd)
+                return false;
+
+            string numFilter = txtFilterNumCommande.Text.Trim();
+            string dateFilter = txtFilterDateCommande.Text.Trim();
+            string vendeurFilter = txtFilterVendeur.Text.Trim();
+            string nomFilter = txtFilterNomClient.Text.Trim();
+            string prenomFilter = txtFilterPrenomClient.Text.Trim();
+
+            bool matchNum = string.IsNullOrEmpty(numFilter)
+                            || cmd.Numcommande.ToString()
+                                  .StartsWith(numFilter, StringComparison.OrdinalIgnoreCase);
+
+            bool matchDate = string.IsNullOrEmpty(dateFilter)
+                              || cmd.Datecommande.ToString("yyyy-MM-dd")
+                                    .Contains(dateFilter, StringComparison.OrdinalIgnoreCase);
+
+            bool matchVendeur = string.IsNullOrEmpty(vendeurFilter)
+                                 || (cmd.UnEmploye?.Nomemploye ?? "")
+                                      .StartsWith(vendeurFilter, StringComparison.OrdinalIgnoreCase);
+
+            bool matchNomClient = string.IsNullOrEmpty(nomFilter)
+                                   || (cmd.UnClient?.Nomclient ?? "")
+                                        .StartsWith(nomFilter, StringComparison.OrdinalIgnoreCase);
+
+            bool matchPrenomClient = string.IsNullOrEmpty(prenomFilter)
+                                      || (cmd.UnClient?.Prenomclient ?? "")
+                                           .StartsWith(prenomFilter, StringComparison.OrdinalIgnoreCase);
+
+            return matchNum
+                && matchDate
+                && matchVendeur
+                && matchNomClient
+                && matchPrenomClient;
+        }
+
+    }
+}
+et voici le main window
+<Window
+    x:Class="SAE201.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Classes="clr-namespace:SAE201.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SAE201"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="1300"
+    Height="850"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid x:Name="Connection" ContextMenuClosing="Connection_ContextMenuClosing">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="264" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel
+            x:Name="Menu"
+            Grid.Column="0"
+            Height="834"
+            Background="#ebebeb">
+            <Image
+                Width="242"
+                Height="88"
+                Margin="0,10,0,0"
+                Cursor=""
+                Source="/Images/image-removebg-preview.png"
+                Stretch="Fill" />
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonAcceuil_Click"
+                Content="Acceuil"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonsToutesCommandes_Click"
+                Content="Toutes les commandes"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                x:Name="butNouvelleCommande"
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonNewCommande_Click"
+                Content="Nouvelle commande"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonRecupCommande_Click"
+                Content="Commande à récuperer"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonRechercherPlat_Click"
+                Content="Rechercher un plat"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonCreerPlat_Click"
+                Content="Créer un plat"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonRechercherClient_Click"
+                Content="Rechercher un client"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button
+                Width="250"
+                Height="60"
+                Margin="5,20,5,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="0"
+                Click="BoutonCreerClient_Click"
+                Content="Créer un client"
+                Cursor="Hand"
+                FontSize="16"
+                FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="25">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+
+        </StackPanel>
+        <ContentControl
+            x:Name="ZoneUserControls"
+            Grid.Column="1"
+            Width="1000"
+            Height="700"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" />
+        <Button
+            x:Name="Connection1"
+            Grid.Column="1"
+            Width="185"
+            Height="52"
+            Margin="820,10,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="Connection1_Click"
+            Content="Connexion"
+            FontSize="16"
+            FontWeight="Bold">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="25">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#ffe1be" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>
+using SAE201.Classes;
+using SAE201.Usercontrol;
+using SAE201.userControls;
+using System;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SAE201
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow 
+    {
+        public Gestion LaGestion { get; set; }
+        public Employe EmployeConnecte { get; set; }
+
+        public MainWindow()
+        {
+            ChargeData();
+            InitializeComponent();
+            ZoneUserControls.Content = new Connection();
+            Menu.Visibility = Visibility.Collapsed;
+        }
+
+        public void ChargeData()
+        {
+            string defaultConn = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
+            DataAccess.Init(defaultConn);
+            try
+            {
+                LaGestion = new Gestion("laGestion");
+                this.DataContext = LaGestion;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Problème lors de récupération des données, veuillez consulter votre admin");
+                LogError.Log(ex, "Erreur SQL");
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void BoutonsToutesCommandes_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is ToutesLesCommandes))
+            {
+                ZoneUserControls.Content = new ToutesLesCommandes();
+            }
+        }
+
+        private void BoutonAcceuil_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is Acceuil))
+            {
+                ZoneUserControls.Content = new Acceuil();
+            }
+        }
+
+        private void BoutonNewCommande_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is NouvelleCommande))
+            {
+                ZoneUserControls.Content = new NouvelleCommande();
+            }
+        }
+
+        private void BoutonRecupCommande_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BoutonRechercherPlat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is Rechercherplat))
+            {
+                ZoneUserControls.Content = new Rechercherplat();
+            }
+        }
+
+        private void BoutonCreerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is Creerplat))
+            {
+                ZoneUserControls.Content = new Creerplat();
+            }
+
+        }
+
+        private void BoutonRechercherClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is Rechercherclient))
+            {
+                ZoneUserControls.Content = new Rechercherclient();
+            }
+        }
+
+        private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(ZoneUserControls.Content is Creerclient))
+            {
+                ZoneUserControls.Content = new Creerclient();
+            }
+        }
+
+        private void Connection_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+
+        }
+
+        private void Connection1_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (!(ZoneUserControls.Content is Connection))
+            {
+                ZoneUserControls.Content = new Connection();
+            }
+        }
+
+       
+
+
+
+    }
+}
+
+
+
+
+

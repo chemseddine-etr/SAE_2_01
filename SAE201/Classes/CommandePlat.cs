@@ -13,7 +13,7 @@ namespace SAE201.Classes
         private Commande uneCommande;
         private Plat unPlat;
         private int quantite;
-        private Decimal prix;
+        private decimal prix;
 
         public CommandePlat()
         {
@@ -81,11 +81,22 @@ namespace SAE201.Classes
         public List<CommandePlat> FindAll(Gestion gestion)
         {
             List<CommandePlat> lesCommandesPlats = new List<CommandePlat>();
-            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from categorie;"))
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from platcommande;"))
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
-                    lesCommandesPlats.Add(new CommandePlat(gestion.LesCommandes.FirstOrDefault(c => c.Numcommande == (int)dr["numcommande"]),gestion.LesPlats.FirstOrDefault(c => c.Numplat == (int)dr["numplat"]), (int)dr["quantite"], (Decimal)dr["prix"]));
+                {
+                    var commande = gestion.LesCommandes?.FirstOrDefault(c => c.Numcommande == (int)dr["numcommande"]);
+                    var plat = gestion.LesPlats?.FirstOrDefault(p => p.Numplat == (int)dr["numplat"]);
+
+                    if (commande != null && plat != null)
+                    {
+                        int quantite = Convert.ToInt32(dr["quantite"]);
+                        decimal prix = Convert.ToDecimal(dr["prix"]);
+
+                        lesCommandesPlats.Add(new CommandePlat(commande, plat, quantite, prix));
+                    }
+                }
             }
             return lesCommandesPlats;
         }
@@ -123,7 +134,7 @@ namespace SAE201.Classes
                 this.UneCommande.Numcommande = (int)dt.Rows[0]["numcommande"];
                 this.UnPlat.Numplat = (int)dt.Rows[0]["numplat"];
                 this.Quantite = (int)dt.Rows[0]["quantite"];
-                this.Prix = (Decimal)dt.Rows[0]["prix"];
+                this.Prix = (decimal)dt.Rows[0]["prix"];
 
             }
 
@@ -143,7 +154,7 @@ namespace SAE201.Classes
 
         public int Delete()
         {
-            using (var cmdUpdate = new NpgsqlCommand("delete from platcommandewhere where numcommande =@numcommande and numplat =@numplat;"))
+            using (var cmdUpdate = new NpgsqlCommand("delete from platcommande where numcommande =@numcommande and numplat =@numplat;"))
             {
                 cmdUpdate.Parameters.AddWithValue("numcommande", this.UneCommande.Numcommande);
                 cmdUpdate.Parameters.AddWithValue("numplat", this.UnPlat.Numplat);
