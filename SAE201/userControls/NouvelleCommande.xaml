@@ -26,11 +26,14 @@
 
         <StackPanel Grid.Row="1" Margin="20,100,20,20">
             <Label Content="Client" FontSize="20" />
-            <ComboBox IsEditable="True" x:Name="menuClient" ItemsSource="{Binding LesClients}"/>
+            <ComboBox
+                x:Name="menuClient"
+                IsEditable="True"
+                ItemsSource="{Binding LesClients}" />
             <Label Content="Date du jour" FontSize="20" />
-            <DatePicker x:Name="dateJour" Margin="0,0,0,20"/>
+            <DatePicker x:Name="dateJour" Margin="0,0,0,20" />
             <Label Content="Date de retrait prévue" FontSize="20" />
-            <DatePicker x:Name="dateRetrait" Margin="0,0,0,20"/>
+            <DatePicker x:Name="dateRetrait" Margin="0,0,0,20" />
             <StackPanel
                 Margin="0,20,0,20"
                 HorizontalAlignment="Center"
@@ -41,13 +44,15 @@
                     x:Name="butCréerClient"
                     Width="143"
                     Margin="100,0,0,0"
+                    Click="butCréerClient_Click"
                     Content="Créer client"
-                    FontSize="20" Click="butCréerClient_Click" />
+                    FontSize="20" />
             </StackPanel>
             <Button
                 x:Name="butCreerCommande"
                 Width="228"
                 Margin="0,50,0,0"
+                Click="butCreerCommande_Click"
                 Content="Créer commande"
                 FontSize="20" Click="butCreerCommande_Click" />
 

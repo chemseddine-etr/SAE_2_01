@@ -137,7 +137,6 @@
             Width="100"
             Height="50"
             Margin="884,39,-24,399"
-            
             Content="Editer"
             FontSize="16" Click="Editer_client_Click_1" />
 

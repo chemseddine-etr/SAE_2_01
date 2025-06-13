@@ -45,6 +45,7 @@
         <Button
             Grid.Row="1"
             Width="150"
+            Height="50"
             Margin="0,241,0,56"
             HorizontalAlignment="Center"
             Click="BtnMettreAJour_Click"
