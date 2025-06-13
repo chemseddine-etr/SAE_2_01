@@ -76,12 +76,11 @@
             Orientation="Horizontal">
             <DataGrid
                 x:Name="dgCommandes"
-                Width="862"
+                Width="960"
                 Height="468"
                 AutoGenerateColumns="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding LesCommandes}"
-                SelectionChanged="dgCommandes_SelectionChanged">
+                ItemsSource="{Binding LesCommandes}">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="*"
@@ -113,15 +112,6 @@
                         Header="Payee" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Button
-                x:Name="butSuppr"
-                Width="30"
-                Height="30"
-                Margin="20,0,0,0"
-                Content=""
-                FontFamily="Segoe MDL2 Assets"
-                FontSize="16"
-                ToolTip="Supprimer" />
         </StackPanel>
     </Grid>
 </UserControl>

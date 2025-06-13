@@ -158,13 +158,12 @@ namespace SAE201.Classes
             int nb;
             using (var cmdInsert = new NpgsqlCommand("insert into commande (numclient,numemploye,datecommande,dateretraitprevue,payee,retiree,prixtotal ) values (@numclient,@numemploye,@datecommande,@dateretraitprevue,@payee,@retiree,@prixtotal) RETURNING numcommande;"))
             {
-                
                 cmdInsert.Parameters.AddWithValue("numclient", this.UnClient.Numclient);
                 cmdInsert.Parameters.AddWithValue("numemploye", this.UnEmploye.Numemploye);
                 cmdInsert.Parameters.AddWithValue("datecommande", this.Datecommande);
                 cmdInsert.Parameters.AddWithValue("dateretraitprevue", this.Dateretraitprevue);
                 cmdInsert.Parameters.AddWithValue("payee", this.Payee);
-                cmdInsert.Parameters.AddWithValue("retiree", this.Retire);
+                cmdInsert.Parameters.AddWithValue("retiree", this.Retire);     
                 cmdInsert.Parameters.AddWithValue("prixtotal", this.Prixtotal);
                 nb = DataAccess.Instance.ExecuteInsert(cmdInsert);
             }

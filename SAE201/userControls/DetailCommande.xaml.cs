@@ -25,6 +25,7 @@ namespace SAE201.userControls
     {
         private Commande commande;
 
+
         public DetailCommande(Commande selectedCommande)
         {
             InitializeComponent();
