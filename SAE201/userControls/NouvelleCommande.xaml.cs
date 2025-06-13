@@ -48,12 +48,18 @@ namespace SAE201.userControls
 
                 Gestion gestion = (Gestion)Application.Current.MainWindow.DataContext;
 
+                var mainWin = (MainWindow)Application.Current.MainWindow;
+
 
                 Commande uneCommande = new Commande
                 {
-                    
+                    UnClient = (Client)menuClient.SelectedItem,
+                    UnEmploye = mainWin.EmployeConnecte,
                     Datecommande = (DateTime)dateJour.SelectedDate,
-                    Dateretraitprevue = (DateTime)dateRetrait.SelectedDate
+                    Dateretraitprevue = (DateTime)dateRetrait.SelectedDate,
+                    Payee = false,
+                    Retire = false,
+                    Prixtotal = 0
                 };
 
                 int newId = uneCommande.Create();

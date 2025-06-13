@@ -1,4 +1,5 @@
-﻿using SAE201.Classes;
+﻿using Npgsql;
+using SAE201.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,28 @@ namespace SAE201.userControls
 
                 // 1) Récupère MainWindow et met à jour l'état connecté
                 var mainWin = (MainWindow)Application.Current.MainWindow;
+
+                using (var cmd = new NpgsqlCommand("SELECT * FROM employe WHERE login = @login", DataAccess.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("login", username);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Employe emp = new Employe
+                            {
+                                Numemploye = (int)reader["numemploye"],
+                                Nomemploye = (string)reader["nomemploye"],
+                                Prenomemploye = (string)reader["prenomemploye"],
+                                Login = (string)reader["login"]
+                                // ajoute les autres champs si nécessaires
+                            };
+                            mainWin.EmployeConnecte = emp;
+                        }
+                    }
+                }
+
+
                 Window parentWindow = Window.GetWindow(this);
 
                  mainWin = (MainWindow)Application.Current.MainWindow;
@@ -57,9 +80,7 @@ namespace SAE201.userControls
             }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-        }
+
     }
 }

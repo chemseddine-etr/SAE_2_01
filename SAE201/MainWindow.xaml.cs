@@ -21,13 +21,14 @@ namespace SAE201
     public partial class MainWindow 
     {
         public Gestion LaGestion { get; set; }
+        public Employe EmployeConnecte { get; set; }
+
         public MainWindow()
         {
             ChargeData();
             InitializeComponent();
             ZoneUserControls.Content = new Connection();
             Menu.Visibility = Visibility.Collapsed;
-            
         }
 
         public void ChargeData()
@@ -122,6 +123,7 @@ namespace SAE201
                 ZoneUserControls.Content = new Connection();
             }
         }
+
        
 
 
