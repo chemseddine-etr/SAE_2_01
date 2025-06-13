@@ -166,5 +166,15 @@ namespace SAE201
                 MessageBox.Show("Veuillez sélectionner un plat à supprimer.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        private void Editer_plat_Click_1(object sender, RoutedEventArgs e)
+        {
+            var mainWin = (MainWindow)Application.Current.MainWindow;
+
+            if (dgPlats.SelectedItem is Plat platSelectionne)
+            {
+                mainWin.ZoneUserControls.Content = new Editerplat(platSelectionne);
+            }
+        }
     }
 }

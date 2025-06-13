@@ -39,9 +39,7 @@ namespace SAE201.userControls
             {
                 DataAccess.Init(connString);
                 using (var conn = DataAccess.Instance.GetConnection())
-                {
-                    MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+                { }
 
                 // 1) Récupère MainWindow et met à jour l'état connecté
                 var mainWin = (MainWindow)Application.Current.MainWindow;
