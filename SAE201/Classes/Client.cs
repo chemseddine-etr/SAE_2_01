@@ -195,5 +195,10 @@ namespace SAE201.Classes
                 return DataAccess.Instance.ExecuteSet(cmdUpdate);
             }
         }
+
+        public override string? ToString()
+        {
+            return $"{Nomclient} {Prenomclient}";
+        }
     }
 }
