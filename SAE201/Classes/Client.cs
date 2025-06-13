@@ -174,7 +174,7 @@ namespace SAE201.Classes
 
         public int Update()
         {
-            using (var cmdUpdate = new NpgsqlCommand("update client set nomclient =@nomclient ,  prenomclient = @prenomclient,  tel = @tel , adresserue = @adresserue , adressecp =@adressecp , adresseville =@adresseville ,  where numclient =@numclient;"))
+            using (var cmdUpdate = new NpgsqlCommand("update client set nomclient =@nomclient ,  prenomclient = @prenomclient,  tel = @tel , adresserue = @adresserue , adressecp =@adressecp , adresseville =@adresseville  where numclient =@numclient;"))
             {
                 cmdUpdate.Parameters.AddWithValue("nomclient", this.Nomclient);
                 cmdUpdate.Parameters.AddWithValue("prenomclient", this.Prenomclient);

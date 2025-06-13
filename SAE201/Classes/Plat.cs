@@ -163,7 +163,7 @@ namespace SAE201.Classes
 
         public int Update()
         {
-            using (var cmdUpdate = new NpgsqlCommand("update plat set numplat =@numplat ,  numsouscategorie =@numsouscategorie,  numperiode =@numperiode , nomplat =@nomplat , prixunitaire =@prixunitaire ,delaipreparation delaipreparation , nbpersonnes =@nbpersonnes  where idchien =@id;"))
+            using (var cmdUpdate = new NpgsqlCommand("update plat set numplat =@numplat ,  numsouscategorie =@numsouscategorie,  numperiode =@numperiode , nomplat =@nomplat , prixunitaire =@prixunitaire ,delaipreparation =@delaipreparation , nbpersonnes =@nbpersonnes  where numplat =@numplat;"))
             {
                 cmdUpdate.Parameters.AddWithValue("numplat", this.Numplat);
                 cmdUpdate.Parameters.AddWithValue("numsouscategorie", this.UneSousCategorie.Numsouscategorie);

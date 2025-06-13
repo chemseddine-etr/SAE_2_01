@@ -107,7 +107,8 @@ namespace SAE201.userControls
             }
         }
 
-        /*private void Editer_client_Click(object sender, RoutedEventArgs e)
+
+        private void Editer_client_Click_1(object sender, RoutedEventArgs e)
         {
             var mainWin = (MainWindow)Application.Current.MainWindow;
 
@@ -115,6 +116,6 @@ namespace SAE201.userControls
             {
                 mainWin.ZoneUserControls.Content = new Editerclient(clientSelectionne);
             }
-        }*/
+        }
     }
 }
