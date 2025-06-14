@@ -70,6 +70,8 @@ namespace SAE201.Classes
 
             set
             {
+                if(value < 0 )
+                    throw new ArgumentOutOfRangeException("le prix ne peux pas etre négatif");
                 this.prixunitaire = value;
             }
         }
