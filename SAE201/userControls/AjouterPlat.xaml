@@ -22,7 +22,7 @@
             HorizontalAlignment="Center"
             FontSize="28"
             FontWeight="Bold"
-            Text="Rechercher un plat" />
+            Text="Ajouter un plat" />
 
         <!--  Corps du formulaire  -->
         <Grid Grid.Row="1" Margin="0,20">
@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            
 
             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                 <TextBlock Margin="0,0,0,5" Text="Par mot clef :" />
@@ -37,9 +38,10 @@
                 <TextBlock Margin="0,10,0,5" Text="Par sous-catégorie :" />
                 <TextBlock Margin="0,10,0,5" Text="Par disponibilité :" />
                 <TextBlock Margin="0,10,0,5" Text="Par prix :" />
+                <TextBlock Margin="0,10,0,5" Text="Quantité :" />
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Margin="0,0,10,422">
+            <StackPanel Grid.Column="1" Margin="0,0,10,379">
                 <TextBox x:Name="textMotClefPlat" Width="200" />
 
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
@@ -93,13 +95,15 @@
                     Width="200"
                     Margin="0,10,0,0" />
 
+                <TextBox x:Name="textQuantite" Width="200" Margin="0,20,0,0" />
+
             </StackPanel>
         </Grid>
 
         <DataGrid
             x:Name="dgPlats"
             Grid.Row="1"
-            Margin="0,177,0,0"
+            Margin="0,210,0,0"
             HorizontalAlignment="Center"
             AutoGenerateColumns="False"
             IsReadOnly="True"

@@ -1,6 +1,7 @@
 ﻿using SAE201.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace SAE201.userControls
     /// </summary>
     public partial class AjouterPlat : UserControl
     {
-        public AjouterPlat()
+        private Commande commande;
+        public AjouterPlat(Commande c)
         {
             InitializeComponent();
             dgPlats.Items.Filter = FiltrePlatCombine;
@@ -35,6 +37,8 @@ namespace SAE201.userControls
             radioEntreeFroide.Checked += RadioButton_Checked;
             radioPlatChaud.Checked += RadioButton_Checked;
             radioPlatFroid.Checked += RadioButton_Checked;
+
+            this.commande = c;
 
         }
         private string _filterCategorie;
@@ -127,7 +131,28 @@ namespace SAE201.userControls
 
         private void butAdd_Click(object sender, RoutedEventArgs e)
         {
+            var platsSelectionnes = dgPlats.SelectedItems.Cast<Plat>().ToList();
+            if (platsSelectionnes.Count == 0)
+            {
+                MessageBox.Show("Aucun plat sélectionné.");
+                return;
+            }
 
+            if (!int.TryParse(textQuantite.Text, out int quantite) || quantite <= 0)
+            {
+                MessageBox.Show("Quantité invalide.");
+                return;
+            }
+
+            foreach (var plat in platsSelectionnes)
+            {
+                CommandePlat cp = new CommandePlat(commande, plat, quantite, Convert.ToDecimal(plat.Prixunitaire));
+                cp.Create();
+            }
+
+            // Mise à jour de la commande ?
+            MessageBox.Show("Plats ajoutés à la commande !");
+            ((MainWindow)Application.Current.MainWindow).ZoneUserControls.Content = new DetailCommande(commande);
         }
     }
 }

@@ -14,8 +14,6 @@ namespace SAE201.Usercontrol
         {
             InitializeComponent();
 
-            dgCommandes.SelectionChanged += dgCommandes_SelectionChanged;
-
             // 1) On définit le filtre dès l'initialisation
             dgCommandes.Items.Filter = FiltreCommandeCombine;
 
@@ -73,16 +71,17 @@ namespace SAE201.Usercontrol
                 && matchPrenomClient;
         }
 
-        private void dgCommandes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void btnDetailcommande_Click(object sender, RoutedEventArgs e)
         {
-            if (dgCommandes.SelectedItem is Commande selectedCommande)
+            var commandeSelectionnee = (Commande)dgCommandes.SelectedItem;
+            if (commandeSelectionnee != null)
             {
-                var detailUC = new DetailCommande(selectedCommande);
-
-                if (Application.Current.MainWindow is MainWindow mw)
-                {
-                    mw.ZoneUserControls.Content = detailUC;
-                }
+                var detailUC = new DetailCommande(commandeSelectionnee);
+                ((MainWindow)Application.Current.MainWindow).ZoneUserControls.Content = detailUC;
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une commande.");
             }
         }
     }
