@@ -33,7 +33,7 @@ namespace SAE201
 
         public void ChargeData()
         {
-            string defaultConn = "Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
+            string defaultConn = "Host=localhost;Port=5432;Username=postgres;Password=;Database=SAE_201new;";
             DataAccess.Init(defaultConn);
             try
             {

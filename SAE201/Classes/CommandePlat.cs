@@ -113,13 +113,13 @@ namespace SAE201.Classes
                 {
                     if (reader.Read())
                     {
-                        this.UneCommande.Numcommande = reader.GetInt32(0); // numcommande
-                        this.UnPlat.Numplat = reader.GetInt32(1);          // numplat
+                        this.UneCommande.Numcommande = reader.GetInt32(0);
+                        this.UnPlat.Numplat = reader.GetInt32(1);
                         return true;
                     }
                 }
             }
-            return false; // si l'insertion a échoué
+            return false;
         }
 
 

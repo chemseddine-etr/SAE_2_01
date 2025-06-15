@@ -40,7 +40,6 @@ namespace SAE201.userControls
                 gestion.LesCommandesPlats.Add(cp);
             }
 
-            // Récupère les plats liés à cette commande
             var liste = gestion.LesCommandesPlats
                 .Where(cp => cp.UneCommande.Numcommande == commande.Numcommande)
                 .Select(cp => new PlatCommandeAffiche { CP = cp })
@@ -49,7 +48,7 @@ namespace SAE201.userControls
             var platsCommandeRaw = gestion.LesCommandesPlats
                 .Where(cp => cp.UneCommande.Numcommande == commande.Numcommande).ToList();
 
-            MessageBox.Show($"Nb plats trouvés : {platsCommandeRaw.Count}"); // DEBUG
+            MessageBox.Show($"Nb plats trouvés : {platsCommandeRaw.Count}");
 
             platsCommande = new ObservableCollection<PlatCommandeAffiche>(liste);
 
@@ -90,10 +89,8 @@ namespace SAE201.userControls
 
             if (platAffiche != null)
             {
-                // Supprimer en BDD
                 platAffiche.CP.Delete();
-                    
-                // Supprimer de l'affichage
+                
                 platsCommande.Remove(platAffiche);
             }
         }

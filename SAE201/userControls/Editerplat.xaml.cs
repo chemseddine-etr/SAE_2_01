@@ -56,16 +56,6 @@ namespace SAE201
                 else
                     MessageBox.Show("Échec de la mise à jour.");
             }
-
-            private void NettoyerChamps()
-            {
-                TxtNomPlat.Clear();
-                TxtPrix.Clear();
-                TxtDelais.Clear();
-                TxtNbPersonnes.Clear();
-                TxtPeriode.Clear();
-                TxtSouscategorie.Clear();
-            }
         }
     }
 

@@ -191,7 +191,6 @@ namespace SAE201.Classes
         {
             List<Plat> lesPlats = new List<Plat>();
 
-            // Vérification préalable des dépendances
             if (gestion.LesPeriodes == null || gestion.LesSousCategories == null)
             {
                 throw new InvalidOperationException("Les périodes ou les sous-catégories ne sont pas initialisées dans l'objet Gestion.");
@@ -209,11 +208,9 @@ namespace SAE201.Classes
                     var sousCategorie = gestion.LesSousCategories
                         .FirstOrDefault(s => s.Numsouscategorie == (int)dr["numsouscategorie"]);
 
-                    // Tu peux ajouter un log ou continuer même si null
                     if (periode == null || sousCategorie == null)
                     {
-                        // Logique de fallback si tu veux continuer
-                        continue; // ou logguer l’erreur
+                        continue; 
                     }
 
                     lesPlats.Add(new Plat(

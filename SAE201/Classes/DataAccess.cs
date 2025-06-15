@@ -13,7 +13,7 @@ namespace SAE201.Classes
     public class DataAccess
     {
         private static readonly DataAccess instance = new DataAccess();
-        private static string connectionString ="Host=srv-peda-new;Port=5433;Username=morardl;Password=dHUWL1;Database=BD_SAE;Options=-c search_path=201";
+        private static string connectionString ="Host=localhost;Port=5432;Username=postgres;Password=;Database=SAE_201new;";
         private NpgsqlConnection connection;
 
         public static DataAccess Instance
@@ -23,8 +23,6 @@ namespace SAE201.Classes
                 return instance;
             }
         }
-
-        //  Constructeur privé pour empêcher l'instanciation multiple
         private DataAccess()
         {
 
@@ -50,7 +48,6 @@ namespace SAE201.Classes
             try
             {
                 command.Connection = GetConnection();
-                // ExecuteReader avec fermeture automatique de la connexion quand le reader est fermé
                 return command.ExecuteReader(CommandBehavior.CloseConnection);
             }
             catch (Exception ex)
@@ -60,8 +57,6 @@ namespace SAE201.Classes
             }
         }
 
-
-        // pour récupérer la connexion (et l'ouvrir si nécessaire)
         public NpgsqlConnection GetConnection()
         {
             try
@@ -77,7 +72,6 @@ namespace SAE201.Classes
             }
         }
 
-        //  pour requêtes SELECT et retourne un DataTable ( table de données en mémoire)
         public DataTable ExecuteSelect(NpgsqlCommand cmd)
         {
             DataTable dataTable = new DataTable();
@@ -97,8 +91,6 @@ namespace SAE201.Classes
             return dataTable;
         }
 
-        //   pour requêtes INSERT et renvoie l'ID généré
-
         public int ExecuteInsert(NpgsqlCommand cmd)
         {
             int nb = 0;
@@ -116,10 +108,6 @@ namespace SAE201.Classes
             return nb;
         }
 
-
-
-
-        //  pour requêtes UPDATE, DELETE
         public int ExecuteSet(NpgsqlCommand cmd)
         {
             int nb = 0;
@@ -137,7 +125,6 @@ namespace SAE201.Classes
 
         }
 
-        // pour requêtes avec une seule valeur retour  (ex : COUNT, SUM) 
         public object ExecuteSelectUneValeur(NpgsqlCommand cmd)
         {
             object res = null;
@@ -155,7 +142,6 @@ namespace SAE201.Classes
 
         }
 
-        //  Fermer la connexion 
         public void CloseConnection()
         {
             if (connection.State == ConnectionState.Open)

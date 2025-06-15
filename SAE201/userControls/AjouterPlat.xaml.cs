@@ -150,7 +150,6 @@ namespace SAE201.userControls
                 cp.Create();
             }
 
-            // Mise à jour de la commande ?
             MessageBox.Show("Plats ajoutés à la commande !");
             ((MainWindow)Application.Current.MainWindow).ZoneUserControls.Content = new DetailCommande(commande);
         }

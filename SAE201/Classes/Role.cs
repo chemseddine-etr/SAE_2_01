@@ -51,16 +51,14 @@ namespace SAE201.Classes
         public List<Role> FindAll()
         {
             List<Role> lesRoles = new List<Role>();
-            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from role;")) // Assurez-vous d'interroger la bonne table, ici 'role'
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from role;")) 
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
 
-                // Vérifiez que la DataTable et ses lignes ne sont pas null
                 if (dt != null && dt.Rows != null)
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        // Vérifiez que les valeurs des colonnes ne sont pas DBNull.Value
                         if (dr["numrole"] != DBNull.Value && dr["nomrole"] != DBNull.Value)
                         {
                             lesRoles.Add(new Role(

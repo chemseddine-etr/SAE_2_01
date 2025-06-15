@@ -118,17 +118,12 @@ namespace SAE201.Classes
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
                 foreach (DataRow dr in dt.Rows)
                 {
-                    // Vérifiez que gestion.LesRoles n'est pas null
                     if (gestion.LesRoles == null)
                     {
-                        // Log ou gérer l'erreur
-                        continue; // Passons à l'itération suivante si la collection est null
+                        continue;
                     }
-
-                    // Utiliser FirstOrDefault de manière sécurisée
                     var role = gestion.LesRoles.FirstOrDefault(c => c.Numrole == (int)dr["numrole"]);
 
-                    // Ajoutez un employé à la liste seulement si toutes les données nécessaires sont disponibles.
                     if (role != null)
                     {
                         lesEmployes.Add(new Employe(

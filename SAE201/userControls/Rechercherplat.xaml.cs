@@ -42,10 +42,8 @@ namespace SAE201
         private string _filterSousCategorie;
         private decimal? _filterPrix;
 
-
         private bool FiltrePlatCombine(object obj)
         {
-
             
             {
                 var unPlat = obj as Plat;
@@ -70,11 +68,7 @@ namespace SAE201
 
                 return motClefMatch && categorieMatch && sousCategorieMatch && disponibiliteMatch && prixMatch;
             }
-
-
         }
-
-
 
         private void textMotClefPlat_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -131,17 +125,14 @@ namespace SAE201
 
         private void butSuppr_Click(object sender, RoutedEventArgs e)
         {
-            // Récupère l'objet Plat sélectionné dans le DataGrid
             if (dgPlats.SelectedItem is Plat platSelec)
             {
-                // Demande de confirmation
                 var result = MessageBox.Show($"Voulez-vous vraiment supprimer le plat « {platSelec.Nomplat} » ?","Confirmation de suppression",MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        // 1) Suppression en base
                         int ligneSelectionner = platSelec.Delete();
                         if (ligneSelectionner <= 0)
                         {
@@ -149,7 +140,6 @@ namespace SAE201
                             return;
                         }
 
-                        // 2) Suppression de la collection liée à l'IU
                         var gestion = (Gestion)Application.Current.MainWindow.DataContext;
                         gestion.LesPlats.Remove(platSelec);
 

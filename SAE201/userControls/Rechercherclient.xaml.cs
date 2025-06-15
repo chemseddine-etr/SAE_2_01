@@ -33,7 +33,6 @@ namespace SAE201.userControls
             var unClient = obj as Client;
             if (unClient == null) return false;
 
-            // Vérifier chaque critère de recherche
             bool nomMatch = string.IsNullOrEmpty(textMotClefClientNom.Text) ||
                             unClient.Nomclient.StartsWith(textMotClefClientNom.Text, StringComparison.OrdinalIgnoreCase);
 
@@ -49,7 +48,6 @@ namespace SAE201.userControls
             bool cpMatch = string.IsNullOrEmpty(textMotClefClientCP.Text) ||
                            unClient.Adressecp.StartsWith(textMotClefClientCP.Text, StringComparison.OrdinalIgnoreCase);
 
-            // Retourner vrai seulement si toutes les conditions sont satisfaites
             return nomMatch && prenomMatch && villeMatch && rueMatch && cpMatch;
         }
 
@@ -57,8 +55,6 @@ namespace SAE201.userControls
         {
             CollectionViewSource.GetDefaultView(dgClients.ItemsSource).Refresh();
         }
-
-       
 
         private void Creer_client_Click(object sender, RoutedEventArgs e)
         {
@@ -71,17 +67,14 @@ namespace SAE201.userControls
 
         private void butSupprClient_Click(object sender, RoutedEventArgs e)
         {
-            // Récupère l'objet Plat sélectionné dans le DataGrid
             if (dgClients.SelectedItem is Client clientSelec)
             {
-                // Demande de confirmation
                 var result = MessageBox.Show($"Voulez-vous vraiment supprimer le client « {clientSelec.Nomclient} {clientSelec.Prenomclient} » ?", "Confirmation de suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        // 1) Suppression en base
                         int ligneSelectionner = clientSelec.Delete();
                         if (ligneSelectionner <= 0)
                         {
@@ -89,7 +82,6 @@ namespace SAE201.userControls
                             return;
                         }
 
-                        // 2) Suppression de la collection liée à l'IU
                         var gestion = (Gestion)Application.Current.MainWindow.DataContext;
                         gestion.LesClients.Remove(clientSelec);
 

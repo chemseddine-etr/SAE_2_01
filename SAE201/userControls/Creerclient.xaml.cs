@@ -30,7 +30,6 @@ namespace SAE201.userControls
 
         private void BoutonCreerClient_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Vérification des champs obligatoires
             if (string.IsNullOrWhiteSpace(txtNom.Text) ||
                 string.IsNullOrWhiteSpace(txtPrenom.Text) ||
                 string.IsNullOrWhiteSpace(txtTelephone.Text) ||
@@ -60,7 +59,6 @@ namespace SAE201.userControls
 
                 MessageBox.Show($"Client créé avec succès ");
 
-                // --- Nettoyage des champs ---
                 txtNom.Clear();
                 txtPrenom.Clear();
                 txtTelephone.Clear();

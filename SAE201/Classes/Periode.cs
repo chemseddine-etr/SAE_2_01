@@ -52,16 +52,14 @@ namespace SAE201.Classes
         public List<Periode> FindAll()
         {
             List<Periode> lesPeriodes = new List<Periode>();
-            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from periode;")) // Assurez-vous que la table est correcte
+            using (NpgsqlCommand cmdSelect = new NpgsqlCommand("select * from periode;"))
             {
                 DataTable dt = DataAccess.Instance.ExecuteSelect(cmdSelect);
 
-                // Vérifiez que la table et ses lignes ne sont pas nulles
                 if (dt != null && dt.Rows != null)
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        // Vérifiez que les valeurs de colonnes ne sont pas DBNull.Value
                         if (dr["libelleperiode"] != DBNull.Value && dr["numperiode"] != DBNull.Value)
                         {
                             lesPeriodes.Add(new Periode(

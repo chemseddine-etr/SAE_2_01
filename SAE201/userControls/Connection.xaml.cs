@@ -34,15 +34,15 @@ namespace SAE201.userControls
 
             string username = loginTextbox.Text;
             string password = mdpTextBox.Password;
-            string connString = $"Host=srv-peda-new;Port=5433;Username={username};Password={password};Database=BD_SAE;Options=-c search_path=201";
+            string connString = "Host=localhost;Port=5432;Username=postgres;Password=;Database=SAE_201new;";
 
             try
             {
                 DataAccess.Init(connString);
                 using (var conn = DataAccess.Instance.GetConnection())
-                { }
+                {
 
-                // 1) Récupère MainWindow et met à jour l'état connecté
+                }
                 var mainWin = (MainWindow)Application.Current.MainWindow;
 
                 using (var cmd = new NpgsqlCommand("SELECT * FROM employe WHERE login = @login", DataAccess.Instance.GetConnection()))
@@ -58,7 +58,6 @@ namespace SAE201.userControls
                                 Nomemploye = (string)reader["nomemploye"],
                                 Prenomemploye = (string)reader["prenomemploye"],
                                 Login = (string)reader["login"]
-                                // ajoute les autres champs si nécessaires
                             };
                             mainWin.EmployeConnecte = emp;
                         }
@@ -79,8 +78,5 @@ namespace SAE201.userControls
                 MessageBox.Show($"Erreur de connexion : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-
     }
 }
